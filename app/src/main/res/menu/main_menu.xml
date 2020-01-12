@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Кнопки меню Action Bar - в MainActivity
+-->
+
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/celendarView"
+        android:title="@string/calendarView"
+        app:showAsAction="always"
+        android:icon="@drawable/action_bar_main_calendar"
+        />
+
+    <item
+        android:id="@+id/listView"
+        android:title="@string/listView"
+        app:showAsAction="always"
+        android:icon="@drawable/action_bar_main_list"
+        />
+
+    <item
+        android:id="@+id/settings"
+        android:title="@string/settings"
+        app:showAsAction="always"
+        android:icon="@drawable/action_bar_main_settings"
+        />
+
+
+</menu>
