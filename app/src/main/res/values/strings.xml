@@ -1,22 +1,40 @@
 <resources>
 
     <!-- Название приложения -->
-        <!-- Eng name
+    <!-- Eng name
     <string name="app_name">Occasions calendar</string>
         -->
     <string name="app_name">Календарь событий</string>
 
     <!-- Action bar Titles -->
     <string name="title_activity_settings">Настройки</string>
+    <string name="title_about_program_activity">О программе</string>
 
 
     <!-- Иконки -->
     <string name="settings">Настройки</string>
-    <string name="listView">Списком</string>
-    <string name="calendarView">В виде календаря</string>
+    <string name="list_view">Списком</string>
+    <string name="calendar_view">В виде календаря</string>
+
+    <!-- Настройки -->
+    <string name="about_program">О программе</string>
+    
+    <!-- About programm / О программе-->
+    <string name="cc_licence_text">В этом проекте использованы материалы по лицензии \"Creative Commons Attribution-NoDerivs 3.0 Unported\" ( https://creativecommons.org/licenses/by-nd/3.0/ )</string>
+    <string name="icon8_text">В этом проекте использованы материала полученные с ресурса ICON8 ( https://icons8.ru ) </string>
 
 
+    
+    <!-- Lorem ipsum text -->
+    <string name="lorem_ipsum"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum faucibus nisi leo, a auctor risus molestie ac. Donec ultrices venenatis sagittis. Sed faucibus dui est, at congue sapien auctor id. In mollis ultricies urna sit amet condimentum. Mauris eu orci id velit blandit euismod ultricies vitae diam. Nam quis tellus urna. Mauris vitae diam nulla. Nam et enim vel nulla dictum hendrerit. Cras vehicula lacinia neque ut laoreet. Nullam pretium urna ultrices lorem fringilla laoreet.
 
+Aliquam ut mauris sit amet odio bibendum facilisis et euismod lacus. Vivamus tincidunt volutpat orci, ac scelerisque lectus molestie non. Ut faucibus pellentesque hendrerit. Nulla sit amet felis eu ligula porta vulputate. Ut quis ultrices mi. Praesent tempor imperdiet tempor. Donec accumsan dui tristique velit bibendum, dapibus rutrum sapien lobortis. Nullam cursus dapibus efficitur. Nunc pulvinar quis lectus ut rhoncus. Duis tincidunt libero velit, at pulvinar nunc aliquam at. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam egestas ante vitae ante pharetra varius. In porttitor magna a sodales congue.
 
+Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas egestas libero vel egestas suscipit. Suspendisse sit amet congue lacus. Curabitur in nisi justo. Nullam nec lacus congue metus tristique luctus. Aliquam vulputate rutrum tellus eu ultrices. Pellentesque lobortis tincidunt felis, quis euismod velit imperdiet id. Maecenas et augue in odio laoreet feugiat. Donec at tristique dolor. Maecenas id lorem tortor. Etiam purus nisi, vestibulum et sem laoreet, porttitor dapibus lorem. Nullam eu egestas ipsum, sit amet pretium felis. Ut condimentum nibh eget nulla semper ullamcorper.
+
+Morbi gravida est venenatis nisi venenatis facilisis. Vestibulum convallis, leo eu euismod posuere, sapien urna tempor ex, vitae mattis tortor sem id purus. Vestibulum malesuada erat et ligula facilisis sodales. Pellentesque id gravida lorem. Sed pharetra sagittis pellentesque. Donec efficitur, nisi et auctor dapibus, ligula felis condimentum neque, at pulvinar enim lorem eget felis. Duis vel magna nec turpis gravida ultricies.
+
+In ultrices vel massa non ornare. Donec ornare eget enim eget vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in dolor risus. Suspendisse dolor odio, congue eu euismod quis, laoreet sed augue. Proin vitae dignissim turpis, nec pellentesque nulla. Donec eu enim arcu. Aenean eu lectus ex. Morbi facilisis luctus lacus id blandit. Donec ac quam id elit gravida accumsan. Nulla facilisi. Suspendisse finibus diam nisi.
+    </string>
 
 </resources>

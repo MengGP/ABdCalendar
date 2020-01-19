@@ -1,6 +1,7 @@
 package com.menggp.abdcalendar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -46,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
                 toast_listView.show();
                 return true;
             case R.id.settings :
-                Intent intent_settings = new Intent(SHOW_SETTING_ACTIVITY);
-                startActivity(intent_settings);
+                Intent intentSettings = new Intent(SHOW_SETTING_ACTIVITY);
+                startActivity(intentSettings);
                 return true;
         }
         return super.onOptionsItemSelected(item);

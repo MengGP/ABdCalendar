@@ -22,8 +22,17 @@
 
         <activity android:name=".SettingsActivity">
             <intent-filter>
-                <action android:name="com.menggp.SHOW_SETTINGS_ACTIVITY"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.menggp.SHOW_SETTINGS_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".AboutProgramActivity">
+            <intent-filter>
+                <action android:name="com.menggp.SHOW_ABOUT_PROGRAM_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 

@@ -3,11 +3,17 @@ package com.menggp.abdcalendar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    public static final String SHOW_ABOUT_PROGRAM_ACTIVITY = "com.menggp.SHOW_ABOUT_PROGRAM_ACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,5 +42,18 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    } // end_method
+
+    /*
+    Обработка выбора пункта настроек "О программе / About programm"
+    */
+    public void aboutProgram(View view) {
+        Intent intentAboutProgram = new Intent(SHOW_ABOUT_PROGRAM_ACTIVITY);
+        startActivity(intentAboutProgram);
+
+    } // end_method
+
+
+
+
 } // end_class

@@ -9,14 +9,14 @@
 
     <item
         android:id="@+id/celendarView"
-        android:title="@string/calendarView"
+        android:title="@string/calendar_view"
         app:showAsAction="always"
         android:icon="@drawable/action_bar_main_calendar"
         />
 
     <item
         android:id="@+id/listView"
-        android:title="@string/listView"
+        android:title="@string/list_view"
         app:showAsAction="always"
         android:icon="@drawable/action_bar_main_list"
         />
