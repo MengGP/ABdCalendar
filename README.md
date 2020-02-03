@@ -11,7 +11,7 @@
 
 Последнее обновление: NULL(date) 
 
-Минимальная поддерживаемая версия - Android 4.0 (minSDK=14, targetSDK=26)
+Минимальная поддерживаемая версия - Android 5.0 (minSDK=21, targetSDK=26)
 
 Ссылка на Google Play: NULL(url)
 

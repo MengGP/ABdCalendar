@@ -4,9 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="Calendar view"
-        style="@style/settingsTextStyle"/>
+    <include
+        layout="@layout/activity_main_calendar_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <include
+        layout="@layout/activity_main_calendar_middle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"/>
+
+    <include
+        layout="@layout/activity_main_calendar_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"/>
+
+
 
 
 </LinearLayout>

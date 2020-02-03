@@ -2,16 +2,20 @@ package com.menggp.abdcalendar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuView;
 
-import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.applandeo.materialcalendarview.CalendarUtils;
+
+import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -107,5 +111,20 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     } // end_class
+
+    //--------------------------------------------------------------------------------------------------------------------------------------
+    /*
+        Тестовые методы
+     */
+    public void topBtn(View view){
+        TextView tv = (TextView) findViewById(R.id.bottomText);
+        tv.setText("TOP bnt was pressed");
+
+        ImageView iv = (ImageView) findViewById(R.id.bottomDrawble);
+        iv.setImageDrawable(CalendarUtils.getDrawableText(this, "img", null,  android.R.color.black, 8));
+
+
+    } // end_method
+
 
 } // end_class
