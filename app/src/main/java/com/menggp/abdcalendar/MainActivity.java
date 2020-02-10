@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,8 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.applandeo.materialcalendarview.CalendarUtils;
+import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.EventDay;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +37,17 @@ public class MainActivity extends AppCompatActivity {
 
         if (isCalendarView) setContentView(R.layout.activity_main_calendar);
         else setContentView(R.layout.activity_main_list);
+
+        /*
+        Тестовы блок для CalendarView
+         */
+
+
+
+
+        /*
+       ----------------------------------------
+         */
 
     } // end_method
 
@@ -122,6 +138,41 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView iv = (ImageView) findViewById(R.id.bottomDrawble);
         iv.setImageDrawable(CalendarUtils.getDrawableText(this, "img", null,  android.R.color.black, 8));
+
+        List<EventDay> events = new ArrayList<>();
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        events.add(new EventDay(
+                cal1,
+                // R.drawable.action_bar_main_settings,
+                // CalendarUtils.getDrawableText(this, "img", null,  android.R.color.black, 8),
+                R.drawable.sample_icon,
+                //Color.parseColor("#228822")
+                android.R.color.holo_green_dark
+        ));
+        cal2.set(2020, 01, 05);
+        events.add(new EventDay(
+                cal2,
+                R.drawable.sample_icon,
+                Color.parseColor("#228822")
+        ));
+
+        CalendarView calendarView = (CalendarView)findViewById(R.id.calendarView);
+        calendarView.setEvents(events);
+
+        Calendar c1 = Calendar.getInstance();
+        c1.set(2020,01,06);
+        Calendar c2 = Calendar.getInstance();
+        c2.set(2020,01,03);
+        List<Calendar> calendars = new ArrayList<>();
+        calendars.add(c1);
+        calendars.add(c2);
+
+
+
+        calendarView.setHighlightedDays(calendars);
+
+
 
 
     } // end_method
