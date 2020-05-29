@@ -42,7 +42,7 @@ public class Event {
         this(id, eventName, eventDate, eventType, 0, null, eventImg, eventAlertType);
     } // end_constructor
 
-    // Getters and Setters
+    // --- Getters and Setters
     public long getId() {
         return id;
     }
