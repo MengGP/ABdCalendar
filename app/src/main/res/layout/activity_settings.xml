@@ -9,19 +9,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="aboutProgram"
-        >
-
+        android:onClick="aboutProgram">
         <ImageView
             android:src="@drawable/about_program"
-            style="@style/settingsImagesStyle"
-            />
-
+            style="@style/settings_images_style" />
         <TextView
             android:text="@string/about_program"
-            style="@style/settingsTextStyle"
-            />
-
+            style="@style/settingsTextStyle" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="genRndData">
+        <ImageView
+            android:src="@drawable/profile_action"
+            style="@style/settings_images_style" />
+        <TextView
+            android:text="@string/generate_random_data"
+            style="@style/settingsTextStyle" />
     </LinearLayout>
 
 </LinearLayout>

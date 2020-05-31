@@ -5,23 +5,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.applandeo.materialcalendarview.CalendarUtils;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
+import com.menggp.abdcalendar.adapters.EventListAdapter;
+import com.menggp.abdcalendar.datamodel.Event;
+import com.menggp.abdcalendar.repository.DatabaseAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,27 +32,66 @@ public class MainActivity extends AppCompatActivity {
 
     // --- Attributes
     public static boolean isCalendarView = true;        // определяет какой вид необходимо отобрахать на главном экране: календарь или список
+    DatabaseAdapter dbAdapter;
+    EventListAdapter eventListAdapter;
+    // Элементы разметки
+    ListView eventListView;
 
+    /*
+        Метод - onCreate
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (isCalendarView) setContentView(R.layout.activity_main_calendar);
-        else setContentView(R.layout.activity_main_list);
+        // Обработка - в зависимости от текущего выбранного вида
+        // вид - календаря
+        if (isCalendarView) {
+            setContentView(R.layout.activity_main_calendar);
+        }
+        // вид - списка
+        else {
+            setContentView(R.layout.activity_main_list);
 
-        /*
-        Тестовы блок для CalendarView
-         */
+            // Получаем элементы с разметки
+            eventListView = (ListView) findViewById(R.id.main_list_event_list);
+        }
 
-        /*
-       ----------------------------------------
-         */
 
     } // end_method
 
     /*
-    Определение меню в Action Bar
+        Метод - onResume
      */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Подключаем БД
+        dbAdapter = new DatabaseAdapter(this);
+
+        // Обработка - в зависимости от текущего выбранного вида
+        // вид - календаря
+        if (isCalendarView) { }
+        // вид - списка
+        else {
+            // Получаем данные из БД
+            List<Event> events = dbAdapter.getEventsGeneral();
+            // Создаем адапред для списка EVENT
+            eventListAdapter = new EventListAdapter(
+                    this,               // контекст
+                    R.layout.list_item_event,   // разметка
+                    events                      // данные
+            );
+            // Устанавливаем адаптер для списка
+            eventListView.setAdapter( eventListAdapter );
+        }
+
+    } // end_method
+
+    /*
+        Определение меню в Action Bar
+         */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);

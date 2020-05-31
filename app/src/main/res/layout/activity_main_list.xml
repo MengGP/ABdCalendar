@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="List view"
-        style="@style/settingsTextStyle"/>
+    <!-- android:layout_weight="1" -->
 
-</LinearLayout>
+
+    <include
+        layout="@layout/activity_main_list_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/activity_main_list_advert"
+        />
+
+    <include
+        android:id="@+id/activity_main_list_advert"
+        layout="@layout/activity_main_list_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

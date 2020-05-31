@@ -18,13 +18,15 @@
 
     <!-- Настройки -->
     <string name="about_program">О программе</string>
+    <string name="generate_random_data">Генерировать случайные данные</string>
     
     <!-- About programm / О программе-->
     <string name="cc_licence_text">В этом проекте использованы материалы по лицензии \"Creative Commons Attribution-NoDerivs 3.0 Unported\" ( https://creativecommons.org/licenses/by-nd/3.0/ )</string>
     <string name="icon8_text">В этом проекте использованы материалы полученные с ресурса ICON8 ( https://icons8.ru ) </string>
 
+    <!-- Прочее -->
+    <string name="lower_from_with_space">с </string>
 
-    
     <!-- Lorem ipsum text -->
     <string name="lorem_ipsum"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum faucibus nisi leo, a auctor risus molestie ac. Donec ultrices venenatis sagittis. Sed faucibus dui est, at congue sapien auctor id. In mollis ultricies urna sit amet condimentum. Mauris eu orci id velit blandit euismod ultricies vitae diam. Nam quis tellus urna. Mauris vitae diam nulla. Nam et enim vel nulla dictum hendrerit. Cras vehicula lacinia neque ut laoreet. Nullam pretium urna ultrices lorem fringilla laoreet.
 

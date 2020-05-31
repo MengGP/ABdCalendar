@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Разметка для адаптера EventAdapter
+        - вывод списка EVENT в режиме List в MainActivity
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp">
+
+    <!-- Блок изображения события -->
+    <ImageView
+        android:id="@+id/event_img_on_list"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true" />
+
+    <!-- Центральный блок информации -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_toRightOf="@id/event_img_on_list"
+        android:layout_toLeftOf="@id/event_list_item_ages_block"
+        android:layout_marginLeft="8dp">
+
+        <TextView
+            android:id="@+id/event_name_on_list"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center_vertical" />
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:rowCount="2"
+            android:columnCount="2">
+            <TextView
+                android:id="@+id/event_date_on_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/event_left_time_on_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginLeft="8dp" />
+            <TextView
+                android:id="@+id/event_type_on_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/event_alert_type_on_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginLeft="8dp" />
+        </GridLayout>
+    </LinearLayout>
+
+    <!-- Правый блок информации - информации и годах -->
+    <LinearLayout
+        android:id="@+id/event_list_item_ages_block"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true">
+        <TextView
+            android:id="@+id/event_past_years_on_list"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/event_years_on_list"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="center"
+            android:textSize="14sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lower_from_with_space"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/event_since_year_on_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
