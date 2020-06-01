@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Получаем элементы с разметки
             eventListView = (ListView) findViewById(R.id.main_list_event_list);
+
         }
 
 

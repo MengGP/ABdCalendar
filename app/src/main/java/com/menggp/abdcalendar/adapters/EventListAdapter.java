@@ -1,6 +1,7 @@
 package com.menggp.abdcalendar.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,13 @@ import androidx.annotation.Nullable;
 
 
 import com.menggp.abdcalendar.R;
+import com.menggp.abdcalendar.datamodel.DateConverter;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
 import com.menggp.abdcalendar.datamodel.EventType;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -53,10 +57,26 @@ public class EventListAdapter extends ArrayAdapter<Event> {
 
         Event event = events.get( position );
 
+        // Создаем объект resource - для использования при конвертации
+        Resources res = convertView.getResources();
+
+        // Изображение события на разметке
         viewHolder.eventImgOnList.setImageResource( event.getEventImg() );
+        // Имя события на разметке
         viewHolder.eventNameOnList.setText( event.getEventName() );
-        viewHolder.eventDateOnList.setText( event.getEventDate() );
-        viewHolder.eventLeftTimeOnList.setText( "some days" );
+        // Дата события на разметке - в отформатированном виде
+        viewHolder.eventDateOnList.setText(
+                DateConverter.convertDbNotationToItemNotation( res, event.getEventDate() )
+        );
+
+        // Количество оставшихся дней до события
+        int deltaDays = DateConverter.timeLeftToEvent( event.getEventDate() );
+        String dayLeftSrt = "";
+        if (deltaDays==-1)  dayLeftSrt = "Сегодня";
+        else  dayLeftSrt = deltaDays+"дней";
+        viewHolder.eventLeftTimeOnList.setText( dayLeftSrt );
+
+
         viewHolder.eventTypeOnList.setText(EventType.convertToString( event.getEventType() ));
         viewHolder.eventAlertTypeOnList.setText(EventAlertType.convertToString( event.getEventAlertType()) );
         viewHolder.eventPastYearsOnList.setText( "--" );
@@ -85,3 +105,31 @@ public class EventListAdapter extends ArrayAdapter<Event> {
     } // end_private_class
 
 } // end_class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

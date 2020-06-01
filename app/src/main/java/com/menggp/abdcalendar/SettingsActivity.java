@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.menggp.abdcalendar.datamodel.DateConverter;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
 import com.menggp.abdcalendar.datamodel.EventType;
@@ -134,6 +136,9 @@ public class SettingsActivity extends AppCompatActivity {
             else if (eventAlertTypeNum==4) eventAlertType= EventAlertType.DAY_BEFORE_ALERT;
             else if (eventAlertTypeNum==5) eventAlertType=EventAlertType.INTENSIVE_ALERT;
             else eventAlertType= EventAlertType.EVERY_MONTH_ALERT;
+
+//            Log.d(LOG_TAG, " === strDate === " + strDate );
+//            DateConverter.convertDbNotationToItemNotation(strDate);
 
             Event event = new Event (i, fullName, strDate, eventType, eventSinceYear, eventCommemt, eventImg, eventAlertType);
             dbAdapter.insertEvent( event );
