@@ -25,7 +25,7 @@
     <string name="icon8_text">В этом проекте использованы материалы полученные с ресурса ICON8 ( https://icons8.ru ) </string>
 
     <!-- Прочее -->
-    <string name="lower_from_with_space">с </string>
+    <string name="lower_from_with_space">"с "</string>
 
     <!-- Lorem ipsum text -->
     <string name="lorem_ipsum"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum faucibus nisi leo, a auctor risus molestie ac. Donec ultrices venenatis sagittis. Sed faucibus dui est, at congue sapien auctor id. In mollis ultricies urna sit amet condimentum. Mauris eu orci id velit blandit euismod ultricies vitae diam. Nam quis tellus urna. Mauris vitae diam nulla. Nam et enim vel nulla dictum hendrerit. Cras vehicula lacinia neque ut laoreet. Nullam pretium urna ultrices lorem fringilla laoreet.
