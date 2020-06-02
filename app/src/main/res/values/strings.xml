@@ -18,7 +18,7 @@
     <!-- Настройки - активити -->
     <string name="about_program">О программе</string>
     <string name="generate_random_data">Генерировать случайные данные</string>
-    
+
     <!-- About programm / О программе-->
     <string name="cc_licence_text">В этом проекте использованы материалы по лицензии \"Creative Commons Attribution-NoDerivs 3.0 Unported\" ( https://creativecommons.org/licenses/by-nd/3.0/ )</string>
     <string name="icon8_text">В этом проекте использованы материалы полученные с ресурса ICON8 ( https://icons8.ru ) </string>
@@ -36,7 +36,7 @@
     <string name="october">Октября</string>
     <string name="november">Ноября</string>
     <string name="december">Декабря</string>
-    
+
     <!-- Дни -->
     <string name="today">Сегодня</string>
     <plurals name="days">
@@ -62,12 +62,12 @@
     <string name="other">Событие</string>
 
     <!-- Типы оповещений -->
-    <string name="no_alert"             >не напоминать</string>
-    <string name="silent_alert"         >тихо</string>
-    <string name="in_day_alert"         >в день</string>
-    <string name="day_before_alert"     >за день</string>
-    <string name="intensive_alert"      >интенсивно</string>
-    <string name="every_month_alert"    >ежемесячно</string>
+    <string name="no_alert">не напоминать</string>
+    <string name="silent_alert">тихо</string>
+    <string name="in_day_alert">в день</string>
+    <string name="day_before_alert">за день</string>
+    <string name="intensive_alert">интенсивно</string>
+    <string name="every_month_alert">ежемесячно</string>
 
     <!-- Прочее -->
     <string name="lower_from_with_space">"с "</string>

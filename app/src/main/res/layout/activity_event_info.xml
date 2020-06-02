@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/event_img_in_info"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/ev_img_default"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            android:text="Иванов Габдрахман Ннууррссууввалиевич Оглы Третий"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rowCount="4"
+        android:columnCount="2"
+        android:layout_margin="8dp">
+        <!-- row 1 -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:textSize="14sp"
+            android:text="дата события:"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:textSize="14sp"
+            android:text="возрас события:" />
+        <!-- row 2 -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="29 февраля"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="3 года - с 2017"/>
+        <!-- row 3 -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:textSize="14sp"
+            android:text="Тип события:"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:textSize="14sp"
+            android:text="напоминание:"/>
+        <!-- row 4 -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="День рождения"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="интенсивно"
+            />
+    </GridLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Комментарий:"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lorem_ipsum"/>
+    </ScrollView>
+
+
+
+
+
+</LinearLayout>

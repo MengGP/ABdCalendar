@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     // --- Constants
     public static final String SHOW_SETTING_ACTIVITY = "com.menggp.SHOW_SETTINGS_ACTIVITY";
+    public static final String SHOW_EVENT_ACTIVITY_INFO = "com.menggp.SHOW_EVENT_ACTIVITY_INFO";
 
     // --- Attributes
     public static boolean isCalendarView = true;        // определяет какой вид необходимо отобрахать на главном экране: календарь или список
@@ -52,9 +54,25 @@ public class MainActivity extends AppCompatActivity {
         // вид - списка
         else {
             setContentView(R.layout.activity_main_list);
-
             // Получаем элементы с разметки
             eventListView = (ListView) findViewById(R.id.main_list_event_list);
+
+            // Слушатель длинного нажатия на элемент списка - запускает EventActivityInfo
+            eventListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    // Получаем событие из адаптера
+                    Event event = eventListAdapter.getItem( position );
+                    // Если значение не null - вызываем EventActivityInfo и передаем в нее ID события
+                    if (event!=null) {
+                        Intent intent = new Intent(SHOW_EVENT_ACTIVITY_INFO);
+                        intent.putExtra("id",event.getId() );
+                        startActivity(intent);
+                    }
+                    // true - не переходим в обработку короткого нажатия
+                    return true;
+                }
+            });
 
         }
 
@@ -132,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
     } // end_method
 
     /*
-    Обработка нажатия кнопок меню в Action Bar
+        Обработка нажатия кнопок меню в Action Bar
      */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
