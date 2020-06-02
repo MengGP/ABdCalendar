@@ -107,6 +107,16 @@ public class DateConverter {
         return result;
     } // end_method
 
+    /*
+        Метод рассчитывает количество лет от наступления события
+     */
+    public static int timePastYear(int sinceYear) {
+        Date currDate = new Date();                                                 // текущая дата
+        SimpleDateFormat yearDateFormat = new SimpleDateFormat("yyyy");     // только год
+        int nowYear = Integer.parseInt( yearDateFormat.format(currDate) );          // текущий год
+        return nowYear-sinceYear;
+    } // end_method
+
 } // end_class
 
 

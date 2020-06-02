@@ -1,5 +1,9 @@
 package com.menggp.abdcalendar.datamodel;
 
+import android.content.res.Resources;
+
+import com.menggp.abdcalendar.R;
+
 /*
     enum
         - описывает типы событий
@@ -35,6 +39,18 @@ public enum EventType {
             case "memodate": return MEMODATE;
             case "holiday": return HOLIDAY;
             case "other": return OTHER;
+        }
+        return null;
+    } // end_method
+
+    // Приведение к предствлениею для списка
+    public static String convertToItemNotation(Resources res, EventType eventType) {
+        switch (eventType) {
+            case BIRTHDAY: return res.getString(R.string.birthday);
+            case ANNIVERSARY: return res.getString(R.string.anniversary);
+            case MEMODATE: return res.getString(R.string.memodate);
+            case HOLIDAY: return res.getString(R.string.holiday);
+            case OTHER: return res.getString(R.string.other);
         }
         return null;
     } // end_method

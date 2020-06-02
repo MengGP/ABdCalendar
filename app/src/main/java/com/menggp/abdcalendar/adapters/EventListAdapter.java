@@ -68,19 +68,26 @@ public class EventListAdapter extends ArrayAdapter<Event> {
         viewHolder.eventDateOnList.setText(
                 DateConverter.convertDbNotationToItemNotation( res, event.getEventDate() )
         );
-
         // Количество оставшихся дней до события
         int deltaDays = DateConverter.timeLeftToEvent( event.getEventDate() );
         String dayLeftSrt = "";
-        if (deltaDays==-1)  dayLeftSrt = "Сегодня";
-        else  dayLeftSrt = deltaDays+"дней";
+        if (deltaDays==-1)  dayLeftSrt = res.getString(R.string.today);
+        else dayLeftSrt = res.getQuantityString(R.plurals.days, deltaDays, deltaDays);
         viewHolder.eventLeftTimeOnList.setText( dayLeftSrt );
-
-
-        viewHolder.eventTypeOnList.setText(EventType.convertToString( event.getEventType() ));
-        viewHolder.eventAlertTypeOnList.setText(EventAlertType.convertToString( event.getEventAlertType()) );
-        viewHolder.eventPastYearsOnList.setText( "--" );
-        viewHolder.eventYearsOnList.setText("years");
+        // Тип события
+        viewHolder.eventTypeOnList.setText(EventType.convertToItemNotation(res, event.getEventType()));
+        // Тип напоминания
+        viewHolder.eventAlertTypeOnList.setText(EventAlertType.convertToItemNotation(res, event.getEventAlertType()) );
+        // Количество лет событию и подпись
+        if ( event.getEventSinceYear()==0 ) {
+            viewHolder.eventPastYearsOnList.setText("--");
+            viewHolder.eventYearsOnList.setText("");
+        } else {
+            int pastYears = DateConverter.timePastYear( event.getEventSinceYear() );
+            viewHolder.eventPastYearsOnList.setText( String.valueOf(pastYears) );
+            viewHolder.eventYearsOnList.setText( res.getQuantityText(R.plurals.years, pastYears) );
+        }
+        // Год начала события
         viewHolder.eventSinceYearOnList.setText( String.valueOf(event.getEventSinceYear()));
 
         return convertView;

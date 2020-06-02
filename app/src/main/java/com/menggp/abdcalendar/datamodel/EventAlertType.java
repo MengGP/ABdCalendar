@@ -1,5 +1,9 @@
 package com.menggp.abdcalendar.datamodel;
 
+import android.content.res.Resources;
+
+import com.menggp.abdcalendar.R;
+
 public enum EventAlertType {
 
     // values
@@ -34,6 +38,19 @@ public enum EventAlertType {
             case "day_before_alert": return DAY_BEFORE_ALERT;
             case "intensive_alert": return INTENSIVE_ALERT;
             case "every_month_alert": return EVERY_MONTH_ALERT;
+        }
+        return null;
+    } // end_method
+
+    // Приведение к предствлениею для списка
+    public static String convertToItemNotation(Resources res, EventAlertType eventAlertType) {
+        switch (eventAlertType) {
+            case NO_ALERT: return res.getString(R.string.no_alert);
+            case SILENT_ALERT: return res.getString(R.string.silent_alert);
+            case IN_DAY_ALERT: return res.getString(R.string.in_day_alert);
+            case DAY_BEFORE_ALERT: return res.getString(R.string.day_before_alert);
+            case INTENSIVE_ALERT: return res.getString(R.string.intensive_alert);
+            case EVERY_MONTH_ALERT: return res.getString(R.string.every_month_alert);
         }
         return null;
     } // end_method
