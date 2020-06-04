@@ -28,6 +28,7 @@ import com.menggp.abdcalendar.repository.DatabaseAdapter;
 public class EventActivityInfo extends AppCompatActivity implements EventDelConfirmationDialogDatable {
 
     private static final String LOG_TAG = "EventActivityInfo";
+    public static final String SHOW_EVENT_ACTIVITY_EDIT = "com.menggp.SHOW_EVENT_ACTIVITY_EDIT";
 
     DatabaseAdapter dbAdapter;
 
@@ -118,10 +119,19 @@ public class EventActivityInfo extends AppCompatActivity implements EventDelConf
     } // end_method
 
     /*
+        Метод вызывает EventEditActivity и передает в нее ID текущего события
+     */
+    private void toEventEditActivity() {
+        Intent intent = new Intent(SHOW_EVENT_ACTIVITY_EDIT);
+        intent.putExtra("id",eventId );
+        startActivity(intent);
+    } // end_class
+
+    /*
         Обработка нажатия меню в Action bar
         - кнопка "home" ( дефолтный ID = android.R.id.home )
         - кнопка "delete" ( ID = 1 )
-        - кнопка "Edite" ( ID = 2 )
+        - кнопка "Edit" ( ID = 2 )
     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -132,7 +142,7 @@ public class EventActivityInfo extends AppCompatActivity implements EventDelConf
                 delConfirmation();
                 break;
             case 2 :
-                Toast.makeText(this, "Edit pressed", Toast.LENGTH_SHORT).show();
+                toEventEditActivity();
                 break;
         }
         return super.onOptionsItemSelected(item);

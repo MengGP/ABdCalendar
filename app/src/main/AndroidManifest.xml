@@ -18,24 +18,36 @@
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".EventActivityInfo">
             <intent-filter>
                 <action android:name="com.menggp.SHOW_EVENT_ACTIVITY_INFO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".EventActivityEdit"
+                    android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="com.menggp.SHOW_EVENT_ACTIVITY_EDIT" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".SettingsActivity">
             <intent-filter>
                 <action android:name="com.menggp.SHOW_SETTINGS_ACTIVITY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".AboutProgramActivity">
+        <activity android:name=".AboutProgramActivity" >
             <intent-filter>
                 <action android:name="com.menggp.SHOW_ABOUT_PROGRAM_ACTIVITY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

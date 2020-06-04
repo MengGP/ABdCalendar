@@ -27,13 +27,14 @@ public class DatabaseAdapter {
     } // end_constructor
 
     // Метод - открывает соеднение с БД на запись
-    public DatabaseAdapter open() {
+    // private DatabaseAdapter open() {
+    private void open() {
         db = dbHelper.getWritableDatabase();
-        return this;
+        // return this;
     } // end_method
 
     // Метод закрывает соединение с БД
-    public void close() {
+    private void close() {
         dbHelper.close();
     } // end_method
 

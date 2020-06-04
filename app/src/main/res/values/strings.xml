@@ -30,6 +30,7 @@
     <string name="event_type_note">тип события</string>
     <string name="event_alert_note">напоминание</string>
     <string name="event_comment_note">Комментарий</string>
+    <string name="event_name_hint">Введите имя события</string>
 
     <!-- Диалоги -->
     <string name="dialog_del_confirmation_title">Удалить событие?</string>
@@ -78,11 +79,11 @@
     <string name="other">событие</string>
 
     <!-- Типы оповещений -->
-    <string name="no_alert"         >не напоминать</string>
-    <string name="silent_alert"     >тихо</string>
-    <string name="in_day_alert"     >в день</string>
-    <string name="day_before_alert" >за день</string>
-    <string name="intensive_alert"  >интенсивно</string>
+    <string name="no_alert">не напоминать</string>
+    <string name="silent_alert">тихо</string>
+    <string name="in_day_alert">в день</string>
+    <string name="day_before_alert">за день</string>
+    <string name="intensive_alert">интенсивно</string>
     <string name="every_month_alert">ежемесячно</string>
 
     <!-- contentDescription -->
