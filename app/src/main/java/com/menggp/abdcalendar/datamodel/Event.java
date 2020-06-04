@@ -1,5 +1,7 @@
 package com.menggp.abdcalendar.datamodel;
 
+import androidx.annotation.NonNull;
+
 /*
     Класс описывает данные табилцы "Events" БД
  */
@@ -107,5 +109,20 @@ public class Event {
         this.eventAlertType = eventAlertType;
     }
     // --- end_getters_setters
+
+
+    @NonNull
+    @Override
+    public String toString() {
+        return
+                this.id + " : " +
+                this.eventName + " : " +
+                this.eventDate+ " : " +
+                this.eventType+ " : " +
+                this.eventSinceYear+ " : " +
+                this.eventComment+ " : " +
+                this.eventImg+ " : " +
+                this.eventAlertType;
+    } // end_method
 
 } // end_class

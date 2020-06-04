@@ -43,7 +43,7 @@ public enum EventAlertType {
     } // end_method
 
     // Приведение к предствлениею для списка
-    public static String convertToItemNotation(Resources res, EventAlertType eventAlertType) {
+    public static String convertToHumanNotation(Resources res, EventAlertType eventAlertType) {
         switch (eventAlertType) {
             case NO_ALERT: return res.getString(R.string.no_alert);
             case SILENT_ALERT: return res.getString(R.string.silent_alert);

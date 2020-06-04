@@ -118,11 +118,11 @@ public class MainActivity extends AppCompatActivity {
         // установка иконов в зависимости от текущего вида сноговного окна
         int calendarViewIcon, listViewIcon;
         if (isCalendarView) {
-            calendarViewIcon = R.drawable.action_bar_main_calendar;
-            listViewIcon = R.drawable.action_bar_main_list_gray;
+            calendarViewIcon = R.drawable.act_bar_main_calendar;
+            listViewIcon = R.drawable.act_bar_main_list_gray;
         } else {
-            calendarViewIcon = R.drawable.action_bar_main_calendar_gray;
-            listViewIcon = R.drawable.action_bar_main_list;
+            calendarViewIcon = R.drawable.act_bar_main_calendar_gray;
+            listViewIcon = R.drawable.act_bar_main_list;
         }
 
         menu.add(0
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 ,3
                 ,2
                 ,"GoToSettingsActivity")
-                .setIcon(R.drawable.action_bar_main_settings)
+                .setIcon(R.drawable.act_bar_main_settings)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         return true;

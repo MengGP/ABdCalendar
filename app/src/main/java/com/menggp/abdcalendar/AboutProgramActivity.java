@@ -30,7 +30,7 @@ public class AboutProgramActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case android.R.id.home :
+            case android.R.id.home:
                 this.finish();
                 return true;
         }

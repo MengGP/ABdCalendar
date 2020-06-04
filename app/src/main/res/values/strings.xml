@@ -9,6 +9,7 @@
     <!-- Action bar Titles -->
     <string name="title_activity_settings">Настройки</string>
     <string name="title_about_program_activity">О программе</string>
+    <string name="title_event_activity_info">Карточка события</string>
 
     <!-- Иконки -->
     <string name="settings">Настройки</string>
@@ -22,6 +23,21 @@
     <!-- About programm / О программе-->
     <string name="cc_licence_text">В этом проекте использованы материалы по лицензии \"Creative Commons Attribution-NoDerivs 3.0 Unported\" ( https://creativecommons.org/licenses/by-nd/3.0/ )</string>
     <string name="icon8_text">В этом проекте использованы материалы полученные с ресурса ICON8 ( https://icons8.ru ) </string>
+
+    <!-- EventActivity - info + edit -->
+    <string name="event_date_note">дата события</string>
+    <string name="event_ages_note">возраст</string>
+    <string name="event_type_note">тип события</string>
+    <string name="event_alert_note">напоминание</string>
+    <string name="event_comment_note">Комментарий</string>
+
+    <!-- Диалоги -->
+    <string name="dialog_del_confirmation_title">Удалить событие?</string>
+    <string name="dialog_del_action">Удалить</string>
+    <string name="dialog_cancel_action">Отмена</string>
+
+    <!-- Тосты -->
+    <string name="toast_del_accepted">Событие удалено</string>
 
     <!-- Месяцы -->
     <string name="january">Января</string>
@@ -55,19 +71,22 @@
     </plurals>
 
     <!-- Типы событий -->
-    <string name="birthday">День рождения</string>
-    <string name="anniversary">Годовщина</string>
-    <string name="memodate">Памятная дата</string>
-    <string name="holiday">Праздник</string>
-    <string name="other">Событие</string>
+    <string name="birthday">день рождения</string>
+    <string name="anniversary">годовщина</string>
+    <string name="memodate">памятная дата</string>
+    <string name="holiday">праздник</string>
+    <string name="other">событие</string>
 
     <!-- Типы оповещений -->
-    <string name="no_alert">не напоминать</string>
-    <string name="silent_alert">тихо</string>
-    <string name="in_day_alert">в день</string>
-    <string name="day_before_alert">за день</string>
-    <string name="intensive_alert">интенсивно</string>
+    <string name="no_alert"         >не напоминать</string>
+    <string name="silent_alert"     >тихо</string>
+    <string name="in_day_alert"     >в день</string>
+    <string name="day_before_alert" >за день</string>
+    <string name="intensive_alert"  >интенсивно</string>
     <string name="every_month_alert">ежемесячно</string>
+
+    <!-- contentDescription -->
+    <string name="cd_event_img">Изображение события</string>
 
     <!-- Прочее -->
     <string name="lower_from_with_space">"с "</string>

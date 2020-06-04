@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Разметка описывает активность просмотра полной информации о событии
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,23 +11,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
-            android:id="@+id/event_img_in_info"
+            android:id="@+id/event_img_on_info"
+            android:contentDescription="@string/cd_event_img"
             android:layout_width="128dp"
             android:layout_height="128dp"
-            android:layout_margin="12dp"
-            android:src="@drawable/ev_img_default"/>
+            android:layout_margin="12dp" />
         <TextView
+            android:id="@+id/event_name_on_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginRight="12dp"
-            android:text="Иванов Габдрахман Ннууррссууввалиевич Оглы Третий"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            />
+            android:layout_marginEnd="12dp"
+            style="@style/text26_bold" />
     </LinearLayout>
 
     <GridLayout
@@ -31,84 +34,87 @@
         android:layout_height="wrap_content"
         android:rowCount="4"
         android:columnCount="2"
-        android:layout_margin="8dp">
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp" >
         <!-- row 1 -->
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:textSize="14sp"
-            android:text="дата события:"
-            />
+            style="@style/text18_italic"
+            android:text="@string/event_date_note"  />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:textSize="14sp"
-            android:text="возрас события:" />
+            style="@style/text18_italic"
+            android:text="@string/event_ages_note" />
         <!-- row 2 -->
         <TextView
+            android:id="@+id/event_date_on_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:text="29 февраля"
-            />
+            android:layout_marginStart="12dp"
+            style="@style/text18_bold" />
         <TextView
+            android:id="@+id/event_since_year_on_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:text="3 года - с 2017"/>
+            android:layout_marginStart="12dp"
+            style="@style/text18_bold" />
         <!-- row 3 -->
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:textSize="14sp"
-            android:text="Тип события:"/>
+            style="@style/text18_italic"
+            android:text="@string/event_type_note"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:textSize="14sp"
-            android:text="напоминание:"/>
+            style="@style/text18_italic"
+            android:text="@string/event_alert_note"/>
         <!-- row 4 -->
         <TextView
+            android:id="@+id/event_type_on_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:text="День рождения"/>
+            android:layout_marginStart="12dp"
+            style="@style/text18_bold" />
         <TextView
+            android:id="@+id/event_alert_type_on_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:text="интенсивно"
-            />
+            android:layout_marginStart="12dp"
+            style="@style/text18_bold" />
     </GridLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Комментарий:"/>
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        style="@style/text20_bold_italic"
+        android:text="@string/event_comment_note"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp">
         <TextView
+            android:id="@+id/event_comment_on_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/lorem_ipsum"/>
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            style="@style/text18" />
     </ScrollView>
-
-
-
-
 
 </LinearLayout>

@@ -16,6 +16,33 @@
 
 
     <!-- TEXT Styles -->
+    <style name="text26_bold">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item> </style>
+    <style name="text22_bold_center">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item> </style>
+    <style name="text18_bold_vert_center">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item> </style>
+    <style name="text20_bold_italic">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold|italic</item> </style>
+    <style name="text18">
+        <item name="android:textSize">18sp</item> </style>
+    <style name="text18_bold">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item> </style>
+    <style name="text18_italic">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">italic</item> </style>
+    <style name="text14">
+        <item name="android:textSize">14sp</item> </style>
+    <style name="text14_center">
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item> </style>
 
     <!-- Settings text style -->
     <style name="settingsTextStyle">

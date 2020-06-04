@@ -44,7 +44,7 @@ public enum EventType {
     } // end_method
 
     // Приведение к предствлениею для списка
-    public static String convertToItemNotation(Resources res, EventType eventType) {
+    public static String convertToHumanNotation(Resources res, EventType eventType) {
         switch (eventType) {
             case BIRTHDAY: return res.getString(R.string.birthday);
             case ANNIVERSARY: return res.getString(R.string.anniversary);

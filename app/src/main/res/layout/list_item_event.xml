@@ -12,25 +12,24 @@
         android:id="@+id/event_img_on_list"
         android:layout_width="64dp"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentStart="true"
+        android:contentDescription="@string/cd_event_img"/>
 
     <!-- Центральный блок информации -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_toRightOf="@id/event_img_on_list"
-        android:layout_toLeftOf="@id/event_list_item_ages_block"
-        android:layout_marginLeft="8dp">
+        android:layout_toEndOf="@id/event_img_on_list"
+        android:layout_toStartOf="@id/event_list_item_ages_block"
+        android:layout_marginStart="8dp">
 
         <TextView
             android:id="@+id/event_name_on_list"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="3"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:gravity="center_vertical" />
+            style="@style/text18_bold_vert_center" />
 
         <GridLayout
             android:layout_width="match_parent"
@@ -49,19 +48,19 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:textSize="14sp" />
+                style="@style/text14" />
             <TextView
                 android:id="@+id/event_type_on_list"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:textSize="14sp"/>
+                style="@style/text14" />
             <TextView
                 android:id="@+id/event_alert_type_on_list"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:textSize="14sp"/>
+                style="@style/text14" />
         </GridLayout>
     </LinearLayout>
 
@@ -71,22 +70,19 @@
         android:layout_width="56dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentEnd="true">
         <TextView
             android:id="@+id/event_past_years_on_list"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
-            android:layout_gravity="center"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            style="@style/text22_bold_center" />
         <TextView
             android:id="@+id/event_years_on_list"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:layout_gravity="center"
-            android:textSize="14sp" />
+            style="@style/text14_center" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -97,12 +93,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lower_from_with_space"
-                android:textSize="14sp" />
+                style="@style/text14" />
             <TextView
                 android:id="@+id/event_since_year_on_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp" />
+                style="@style/text14" />
         </LinearLayout>
     </LinearLayout>
 

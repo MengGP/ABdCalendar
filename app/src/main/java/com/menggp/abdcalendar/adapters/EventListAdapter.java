@@ -19,8 +19,6 @@ import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
 import com.menggp.abdcalendar.datamodel.EventType;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 /*
@@ -66,7 +64,7 @@ public class EventListAdapter extends ArrayAdapter<Event> {
         viewHolder.eventNameOnList.setText( event.getEventName() );
         // Дата события на разметке - в отформатированном виде
         viewHolder.eventDateOnList.setText(
-                DateConverter.convertDbNotationToItemNotation( res, event.getEventDate() )
+                DateConverter.convertDbToHumanNotation( res, event.getEventDate() )
         );
         // Количество оставшихся дней до события
         int deltaDays = DateConverter.timeLeftToEvent( event.getEventDate() );
@@ -75,9 +73,9 @@ public class EventListAdapter extends ArrayAdapter<Event> {
         else dayLeftSrt = res.getQuantityString(R.plurals.days, deltaDays, deltaDays);
         viewHolder.eventLeftTimeOnList.setText( dayLeftSrt );
         // Тип события
-        viewHolder.eventTypeOnList.setText(EventType.convertToItemNotation(res, event.getEventType()));
+        viewHolder.eventTypeOnList.setText(EventType.convertToHumanNotation(res, event.getEventType()));
         // Тип напоминания
-        viewHolder.eventAlertTypeOnList.setText(EventAlertType.convertToItemNotation(res, event.getEventAlertType()) );
+        viewHolder.eventAlertTypeOnList.setText(EventAlertType.convertToHumanNotation(res, event.getEventAlertType()) );
         // Количество лет событию и подпись
         if ( event.getEventSinceYear()==0 ) {
             viewHolder.eventPastYearsOnList.setText("--");

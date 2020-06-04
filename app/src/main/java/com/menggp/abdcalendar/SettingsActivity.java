@@ -6,12 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.menggp.abdcalendar.datamodel.DateConverter;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
 import com.menggp.abdcalendar.datamodel.EventType;
@@ -51,7 +49,6 @@ public class SettingsActivity extends AppCompatActivity {
                 this.finish();
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     } // end_method
 
@@ -111,21 +108,21 @@ public class SettingsActivity extends AppCompatActivity {
 
             // event_img
             int eventImg = rndBetween(1, 15);
-            if (eventImg==1) eventImg=R.drawable.ev_img_balloon;
-            else if (eventImg==2) eventImg=R.drawable.ev_img_batman_logo;
-            else if (eventImg==3) eventImg=R.drawable.ev_img_bear_face;
-            else if (eventImg==4) eventImg=R.drawable.ev_img_black_blood_face;
-            else if (eventImg==5) eventImg=R.drawable.ev_img_black_cat;
-            else if (eventImg==6) eventImg=R.drawable.ev_img_cat_face;
-            else if (eventImg==7) eventImg=R.drawable.ev_img_christmas_tree;
-            else if (eventImg==8) eventImg=R.drawable.ev_img_default;
-            else if (eventImg==9) eventImg=R.drawable.ev_img_dog_face;
-            else if (eventImg==10) eventImg=R.drawable.ev_img_elf_face;
-            else if (eventImg==11) eventImg=R.drawable.ev_img_finn_the_human;
-            else if (eventImg==12) eventImg=R.drawable.ev_img_jack_o_lantern;
-            else if (eventImg==13) eventImg=R.drawable.ev_img_monkey_face;
-            else if (eventImg==14) eventImg=R.drawable.ev_img_skull_face;
-            else eventImg=R.drawable.ev_img_tiger_face;
+            if (eventImg==1) eventImg=R.drawable.a01_ev_img_balloon;
+            else if (eventImg==2) eventImg=R.drawable.a02_ev_img_batman_logo;
+            else if (eventImg==3) eventImg=R.drawable.a03_ev_img_bear_face;
+            else if (eventImg==4) eventImg=R.drawable.a04_ev_img_black_blood_face;
+            else if (eventImg==5) eventImg=R.drawable.a05_ev_img_black_cat;
+            else if (eventImg==6) eventImg=R.drawable.a06_ev_img_cat_face;
+            else if (eventImg==7) eventImg=R.drawable.a07_ev_img_christmas_tree;
+            else if (eventImg==8) eventImg=R.drawable.a08_ev_img_default;
+            else if (eventImg==9) eventImg=R.drawable.a09_ev_img_dog_face;
+            else if (eventImg==10) eventImg=R.drawable.a10_ev_img_elf_face;
+            else if (eventImg==11) eventImg=R.drawable.a11_ev_img_finn_the_human;
+            else if (eventImg==12) eventImg=R.drawable.a12_ev_img_jack_o_lantern;
+            else if (eventImg==13) eventImg=R.drawable.a13_ev_img_monkey_face;
+            else if (eventImg==14) eventImg=R.drawable.a14_ev_img_skull_face;
+            else eventImg=R.drawable.a15_ev_img_tiger_face;
 
             // event_alert
             EventAlertType eventAlertType;
@@ -143,12 +140,6 @@ public class SettingsActivity extends AppCompatActivity {
             Event event = new Event (i, fullName, strDate, eventType, eventSinceYear, eventCommemt, eventImg, eventAlertType);
             dbAdapter.insertEvent( event );
         }
-
-
-
-
-
-
 
     } // end_method
 

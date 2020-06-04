@@ -23,7 +23,7 @@ public class DateConverter {
         Преобразование даты из строки формата БД: MM-DD
             в формат элемета списка: DD month_name
      */
-    public static String convertDbNotationToItemNotation(Resources res, String date) {
+    public static String convertDbToHumanNotation(Resources res, String date) {
         String result="";
         String dayPart="";
         String monthPart="";

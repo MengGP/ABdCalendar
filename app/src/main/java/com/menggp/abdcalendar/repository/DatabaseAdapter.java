@@ -92,7 +92,7 @@ public class DatabaseAdapter {
             int eventImg = cursor.getInt( cursor.getColumnIndex(dbHelper.COL_EVENT_IMG) );
             EventAlertType eventAlertType = EventAlertType.convertToEventAlertType( cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_ALERT_TYPE) ) );
 
-            new Event(id, eventName, eventDate, eventType, eventSinceYear, eventComment, eventImg, eventAlertType);
+            event = new Event(id, eventName, eventDate, eventType, eventSinceYear, eventComment, eventImg, eventAlertType);
         }
         cursor.close();
 
