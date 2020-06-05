@@ -2,20 +2,23 @@ package com.menggp.abdcalendar.datamodel;
 
 import android.content.res.Resources;
 import android.util.Log;
+import android.view.View;
 
 import com.menggp.abdcalendar.R;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /*
     Класс реализует различные преобразования используемых в приложении дат
  */
-public class DateConverter {
+public class DateHandler{
 
     private static final String LOG_TAG = "DateConverter";
 
@@ -116,6 +119,38 @@ public class DateConverter {
         int nowYear = Integer.parseInt( yearDateFormat.format(currDate) );          // текущий год
         return nowYear-sinceYear;
     } // end_method
+
+    /*
+        Метод возвращает ArrayList<String> лет начианая с текущего - 0-й элемент строка "без годя/no year"
+     */
+    public static ArrayList<String> getYearsStrList(Resources res) {
+        // Получаем текущий год
+        Date currDate = new Date();                                                 // текущая дата
+        SimpleDateFormat yearDateFormat = new SimpleDateFormat("yyyy");     // только год
+        int nowYear = Integer.parseInt( yearDateFormat.format(currDate) );          // текущий год
+        ArrayList<String> yearsStrList = new ArrayList<>();
+        yearsStrList.add( res.getString(R.string.no_year) );                        // 0-й элемент строка "без годя/no year"
+        for (int i=nowYear; i>=0; i--)
+            yearsStrList.add( String.valueOf(i) );
+        return yearsStrList;
+    } // end_method
+
+    /*
+        Метод возвращает номер месяца из даты в нотации БД
+     */
+    public static int getMonthFromDbDate(String date) {
+        String monthPart = date.substring(0,2);
+        return Integer.parseInt(monthPart);
+    } // end_method
+
+    /*
+        Метод возвращает номер дня месяца из даты в нотации БД
+     */
+    public static int getDayFromDbDate(String date) {
+        String dayPart = date.substring(3,5);
+        return Integer.parseInt(dayPart);
+    } // end_method
+
 
 } // end_class
 

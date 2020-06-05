@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 
 
 import com.menggp.abdcalendar.R;
-import com.menggp.abdcalendar.datamodel.DateConverter;
+import com.menggp.abdcalendar.datamodel.DateHandler;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
 import com.menggp.abdcalendar.datamodel.EventType;
@@ -64,10 +64,10 @@ public class EventListAdapter extends ArrayAdapter<Event> {
         viewHolder.eventNameOnList.setText( event.getEventName() );
         // Дата события на разметке - в отформатированном виде
         viewHolder.eventDateOnList.setText(
-                DateConverter.convertDbToHumanNotation( res, event.getEventDate() )
+                DateHandler.convertDbToHumanNotation( res, event.getEventDate() )
         );
         // Количество оставшихся дней до события
-        int deltaDays = DateConverter.timeLeftToEvent( event.getEventDate() );
+        int deltaDays = DateHandler.timeLeftToEvent( event.getEventDate() );
         String dayLeftSrt = "";
         if (deltaDays==-1)  dayLeftSrt = res.getString(R.string.today);
         else dayLeftSrt = res.getQuantityString(R.plurals.days, deltaDays, deltaDays);
@@ -81,7 +81,7 @@ public class EventListAdapter extends ArrayAdapter<Event> {
             viewHolder.eventPastYearsOnList.setText("--");
             viewHolder.eventYearsOnList.setText("");
         } else {
-            int pastYears = DateConverter.timePastYear( event.getEventSinceYear() );
+            int pastYears = DateHandler.timePastYear( event.getEventSinceYear() );
             viewHolder.eventPastYearsOnList.setText( String.valueOf(pastYears) );
             viewHolder.eventYearsOnList.setText( res.getQuantityText(R.plurals.years, pastYears) );
         }

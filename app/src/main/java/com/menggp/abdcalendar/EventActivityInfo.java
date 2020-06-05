@@ -11,9 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.menggp.abdcalendar.datamodel.DateConverter;
+import com.menggp.abdcalendar.datamodel.DateHandler;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
 import com.menggp.abdcalendar.datamodel.EventType;
@@ -76,12 +75,12 @@ public class EventActivityInfo extends AppCompatActivity implements EventDelConf
             // имя события
             eventNameView.setText( event.getEventName() );
             // дата события
-            eventDateView.setText(DateConverter.convertDbToHumanNotation(res, event.getEventDate()));
+            eventDateView.setText(DateHandler.convertDbToHumanNotation(res, event.getEventDate()));
             // возраст события
             String eventAges="";
             if ( event.getEventSinceYear()==0 ) eventAges = "--";
             else {
-                int pastYears = DateConverter.timePastYear( event.getEventSinceYear() );
+                int pastYears = DateHandler.timePastYear( event.getEventSinceYear() );
                 eventAges += pastYears+" ";
                 eventAges += res.getQuantityText(R.plurals.years, pastYears) + " c ";
                 eventAges += event.getEventSinceYear();

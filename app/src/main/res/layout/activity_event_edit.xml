@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- Поле выбора изображения собятия -->
     <Spinner
         android:id="@+id/event_img_on_edit"
         android:contentDescription="@string/cd_event_img"
@@ -16,6 +17,7 @@
         android:layout_margin="12dp"
         android:layout_gravity="end"/>
 
+    <!-- Поле ввода имени события -->
     <EditText
         android:id="@+id/event_name_on_edit"
         android:layout_width="match_parent"
@@ -24,72 +26,81 @@
         android:layout_marginEnd="12dp"
         android:hint="@string/event_name_hint"
         android:inputType="textMultiLine"
+        android:background="@color/edit_boxes_background"
+        android:padding="8dp"
         style="@style/text26_bold" />
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:rowCount="4"
-        android:columnCount="2"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp" >
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="12dp"
+        android:columnCount="2"
+        android:rowCount="4">
         <!-- row 1 -->
         <TextView
+            style="@style/text18_italic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            style="@style/text18_italic"
-            android:text="@string/event_date_note"  />
+            android:text="@string/event_date_note" />
+
         <TextView
+            style="@style/text18_italic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            style="@style/text18_italic"
             android:text="@string/event_ages_note" />
-        <!-- row 2 -->
+        <!-- Поле выбора даты события -->
         <TextView
-            android:id="@+id/event_date_on_info"
+            android:id="@+id/event_date_on_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:layout_marginStart="12dp"
-            style="@style/text18_bold" />
-        <TextView
-            android:id="@+id/event_since_year_on_info"
+            android:padding="12dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/edit_boxes_background"
+            style="@style/text18_bold"
+            android:onClick="eventDatePickerDialog"/>
+        <!-- Поле выбора года начала собятия -->
+        <Spinner
+            android:id="@+id/event_since_year_on_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:layout_marginStart="12dp"
-            style="@style/text18_bold" />
+            android:layout_marginStart="8dp"
+            android:background="@color/edit_boxes_background" />
         <!-- row 3 -->
         <TextView
+            style="@style/text18_italic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            style="@style/text18_italic"
-            android:text="@string/event_type_note"/>
+            android:text="@string/event_type_note" />
+
         <TextView
+            style="@style/text18_italic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            style="@style/text18_italic"
-            android:text="@string/event_alert_note"/>
+            android:text="@string/event_alert_note" />
         <!-- row 4 -->
         <TextView
             android:id="@+id/event_type_on_info"
+            style="@style/text18_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:layout_marginStart="12dp"
-            style="@style/text18_bold" />
+            android:layout_marginStart="12dp" />
+
         <TextView
             android:id="@+id/event_alert_type_on_info"
+            style="@style/text18_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:layout_marginStart="12dp"
-            style="@style/text18_bold" />
+            android:layout_marginStart="12dp" />
     </GridLayout>
 
     <TextView
