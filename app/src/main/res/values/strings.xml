@@ -37,6 +37,7 @@
     <!-- Диалоги -->
     <string name="dialog_del_confirmation_title">Удалить событие?</string>
     <string name="dialog_save_confirmation_title">Сохранить изменения?</string>
+    <string name="dialog_no_name_alert_title">Не заполнено имя события!</string>
     <string name="dialog_del_action">Удалить</string>
     <string name="dialog_cancel_action">Отмена</string>
     <string name="dialog_yes_action">Да</string>
@@ -48,6 +49,7 @@
     <string name="toast_del_accepted">Событие удалено</string>
     <string name="toast_date_changed">Дата изменена</string>
     <string name="toast_event_change_saved">Изменения сохранены</string>
+    <string name="toast_event_created">Событие создано</string>
     <string name="toast_event_change_no_saved">Изменения НЕ сохранены</string>
 
     <!-- Месяцы -->

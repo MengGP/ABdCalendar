@@ -59,7 +59,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
 
         // настройка Action bar
         ActionBar actionBar = getSupportActionBar();            // получем доступ к action bar
-        actionBar.setTitle(R.string.title_event_activity_edit); // меняем заголовок
+        actionBar.setTitle(R.string.title_event_activity_edit);                 // меняем заголовок
         actionBar.setHomeButtonEnabled(true);                   // активируем кнопку "home"
         actionBar.setDisplayHomeAsUpEnabled(true);              // отображаем кнопку "home"
 
@@ -159,9 +159,22 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             // Комментарий
             eventCommentBox.setText( event.getEventComment() );
 
-
         } else {
-            // код для случая создания нового события
+            // Установка начальных значений
+            // Изображение по умолчанию для спиннера изображения
+            eventImgBox.setSelection( eventImgSpinnerAdapter.getPosition( R.drawable.a08_ev_img_default ));
+            // Дата по умолчанию = "01-01"
+            eventDateStr = "01-01";
+            eventDateBox.setText( DateHandler.convertDbToHumanNotation(res, eventDateStr) );
+            // Год начала события - по умолчаению = "без года"
+            eventSinceYear = 0;
+            eventSinceYearBox.setSelection(0);      // соответствует 0-ой позиции
+            // Тип события по умолчанию = OTHER
+            eventType = EventType.OTHER;
+            eventTypeBox.setSelection( EventType.getIndexByEventType(eventType) );
+            // Тип напоминания по умолчанию = NO_ALERT
+            eventAlertType = EventAlertType.NO_ALERT;
+            eventAlertTypeBox.setSelection(EventAlertType.getIndexByEventAlertType(eventAlertType) );
         }
 
         // Слушатель измениния - спиннер выбора года начала события
@@ -169,7 +182,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if ( position == 0 )  eventSinceYear = 0;
-                else eventSinceYear = Integer.parseInt( eventSinceYearBox.getItemAtPosition(position).toString());
+                else eventSinceYear = Integer.parseInt( eventSinceYearBox.getItemAtPosition(position).toString() );
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
@@ -235,12 +248,15 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             1 - delete btn
             2 - save btn
          */
-        menu.add(0
-                ,1
-                ,0
-                ,"DeleteBtn")
-                .setIcon(R.drawable.act_bar_trash_bin)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        // Пункт меню - УДАЛИТЬ, добавляем только в режиме редактирования события, но не для нового
+         if (eventId > 0) {
+            menu.add(0
+                    , 1
+                    , 0
+                    , "DeleteBtn")
+                    .setIcon(R.drawable.act_bar_trash_bin)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
 
         menu.add(0
                 ,2
@@ -278,6 +294,12 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
         Метод реализует сохранеине события
      */
     private void saveEvent() {
+        // Проверяем заполнение поля "имя события" - имя должно быть, если нет, предупреждающий диалог
+        if ( eventNameBox.getText().toString().length()==0 ) {
+            EventNoNameDialogFragment dialog = new EventNoNameDialogFragment();
+            dialog.show(getSupportFragmentManager(), "EventNoNameDialogFragment");
+            return;
+        }
         if (eventId > 0) {
             event.setEventName( eventNameBox.getText().toString() );
             event.setEventDate( eventDateStr );
@@ -288,7 +310,21 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             event.setEventAlertType( eventAlertType );
             dbAdapter.update( event );
             Toast.makeText(this, R.string.toast_event_change_saved, Toast.LENGTH_SHORT).show();
-        } else {}
+        } else {
+            // Создаем новый объект Event - с данными с формы
+            event = new Event(
+                    0,
+                    eventNameBox.getText().toString(),
+                    eventDateStr,
+                    eventType,
+                    eventSinceYear,
+                    eventCommentBox.getText().toString(),
+                    Integer.parseInt(eventImgBox.getSelectedItem().toString()),
+                    eventAlertType
+            );
+            eventId = dbAdapter.insertEvent(event);
+            Toast.makeText(this, R.string.toast_event_created, Toast.LENGTH_SHORT).show();
+        }
 
         goEventActivityInfo();
     } // end_method
@@ -297,21 +333,32 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
     Метод описывает обработка нажатия кнопки назад
  */
     private void onBackClick() {
-        // Проверяем были ли внесены изменения в событие:
-        boolean isChanged=false;
-        if ( !event.getEventName().equals(eventNameBox.getText().toString())) isChanged = true;
-        else if ( !event.getEventDate().equals( eventDateStr )) isChanged = true;
-        else if ( !event.getEventType().equals( eventType )) isChanged = true;
-        else if ( event.getEventSinceYear()!=eventSinceYear ) isChanged = true;
-        else if ( !event.getEventComment().equals(eventCommentBox.getText().toString()) ) isChanged = true;
-        else if ( event.getEventImg()!=Integer.parseInt(eventImgBox.getSelectedItem().toString())) isChanged = true;
-        else if ( !event.getEventAlertType().equals( eventAlertType )) isChanged = true;
+        // TO DO - доработать с возможностью созданию нового события
+        // Если событие редактируется
+        if (eventId>0) {
+            // Проверяем были ли внесены изменения в событие:
+            boolean isChanged = false;
+            if (!event.getEventName().equals(eventNameBox.getText().toString())) isChanged = true;
+            else if (!event.getEventDate().equals(eventDateStr)) isChanged = true;
+            else if (!event.getEventType().equals(eventType)) isChanged = true;
+            else if (event.getEventSinceYear() != eventSinceYear) isChanged = true;
+            else if (!event.getEventComment().equals(eventCommentBox.getText().toString()))
+                isChanged = true;
+            else if (event.getEventImg() != Integer.parseInt(eventImgBox.getSelectedItem().toString()))
+                isChanged = true;
+            else if (!event.getEventAlertType().equals(eventAlertType)) isChanged = true;
 
-        // Если были внесены изменения - вызываем диалог подтвержения сохраения из менний, иначе переходим на EventActivityInfo
-        if ( isChanged ) {
-            EventChangeConfirmationDialogFragment dialog = new EventChangeConfirmationDialogFragment();
-            dialog.show(getSupportFragmentManager(),"EventChangeConfirmationDialogFragment");
-        } else goEventActivityInfo();
+            // Если были внесены изменения - вызываем диалог подтвержения сохраения из менний, иначе переходим на EventActivityInfo
+            if (isChanged) {
+                EventChangeConfirmationDialogFragment dialog = new EventChangeConfirmationDialogFragment();
+                dialog.show(getSupportFragmentManager(), "EventChangeConfirmationDialogFragment");
+            } else goEventActivityInfo();
+        }
+        // если событие новое
+        else {
+            // Проверяем - было ли заполнено хотябы одно поле, если да, выводим диалог подтверждения
+            // TO DO - доработать с возможностью созданию нового события
+        }
     } // end_method
 
 

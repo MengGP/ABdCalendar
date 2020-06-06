@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     // --- Constants
     public static final String SHOW_SETTING_ACTIVITY = "com.menggp.SHOW_SETTINGS_ACTIVITY";
     public static final String SHOW_EVENT_ACTIVITY_INFO = "com.menggp.SHOW_EVENT_ACTIVITY_INFO";
+    public static final String SHOW_EVENT_ACTIVITY_EDIT = "com.menggp.SHOW_EVENT_ACTIVITY_EDIT";
 
     // --- Attributes
     public static boolean isCalendarView = true;        // определяет какой вид необходимо отобрахать на главном экране: календарь или список
@@ -184,6 +185,16 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     } // end_class
+
+    /*
+        Метод - обрабатывает нажатие кнопки ADD на разметке списка
+     */
+    public void onAddBtnClickOnList(View view) {
+        Intent intent = new Intent(SHOW_EVENT_ACTIVITY_EDIT);
+        intent.putExtra("id",0);
+        startActivity(intent);
+    } // end_method
+
 
     //--------------------------------------------------------------------------------------------------------------------------------------
     /*
