@@ -36,9 +36,12 @@
     <string name="dialog_del_confirmation_title">Удалить событие?</string>
     <string name="dialog_del_action">Удалить</string>
     <string name="dialog_cancel_action">Отмена</string>
+    <string name="dialog_yes_action">Да</string>
+    <string name="dialog_event_date_picker">Выбор даты события</string>
 
     <!-- Тосты -->
     <string name="toast_del_accepted">Событие удалено</string>
+    <string name="toast_date_changed">Дата изменена</string>
 
     <!-- Месяцы -->
     <string name="january">Января</string>
@@ -53,6 +56,20 @@
     <string name="october">Октября</string>
     <string name="november">Ноября</string>
     <string name="december">Декабря</string>
+
+    <string name="january_inf">Январь</string>
+    <string name="february_inf">Февраль</string>
+    <string name="march_inf">Март</string>
+    <string name="april_inf">Апрель</string>
+    <string name="may_inf">Май</string>
+    <string name="june_inf">Июнь</string>
+    <string name="july_inf">Июль</string>
+    <string name="august_inf">Август</string>
+    <string name="september_inf">Сентябрь</string>
+    <string name="october_inf">Октябрь</string>
+    <string name="november_inf">Ноябрь</string>
+    <string name="december_inf">Декабрь</string>
+
 
     <!-- Дни -->
     <string name="today">Сегодня</string>

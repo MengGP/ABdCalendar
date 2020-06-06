@@ -3,6 +3,7 @@ package com.menggp.abdcalendar.datamodel;
 import android.content.res.Resources;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
 import com.menggp.abdcalendar.R;
 
@@ -136,6 +137,52 @@ public class DateHandler{
     } // end_method
 
     /*
+        Метод возвращает ArrayList<String> со списком месяцев
+     */
+    public static ArrayList<String> getMonthStrList(Resources res) {
+        ArrayList<String> monthStrList = new ArrayList<>();
+        monthStrList.add( res.getString(R.string.january_inf) );
+        monthStrList.add( res.getString(R.string.february_inf) );
+        monthStrList.add( res.getString(R.string.march_inf) );
+        monthStrList.add( res.getString(R.string.april_inf) );
+        monthStrList.add( res.getString(R.string.may_inf) );
+        monthStrList.add( res.getString(R.string.june_inf) );
+        monthStrList.add( res.getString(R.string.july_inf) );
+        monthStrList.add( res.getString(R.string.august_inf) );
+        monthStrList.add( res.getString(R.string.september_inf) );
+        monthStrList.add( res.getString(R.string.october_inf) );
+        monthStrList.add( res.getString(R.string.november_inf) );
+        monthStrList.add( res.getString(R.string.december_inf) );
+        return monthStrList;
+    } // end_method
+
+    /*
+        Метод возвращает ArrayList<String> со списком дней для заданного месяцы в формате 2х знаков: 01, 02, 03 ... 29,30,31
+     */
+    public static ArrayList<String> getDayStrList(int month) {
+        ArrayList<String> dayStrList = new ArrayList<>();
+
+        // в аргументе month - номер месяца соответсвует реальному
+        // Для всех месяцев - дни от 01 до 29
+        for (int i=1; i<=29; i++) {
+            String currDay = "";
+            if ( i<10 ) currDay += "0" + i;
+            else currDay += i;
+            dayStrList.add( currDay );
+        }
+        // елси февраль - завершаем заполнение
+        if ( month==2 ) return dayStrList;
+        // иначе добавляем 30е число
+        dayStrList.add("30");
+        // если 04-апрель ИЛИ 06-июнь ИЛИ 09-сетнябрь ИЛИ 11-ноябрь - завершаем запонение
+        if ( month==4 || month==6 || month==9 || month==11 ) return dayStrList;
+        // иначе добавляем 31-е число и завершаем обработку
+        dayStrList.add("31");
+
+        return dayStrList;
+    } // end_method
+
+    /*
         Метод возвращает номер месяца из даты в нотации БД
      */
     public static int getMonthFromDbDate(String date) {
@@ -150,6 +197,8 @@ public class DateHandler{
         String dayPart = date.substring(3,5);
         return Integer.parseInt(dayPart);
     } // end_method
+
+
 
 
 } // end_class

@@ -4,20 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <Spinner
         android:id="@+id/event_date_day_on_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/white"
-        android:layout_margin="12dp" />
+        android:background="@color/edit_boxes_background"
+        android:layout_margin="16dp" />
 
     <Spinner
         android:id="@+id/event_date_month_on_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/white"
-        android:layout_margin="12dp" />
+        android:background="@color/edit_boxes_background"
+        android:layout_marginStart="8dp"
+        android:layout_margin="16dp" />
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -24,13 +25,15 @@ import java.util.ArrayList;
 /*
     Класс описыает Activity - редактирование события
  */
-public class EventActivityEdit extends AppCompatActivity {
+public class EventActivityEdit extends AppCompatActivity implements EventDatePickerDialogDatable {
 
     private static final String LOG_TAG = "EventActivityEdit";
 
+    Resources res;
     DatabaseAdapter dbAdapter;
     static long eventId = 0;
     Event event;
+    String eventDateStr;
 
     TextView eventDateBox;
 
@@ -40,7 +43,7 @@ public class EventActivityEdit extends AppCompatActivity {
         setContentView(R.layout.activity_event_edit);
 
         // Объект resources для вызываемых методов
-        Resources res = getResources();
+        res = getResources();
 
         // получаем элементы с разметки
         // Настраиваем spinner для изображения события
@@ -71,7 +74,6 @@ public class EventActivityEdit extends AppCompatActivity {
         eventSinceYearBox.setAdapter(eventSinceYearSpinnerAdapter);
 
 
-
         // Получаем данные из предыдущей Activity
         Bundle extras = getIntent().getExtras();
         if ( extras != null ) {
@@ -94,7 +96,8 @@ public class EventActivityEdit extends AppCompatActivity {
             // имя события
             eventNameBox.setText( event.getEventName() );
             // дата события
-            eventDateBox.setText( DateHandler.convertDbToHumanNotation(res, event.getEventDate()));
+            eventDateStr = event.getEventDate();
+            eventDateBox.setText( DateHandler.convertDbToHumanNotation(res, eventDateStr));
             // год начала события
             eventSinceYearBox.setSelection( eventSinceYearSpinnerAdapter.getPosition( String.valueOf(event.getEventSinceYear()) ) );
 
@@ -107,15 +110,29 @@ public class EventActivityEdit extends AppCompatActivity {
     } // end_method
 
     public void eventDatePickerDialog(View view) {
-        Toast.makeText(getApplicationContext(), "EventDatePickerDialog", Toast.LENGTH_SHORT).show();
         EventDatePickerDialogFragment dialog = new EventDatePickerDialogFragment();
         Bundle args = new Bundle();
-        args.putInt("day", DateHandler.getDayFromDbDate(event.getEventDate()));
-        args.putInt("month", DateHandler.getMonthFromDbDate(event.getEventDate()));
+        args.putInt("day", DateHandler.getDayFromDbDate(eventDateStr) );
+        args.putInt("month", DateHandler.getMonthFromDbDate(eventDateStr));
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(),"EventDatePickerDialogFragment");
     } // end_method
 
+    /*
+        Метод реализует изменение даты совершенное в диалоге выбора даты
+     */
+    @Override
+    public void setEventDateOnEdit(int month, int day) {
+        // Формируем строковое предстваление даты в формате БД
+        eventDateStr = "";
+        if ( month < 10 ) eventDateStr += "0" + month + "-";
+        else eventDateStr += month + "-";
+        if ( day < 10 ) eventDateStr += "0" + day;
+        else eventDateStr += day;
+
+        // Устанавливаем новое значение на разметке
+        eventDateBox.setText( DateHandler.convertDbToHumanNotation(res, eventDateStr));
+    } // end_method
 } // end_class
 
 

@@ -22,29 +22,41 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EventActivityInfo">
+        <activity
+            android:name=".EventActivityInfo"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="com.menggp.SHOW_EVENT_ACTIVITY_INFO" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".EventActivityEdit"
-                    android:windowSoftInputMode="stateHidden">
+        <activity
+            android:name=".EventActivityEdit"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="com.menggp.SHOW_EVENT_ACTIVITY_EDIT" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity">
+        <activity
+            android:name=".SettingsActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="com.menggp.SHOW_SETTINGS_ACTIVITY" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".AboutProgramActivity" >
+        <activity
+            android:name=".AboutProgramActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="com.menggp.SHOW_ABOUT_PROGRAM_ACTIVITY" />
 
