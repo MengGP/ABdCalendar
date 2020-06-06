@@ -1,13 +1,16 @@
 package com.menggp.abdcalendar;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,7 +20,9 @@ import com.menggp.abdcalendar.adapters.EventImgSpinnerAdapter;
 import com.menggp.abdcalendar.adapters.StrSpinnerAdapter;
 import com.menggp.abdcalendar.datamodel.DateHandler;
 import com.menggp.abdcalendar.datamodel.Event;
+import com.menggp.abdcalendar.datamodel.EventAlertType;
 import com.menggp.abdcalendar.datamodel.EventImgDefaultCollection;
+import com.menggp.abdcalendar.datamodel.EventType;
 import com.menggp.abdcalendar.repository.DatabaseAdapter;
 
 import java.util.ArrayList;
@@ -25,29 +30,46 @@ import java.util.ArrayList;
 /*
     Класс описыает Activity - редактирование события
  */
-public class EventActivityEdit extends AppCompatActivity implements EventDatePickerDialogDatable {
+public class EventActivityEdit extends AppCompatActivity implements EventDatePickerDialogDatable, EventDelConfirmationDialogDatable, EventChangeConfirmationDialogDatable {
 
     private static final String LOG_TAG = "EventActivityEdit";
+    public static final String SHOW_EVENT_ACTIVITY_INFO = "com.menggp.SHOW_EVENT_ACTIVITY_INFO";
 
     Resources res;
     DatabaseAdapter dbAdapter;
     static long eventId = 0;
     Event event;
-    String eventDateStr;
+    String eventDateStr;            // дата события в нотации БД
+    int eventSinceYear;             // год начала события
+    EventType eventType;            // тип события
+    EventAlertType eventAlertType;  // тип напоминания
 
+    Spinner eventImgBox;
+    EditText eventNameBox;
     TextView eventDateBox;
+    Spinner eventSinceYearBox;
+    Spinner eventTypeBox;
+    Spinner eventAlertTypeBox;
+    EditText eventCommentBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_edit);
 
+        // настройка Action bar
+        ActionBar actionBar = getSupportActionBar();            // получем доступ к action bar
+        actionBar.setTitle(R.string.title_event_activity_edit); // меняем заголовок
+        actionBar.setHomeButtonEnabled(true);                   // активируем кнопку "home"
+        actionBar.setDisplayHomeAsUpEnabled(true);              // отображаем кнопку "home"
+
+
         // Объект resources для вызываемых методов
         res = getResources();
 
         // получаем элементы с разметки
         // Настраиваем spinner для изображения события
-        Spinner eventImgBox = (Spinner)findViewById(R.id.event_img_on_edit);
+        eventImgBox = (Spinner)findViewById(R.id.event_img_on_edit);
         ArrayList<Integer> eventImgDefCollection = new EventImgDefaultCollection().getImgCollection();     // получаем коллекцию изображений для spinner
         EventImgSpinnerAdapter eventImgSpinnerAdapter = new EventImgSpinnerAdapter(
                 this,                           // контекст
@@ -58,21 +80,48 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
         eventImgBox.setAdapter( eventImgSpinnerAdapter );
         int defaultEventImg = eventImgSpinnerAdapter.getPosition( R.drawable.a08_ev_img_default );      // получаем позицию для изображения по умолчанию
         eventImgBox.setSelection( defaultEventImg );                                                    // устанавливаем изображение по умолчанию
+
         // Поля имени события
-        EditText eventNameBox = (EditText)findViewById(R.id.event_name_on_edit);
+        eventNameBox = (EditText)findViewById(R.id.event_name_on_edit);
+
         // Поле выбора даты
         eventDateBox = (TextView) findViewById(R.id.event_date_on_edit);
+
         // Поле выбора года начала события
-        Spinner eventSinceYearBox = (Spinner)findViewById(R.id.event_since_year_on_edit);
+        eventSinceYearBox = (Spinner)findViewById(R.id.event_since_year_on_edit);
         ArrayList<String> yearsStrList = DateHandler.getYearsStrList(res);
         StrSpinnerAdapter eventSinceYearSpinnerAdapter = new StrSpinnerAdapter(
                 this,
-                R.layout.spinner_event_since_year_item,
-                R.layout.spinner_event_since_year_dropdown,
+                R.layout.spinner_event_general_item,
+                R.layout.spinner_event_general_dropdown,
                 yearsStrList
         );
         eventSinceYearBox.setAdapter(eventSinceYearSpinnerAdapter);
 
+        // Поле выбора типа события
+        eventTypeBox = (Spinner)findViewById(R.id.event_type_on_edit);
+        ArrayList<String> eventTypeStrList = EventType.getEventTypeStrLst(res);
+        StrSpinnerAdapter eventTypeSpinnerAdapter = new StrSpinnerAdapter(
+                this,
+                R.layout.spinner_event_general_item,
+                R.layout.spinner_event_general_dropdown,
+                eventTypeStrList
+        );
+        eventTypeBox.setAdapter(eventTypeSpinnerAdapter);
+
+        // Поле выбора типа напоминания
+        eventAlertTypeBox = (Spinner)findViewById(R.id.event_alert_type_on_edit);
+        ArrayList<String> eventAlertTypeStrList = EventAlertType.getEventAlertTypeStrLst(res);
+        StrSpinnerAdapter eventAlertTypeSpinnerAdapter = new StrSpinnerAdapter(
+                this,
+                R.layout.spinner_event_general_item,
+                R.layout.spinner_event_general_dropdown,
+                eventAlertTypeStrList
+        );
+        eventAlertTypeBox.setAdapter(eventAlertTypeSpinnerAdapter);
+
+        // Поле комментария
+        eventCommentBox = (EditText)findViewById(R.id.event_comment_on_edit);
 
         // Получаем данные из предыдущей Activity
         Bundle extras = getIntent().getExtras();
@@ -99,13 +148,55 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             eventDateStr = event.getEventDate();
             eventDateBox.setText( DateHandler.convertDbToHumanNotation(res, eventDateStr));
             // год начала события
-            eventSinceYearBox.setSelection( eventSinceYearSpinnerAdapter.getPosition( String.valueOf(event.getEventSinceYear()) ) );
-
+            eventSinceYear = event.getEventSinceYear();
+            eventSinceYearBox.setSelection( eventSinceYearSpinnerAdapter.getPosition( String.valueOf(eventSinceYear) ) );
+            // тип события
+            eventType = event.getEventType();
+            eventTypeBox.setSelection( EventType.getIndexByEventType(eventType) );
+            // тип напоминания
+            eventAlertType = event.getEventAlertType();
+            eventAlertTypeBox.setSelection( EventAlertType.getIndexByEventAlertType(eventAlertType) );
+            // Комментарий
+            eventCommentBox.setText( event.getEventComment() );
 
 
         } else {
             // код для случая создания нового события
         }
+
+        // Слушатель измениния - спиннер выбора года начала события
+        AdapterView.OnItemSelectedListener eventSinceYearSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if ( position == 0 )  eventSinceYear = 0;
+                else eventSinceYear = Integer.parseInt( eventSinceYearBox.getItemAtPosition(position).toString());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        };
+        eventSinceYearBox.setOnItemSelectedListener( eventSinceYearSelectedListener );
+
+        // Слушатель изменения - спиннер выбора типа события
+        AdapterView.OnItemSelectedListener eventTypeSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                eventType = EventType.getEventTypeByIndex(position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        };
+        eventTypeBox.setOnItemSelectedListener( eventTypeSelectedListener );
+
+        // Слушатель изменения - спиннер выбора типа напоминания
+        AdapterView.OnItemSelectedListener eventAlertTypeSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                eventAlertType = EventAlertType.getEventAlertTypeByIndex(position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        };
+        eventAlertTypeBox.setOnItemSelectedListener( eventAlertTypeSelectedListener);
 
     } // end_method
 
@@ -133,6 +224,154 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
         // Устанавливаем новое значение на разметке
         eventDateBox.setText( DateHandler.convertDbToHumanNotation(res, eventDateStr));
     } // end_method
+
+    /*
+       Определение меню в Action Bar
+        */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+         /*
+            1 - delete btn
+            2 - save btn
+         */
+        menu.add(0
+                ,1
+                ,0
+                ,"DeleteBtn")
+                .setIcon(R.drawable.act_bar_trash_bin)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        menu.add(0
+                ,2
+                ,1
+                ,"EditBtn")
+                .setIcon(R.drawable.act_bar_save_floppy)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        return true;
+    } // end_method
+
+    /*
+        Обработка нажатия меню в Action bar
+        - кнопка "home" ( дефолтный ID = android.R.id.home )
+        - кнопка "delete" ( ID = 1 )
+        - кнопка "Save" ( ID = 2 )
+    */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+
+            case android.R.id.home: onBackClick(); break;
+            case 1 :
+                delConfirmation();
+                break;
+            case 2 :
+                saveEvent();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    } // end_method
+
+    /*
+        Метод реализует сохранеине события
+     */
+    private void saveEvent() {
+        if (eventId > 0) {
+            event.setEventName( eventNameBox.getText().toString() );
+            event.setEventDate( eventDateStr );
+            event.setEventType( eventType );
+            event.setEventSinceYear( eventSinceYear );
+            event.setEventComment( eventCommentBox.getText().toString() );
+            event.setEventImg( Integer.parseInt(eventImgBox.getSelectedItem().toString()) );
+            event.setEventAlertType( eventAlertType );
+            dbAdapter.update( event );
+            Toast.makeText(this, R.string.toast_event_change_saved, Toast.LENGTH_SHORT).show();
+        } else {}
+
+        goEventActivityInfo();
+    } // end_method
+
+    /*
+    Метод описывает обработка нажатия кнопки назад
+ */
+    private void onBackClick() {
+        // Проверяем были ли внесены изменения в событие:
+        boolean isChanged=false;
+        if ( !event.getEventName().equals(eventNameBox.getText().toString())) isChanged = true;
+        else if ( !event.getEventDate().equals( eventDateStr )) isChanged = true;
+        else if ( !event.getEventType().equals( eventType )) isChanged = true;
+        else if ( event.getEventSinceYear()!=eventSinceYear ) isChanged = true;
+        else if ( !event.getEventComment().equals(eventCommentBox.getText().toString()) ) isChanged = true;
+        else if ( event.getEventImg()!=Integer.parseInt(eventImgBox.getSelectedItem().toString())) isChanged = true;
+        else if ( !event.getEventAlertType().equals( eventAlertType )) isChanged = true;
+
+        // Если были внесены изменения - вызываем диалог подтвержения сохраения из менний, иначе переходим на EventActivityInfo
+        if ( isChanged ) {
+            EventChangeConfirmationDialogFragment dialog = new EventChangeConfirmationDialogFragment();
+            dialog.show(getSupportFragmentManager(),"EventChangeConfirmationDialogFragment");
+        } else goEventActivityInfo();
+    } // end_method
+
+
+    /*
+       Метод вызывает EventActivityInfo и передает в нее ID текущего события
+    */
+    private void goEventActivityInfo() {
+        Intent intent = new Intent(SHOW_EVENT_ACTIVITY_INFO);
+        intent.putExtra("id",eventId );
+        startActivity(intent);
+    } // end_class
+
+    /*
+        Метод - возвращает на MAIN_ACTIVITY
+     */
+    private void goMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    } // end_method
+
+    /*
+        Метод вызывает диалог подтверждения удаления
+     */
+    private void delConfirmation() {
+        EventDelConfirmationDialogFragment dialog = new EventDelConfirmationDialogFragment();
+        Bundle args = new Bundle();
+        args.putLong("id", eventId);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(),"delConfirmationDialogFragment");
+    } // end_method
+
+    /*
+        Метод - реализует метод "delEvent(long)" из интерфейса "delConfirmationDialogDatable"
+        для текущей Activity
+     */
+    @Override
+    public void delEvent(long eventId) {
+        dbAdapter.deleteEvent( eventId );
+        goMainActivity();
+    } // end_method
+
+    /*
+        Метод реализует выход из редактора события без сохраениния изменений
+            из интерфейса EventChangeConfirmationDialogDatable
+     */
+    @Override
+    public void noSaveEventChage() {
+        goEventActivityInfo();
+    } // end_method
+
+    /*
+        Метод реализует выход из редактора события с сохраениением изменений
+            из интерфейса EventChangeConfirmationDialogDatable
+     */
+    @Override
+    public void saveEventChage() {
+        saveEvent();
+    } // end_method
+
 } // end_class
 
 

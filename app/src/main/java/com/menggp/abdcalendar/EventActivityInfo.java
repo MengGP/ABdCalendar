@@ -120,7 +120,7 @@ public class EventActivityInfo extends AppCompatActivity implements EventDelConf
     /*
         Метод вызывает EventEditActivity и передает в нее ID текущего события
      */
-    private void toEventEditActivity() {
+    private void goEventActivityEdit() {
         Intent intent = new Intent(SHOW_EVENT_ACTIVITY_EDIT);
         intent.putExtra("id",eventId );
         startActivity(intent);
@@ -141,7 +141,7 @@ public class EventActivityInfo extends AppCompatActivity implements EventDelConf
                 delConfirmation();
                 break;
             case 2 :
-                toEventEditActivity();
+                goEventActivityEdit();
                 break;
         }
         return super.onOptionsItemSelected(item);

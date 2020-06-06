@@ -10,6 +10,7 @@
     <string name="title_activity_settings">Настройки</string>
     <string name="title_about_program_activity">О программе</string>
     <string name="title_event_activity_info">Карточка события</string>
+    <string name="title_event_activity_edit">Редактор события</string>
 
     <!-- Иконки -->
     <string name="settings">Настройки</string>
@@ -31,17 +32,23 @@
     <string name="event_alert_note">напоминание</string>
     <string name="event_comment_note">Комментарий</string>
     <string name="event_name_hint">Введите имя события</string>
+    <string name="event_comment_hint">введите комментарий</string>
 
     <!-- Диалоги -->
     <string name="dialog_del_confirmation_title">Удалить событие?</string>
+    <string name="dialog_save_confirmation_title">Сохранить изменения?</string>
     <string name="dialog_del_action">Удалить</string>
     <string name="dialog_cancel_action">Отмена</string>
     <string name="dialog_yes_action">Да</string>
+    <string name="dialog_no_action">Нет</string>
     <string name="dialog_event_date_picker">Выбор даты события</string>
+
 
     <!-- Тосты -->
     <string name="toast_del_accepted">Событие удалено</string>
     <string name="toast_date_changed">Дата изменена</string>
+    <string name="toast_event_change_saved">Изменения сохранены</string>
+    <string name="toast_event_change_no_saved">Изменения НЕ сохранены</string>
 
     <!-- Месяцы -->
     <string name="january">Января</string>

@@ -4,6 +4,8 @@ import android.content.res.Resources;
 
 import com.menggp.abdcalendar.R;
 
+import java.util.ArrayList;
+
 /*
     enum
         - описывает типы событий
@@ -11,13 +13,15 @@ import com.menggp.abdcalendar.R;
 public enum EventType {
 
     // values
-    BIRTHDAY,       // день рожедения
-    ANNIVERSARY,    // годовщина
-    MEMODATE,       // памятная дата
-    HOLIDAY,        // праздник
-    OTHER;          // другое
+    BIRTHDAY,       // день рожедения   - в адаптере = 0
+    ANNIVERSARY,    // годовщина        - в адаптере = 1
+    MEMODATE,       // памятная дата    - в адаптере = 2
+    HOLIDAY,        // праздник         - в адаптере = 3
+    OTHER;          // другое           - в адаптере = 4
 
-    // Приведение заничения EventType - к String
+    /*
+        Метод приводит значение EventType к String - для хранения в БД
+     */
     public static String convertToString(EventType type) {
         if ( type == null ) return null;
         switch (type) {
@@ -30,7 +34,9 @@ public enum EventType {
         return  null;
     } // end_method
 
-    // Приведение значения String - к EventType
+    /*
+        Метод приводит значени String (в нотаци БД) к EventType_
+     */
     public static EventType convertToEventType(String type) {
         if ( type == null ) return null;
         switch (type) {
@@ -43,7 +49,9 @@ public enum EventType {
         return null;
     } // end_method
 
-    // Приведение к предствлениею для списка
+    /*
+        Метод приводит значение EventType - к прадставлению для разметки
+     */
     public static String convertToHumanNotation(Resources res, EventType eventType) {
         switch (eventType) {
             case BIRTHDAY: return res.getString(R.string.birthday);
@@ -53,6 +61,47 @@ public enum EventType {
             case OTHER: return res.getString(R.string.other);
         }
         return null;
+    } // end_method
+
+    /*
+        Метод возвращает ArrayList<String> со списком типов событий в представлении для разметки
+     */
+    public static ArrayList<String> getEventTypeStrLst(Resources res) {
+        ArrayList<String> eventTypeStrList = new ArrayList<>();
+        eventTypeStrList.add( convertToHumanNotation(res, BIRTHDAY) );
+        eventTypeStrList.add( convertToHumanNotation(res, ANNIVERSARY) );
+        eventTypeStrList.add( convertToHumanNotation(res, MEMODATE) );
+        eventTypeStrList.add( convertToHumanNotation(res, HOLIDAY) );
+        eventTypeStrList.add( convertToHumanNotation(res, OTHER) );
+        return eventTypeStrList;
+    } // end_method
+
+    /*
+        Метод возващает индекс (в адаптере) типа события
+     */
+    public static int getIndexByEventType(EventType eventType) {
+        switch (eventType) {
+            case BIRTHDAY: return 0;
+            case ANNIVERSARY: return 1;
+            case MEMODATE: return 2;
+            case HOLIDAY: return 3;
+            case OTHER: return 4;
+        }
+        return  -1;
+    } // end_method
+
+    /*
+        Метод возвращает тип события по его индексу (в адаптере)
+     */
+    public static EventType getEventTypeByIndex(int index) {
+        switch (index) {
+            case 0: return BIRTHDAY;
+            case 1: return ANNIVERSARY;
+            case 2: return MEMODATE;
+            case 3: return HOLIDAY;
+            case 4: return OTHER;
+        }
+        return  null;
     } // end_method
 
 } // end_enum

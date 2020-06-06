@@ -85,22 +85,22 @@
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:text="@string/event_alert_note" />
-        <!-- row 4 -->
-        <TextView
-            android:id="@+id/event_type_on_info"
-            style="@style/text18_bold"
+        <!--Поле выбора типа события -->
+        <Spinner
+            android:id="@+id/event_type_on_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:layout_marginStart="12dp" />
-
-        <TextView
-            android:id="@+id/event_alert_type_on_info"
-            style="@style/text18_bold"
+            android:layout_marginEnd="8dp"
+            android:background="@color/edit_boxes_background" />
+        <!-- Поле выбора типа оповещени -->
+        <Spinner
+            android:id="@+id/event_alert_type_on_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:layout_marginStart="12dp" />
+            android:layout_marginStart="8dp"
+            android:background="@color/edit_boxes_background" />
     </GridLayout>
 
     <TextView
@@ -111,18 +111,18 @@
         style="@style/text20_bold_italic"
         android:text="@string/event_comment_note"/>
 
-    <ScrollView
+    <EditText
+        android:id="@+id/event_comment_on_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp">
-        <TextView
-            android:id="@+id/event_comment_on_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            style="@style/text18" />
-    </ScrollView>
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:hint="@string/event_comment_hint"
+        android:inputType="textMultiLine"
+        android:background="@color/edit_boxes_background"
+        android:padding="8dp"
+        />
 
 </LinearLayout>
