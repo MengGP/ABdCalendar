@@ -37,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     public static boolean isCalendarView = true;        // определяет какой вид необходимо отобрахать на главном экране: календарь или список
     DatabaseAdapter dbAdapter;
     EventListAdapter eventListAdapter;
+    boolean isTypeFilterExist = true;                   // флаг наличия фильтра по типу события
+    boolean isSortExist = true;                         // флаг наличия сортировки отличной от стандартной
+    boolean isMonthFilterExist = true;                  // флаг наличия фильтра по месяцам
+
     // Элементы разметки
     ListView eventListView;
 
@@ -240,9 +244,36 @@ public class MainActivity extends AppCompatActivity {
 
         calendarView.setHighlightedDays(calendars);
 
+    } // end_method
 
+    /*
+        Метод обработки нажтия на "кнопку" фильтра по типу
+     */
+    public void onClickTypeFilterOnList(View view) {
+        ImageView testImg = (ImageView)view.findViewById(R.id.type_filter_on_list);
+        if (isTypeFilterExist) {
+            isTypeFilterExist=false;
+            testImg.setImageResource(R.drawable.filter);
+        }
+        else {
+            isTypeFilterExist=true;
+            testImg.setImageResource(R.drawable.filter_disable);
+        }
+    } // end_method
 
-
+    /*
+        Метод обработки нажтия на "кнопку" сортировки
+     */
+    public void onClickSortOnList(View view) {
+        ImageView testImg = (ImageView)view.findViewById(R.id.sort_on_list);
+        if (isSortExist) {
+            isSortExist=false;
+            testImg.setImageResource(R.drawable.sort);
+        }
+        else {
+            isSortExist=true;
+            testImg.setImageResource(R.drawable.sort_disable);
+        }
     } // end_method
 
 

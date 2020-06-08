@@ -26,7 +26,7 @@
         android:layout_marginEnd="12dp"
         android:hint="@string/event_name_hint"
         android:inputType="textMultiLine"
-        android:background="@color/edit_boxes_background"
+        android:background="@color/gray_light"
         android:padding="8dp"
         style="@style/text26_bold" />
 
@@ -60,7 +60,7 @@
             android:layout_columnWeight="1"
             android:padding="12dp"
             android:layout_marginEnd="8dp"
-            android:background="@color/edit_boxes_background"
+            android:background="@color/gray_light"
             style="@style/text18_bold"
             android:onClick="eventDatePickerDialog"/>
         <!-- Поле выбора года начала собятия -->
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_marginStart="8dp"
-            android:background="@color/edit_boxes_background" />
+            android:background="@color/gray_light" />
         <!-- row 3 -->
         <TextView
             style="@style/text18_italic"
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_marginEnd="8dp"
-            android:background="@color/edit_boxes_background" />
+            android:background="@color/gray_light" />
         <!-- Поле выбора типа оповещени -->
         <Spinner
             android:id="@+id/event_alert_type_on_edit"
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_marginStart="8dp"
-            android:background="@color/edit_boxes_background" />
+            android:background="@color/gray_light" />
     </GridLayout>
 
     <TextView
@@ -121,7 +121,7 @@
         android:layout_marginRight="12dp"
         android:hint="@string/event_comment_hint"
         android:inputType="textMultiLine"
-        android:background="@color/edit_boxes_background"
+        android:background="@color/gray_light"
         android:padding="8dp"
         />
 

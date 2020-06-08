@@ -12,18 +12,56 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="type filter"
-            />
+            android:orientation="vertical"
+            android:background="@color/gray_light"
+            android:layout_margin="4dp"
+            android:onClick="onClickTypeFilterOnList">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text14_bold_center"
+                android:text="@string/main_act_type_filter"/>
+            <ImageView
+                android:id="@+id/type_filter_on_list"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="end"
+                android:src="@drawable/filter_disable"/>
+        </LinearLayout>
+
+        <!--
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Sort"
             />
+            -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@color/gray_light"
+            android:layout_margin="4dp"
+            android:onClick="onClickSortOnList">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text14_bold_center"
+                android:text="@string/main_act_sort"/>
+            <ImageView
+                android:id="@+id/sort_on_list"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="end"
+                android:src="@drawable/sort_disable"/>
+        </LinearLayout>
+
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"

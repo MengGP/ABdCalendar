@@ -25,6 +25,12 @@
     <string name="cc_licence_text">В этом проекте использованы материалы по лицензии \"Creative Commons Attribution-NoDerivs 3.0 Unported\" ( https://creativecommons.org/licenses/by-nd/3.0/ )</string>
     <string name="icon8_text">В этом проекте использованы материалы полученные с ресурса ICON8 ( https://icons8.ru ) </string>
 
+    <!-- MainACtivity -->
+    <string name="main_act_type_filter">ТИП       </string>
+    <string name="main_act_sort"       >СОРТИРОВКА</string>
+    <string name="main_act_month"      >МЕСЯЦ     </string>
+    <string name="main_act_add"        >ДОБАВИТЬ  </string>
+
     <!-- EventActivity - info + edit -->
     <string name="event_date_note">дата события</string>
     <string name="event_ages_note">возраст</string>

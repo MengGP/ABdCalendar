@@ -43,6 +43,10 @@
     <style name="text14_center">
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item> </style>
+    <style name="text14_bold_center">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item> </style>
 
     <!-- Settings text style -->
     <style name="settingsTextStyle">
