@@ -78,7 +78,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
                 eventImgDefCollection                   // данные
         );
         eventImgBox.setAdapter( eventImgSpinnerAdapter );
-        int defaultEventImg = eventImgSpinnerAdapter.getPosition( R.drawable.a08_ev_img_default );      // получаем позицию для изображения по умолчанию
+        int defaultEventImg = eventImgSpinnerAdapter.getPosition( R.drawable.a01_ev_img_default );      // получаем позицию для изображения по умолчанию
         eventImgBox.setSelection( defaultEventImg );                                                    // устанавливаем изображение по умолчанию
 
         // Поля имени события
@@ -162,7 +162,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
         } else {
             // Установка начальных значений
             // Изображение по умолчанию для спиннера изображения
-            eventImgBox.setSelection( eventImgSpinnerAdapter.getPosition( R.drawable.a08_ev_img_default ));
+            eventImgBox.setSelection( eventImgSpinnerAdapter.getPosition( R.drawable.a01_ev_img_default ));
             // Дата по умолчанию = "01-01"
             eventDateStr = "01-01";
             eventDateBox.setText( DateHandler.convertDbToHumanNotation(res, eventDateStr) );
@@ -357,8 +357,24 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
         // если событие новое
         else {
             // Проверяем - было ли заполнено хотябы одно поле, если да, выводим диалог подтверждения
-            // TO DO - доработать с возможностью созданию нового события
+            boolean isChanged = false;
+            if ( eventNameBox.getText().toString().length()>0 ) isChanged = true;
+            else if ( !eventDateStr.equals("01-01") ) isChanged = true;
+            else if ( !eventType.equals(EventType.OTHER) ) isChanged = true;
+            else if ( eventSinceYear != 0 ) isChanged = true;
+            else if ( eventCommentBox.getText().toString().length()>0 ) isChanged = true;
+            else if ( Integer.parseInt(eventImgBox.getSelectedItem().toString()) != R.drawable.a01_ev_img_default )
+                isChanged = true;
+            else if (!eventAlertType.equals(EventAlertType.NO_ALERT)) isChanged = true;
+
+            // Если были внесены изменения - вызываем диалог подтвержения сохраения из менний, иначе переходим на EventActivityInfo
+            if (isChanged) {
+                EventChangeConfirmationDialogFragment dialog = new EventChangeConfirmationDialogFragment();
+                dialog.show(getSupportFragmentManager(), "EventChangeConfirmationDialogFragment");
+            } else goEventActivityInfo();
         }
+
+
     } // end_method
 
 

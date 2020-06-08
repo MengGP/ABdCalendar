@@ -107,22 +107,32 @@ public class SettingsActivity extends AppCompatActivity {
             String eventCommemt = "There's a comment here";
 
             // event_img
-            int eventImg = rndBetween(1, 15);
-            if (eventImg==1) eventImg=R.drawable.a01_ev_img_balloon;
-            else if (eventImg==2) eventImg=R.drawable.a02_ev_img_batman_logo;
-            else if (eventImg==3) eventImg=R.drawable.a03_ev_img_bear_face;
-            else if (eventImg==4) eventImg=R.drawable.a04_ev_img_black_blood_face;
+            int eventImg = rndBetween(1, 25);
+            if (eventImg==1) eventImg=R.drawable.a01_ev_img_default;
+            else if (eventImg==2) eventImg=R.drawable.a02_ev_img_ballon;
+            else if (eventImg==3) eventImg=R.drawable.a03_ev_img_bender;
+            else if (eventImg==4) eventImg=R.drawable.a04_ev_img_bear_face;
             else if (eventImg==5) eventImg=R.drawable.a05_ev_img_black_cat;
             else if (eventImg==6) eventImg=R.drawable.a06_ev_img_cat_face;
             else if (eventImg==7) eventImg=R.drawable.a07_ev_img_christmas_tree;
-            else if (eventImg==8) eventImg=R.drawable.a08_ev_img_default;
-            else if (eventImg==9) eventImg=R.drawable.a09_ev_img_dog_face;
-            else if (eventImg==10) eventImg=R.drawable.a10_ev_img_elf_face;
-            else if (eventImg==11) eventImg=R.drawable.a11_ev_img_finn_the_human;
-            else if (eventImg==12) eventImg=R.drawable.a12_ev_img_jack_o_lantern;
-            else if (eventImg==13) eventImg=R.drawable.a13_ev_img_monkey_face;
-            else if (eventImg==14) eventImg=R.drawable.a14_ev_img_skull_face;
-            else eventImg=R.drawable.a15_ev_img_tiger_face;
+            else if (eventImg==8) eventImg=R.drawable.a08_ev_img_dog_face;
+            else if (eventImg==9) eventImg=R.drawable.a09_ev_img_elf_face;
+            else if (eventImg==10) eventImg=R.drawable.a10_ev_img_finn_the_human;
+            else if (eventImg==11) eventImg=R.drawable.a11_ev_img_jack_o_lantern;
+            else if (eventImg==12) eventImg=R.drawable.a12_ev_img_monkey_face;
+            else if (eventImg==13) eventImg=R.drawable.a13_ev_img_brave_soul;
+            else if (eventImg==14) eventImg=R.drawable.a14_ev_img_woomen;
+            else if (eventImg==15) eventImg=R.drawable.a15_ev_img_witch;
+            else if (eventImg==16) eventImg=R.drawable.a16_ev_img_unicorn;
+            else if (eventImg==17) eventImg=R.drawable.a17_ev_img_da_vinchi;
+            else if (eventImg==18) eventImg=R.drawable.a18_ev_img_pixel_star;
+            else if (eventImg==19) eventImg=R.drawable.a19_ev_img_confetti;
+            else if (eventImg==20) eventImg=R.drawable.a20_ev_img_news;
+            else if (eventImg==21) eventImg=R.drawable.a21_ev_img_safety_circle;
+            else if (eventImg==22) eventImg=R.drawable.a22_ev_img_dali;
+            else if (eventImg==23) eventImg=R.drawable.a23_ev_img_card;
+            else if (eventImg==24) eventImg=R.drawable.a24_ev_img_ballon2;
+            else eventImg=R.drawable.a25_ev_img_fire;
 
             // event_alert
             EventAlertType eventAlertType;
