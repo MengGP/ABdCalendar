@@ -250,14 +250,14 @@ public class MainActivity extends AppCompatActivity {
         Метод обработки нажтия на "кнопку" фильтра по типу
      */
     public void onClickTypeFilterOnList(View view) {
-        ImageView testImg = (ImageView)view.findViewById(R.id.type_filter_on_list);
+        ImageView viewImg = (ImageView)view.findViewById(R.id.type_filter_on_list);
         if (isTypeFilterExist) {
             isTypeFilterExist=false;
-            testImg.setImageResource(R.drawable.filter);
+            viewImg.setImageResource(R.drawable.filter);
         }
         else {
             isTypeFilterExist=true;
-            testImg.setImageResource(R.drawable.filter_disable);
+            viewImg.setImageResource(R.drawable.filter_disable);
         }
     } // end_method
 
@@ -265,14 +265,30 @@ public class MainActivity extends AppCompatActivity {
         Метод обработки нажтия на "кнопку" сортировки
      */
     public void onClickSortOnList(View view) {
-        ImageView testImg = (ImageView)view.findViewById(R.id.sort_on_list);
+        ImageView viewImg = (ImageView)view.findViewById(R.id.sort_on_list);
         if (isSortExist) {
             isSortExist=false;
-            testImg.setImageResource(R.drawable.sort);
+            viewImg.setImageResource(R.drawable.sort);
         }
         else {
             isSortExist=true;
-            testImg.setImageResource(R.drawable.sort_disable);
+            viewImg.setImageResource(R.drawable.sort_disable);
+        }
+    } // end_method
+
+    // onClickMonthFilterOnList
+    /*
+        Метод обработки нажтия на "кнопку" фильтра по месяцу
+     */
+    public void onClickMonthFilterOnList(View view) {
+        ImageView viewImg = (ImageView)view.findViewById(R.id.month_filter_on_list);
+        if (isMonthFilterExist) {
+            isMonthFilterExist=false;
+            viewImg.setImageResource(R.drawable.filter);
+        }
+        else {
+            isMonthFilterExist=true;
+            viewImg.setImageResource(R.drawable.filter_disable);
         }
     } // end_method
 

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <!-- Фильтрация по типу -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -30,17 +31,11 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="end"
-                android:src="@drawable/filter_disable"/>
+                android:src="@drawable/filter_disable"
+                android:contentDescription="@string/cd_filter"/>
         </LinearLayout>
 
-        <!--
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Sort"
-            />
-            -->
+        <!-- Сортировка -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -59,28 +54,61 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="end"
-                android:src="@drawable/sort_disable"/>
+                android:src="@drawable/sort_disable"
+                android:contentDescription="@string/cd_sort"/>
         </LinearLayout>
 
-        <Button
+        <!-- Фильтрация по месяцам -->
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="month filter"
-            />
-        <Button
+            android:orientation="vertical"
+            android:background="@color/gray_light"
+            android:layout_margin="4dp"
+            android:onClick="onClickMonthFilterOnList">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text14_bold_center"
+                android:text="@string/main_act_month"/>
+            <ImageView
+                android:id="@+id/month_filter_on_list"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="end"
+                android:src="@drawable/filter_disable"
+                android:contentDescription="@string/cd_filter"/>
+        </LinearLayout>
+
+        <!-- Добавление нового события -->
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="add"
-            android:onClick="onAddBtnClickOnList" />
+            android:orientation="vertical"
+            android:background="@color/gray_light"
+            android:layout_margin="4dp"
+            android:onClick="onAddBtnClickOnList">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text14_bold_center"
+                android:text="@string/main_act_add"/>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="end"
+                android:src="@drawable/add"
+                android:contentDescription="@string/cd_add"/>
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Поле динамического поиска -->
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search"
+        android:hint="@string/search_by_name"
         />
 
     <!-- Список EVENTS -->

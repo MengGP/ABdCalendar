@@ -30,6 +30,7 @@
     <string name="main_act_sort"       >СОРТИРОВКА</string>
     <string name="main_act_month"      >МЕСЯЦ     </string>
     <string name="main_act_add"        >ДОБАВИТЬ  </string>
+    <string name="search_by_name">Поиск по имени</string>
 
     <!-- EventActivity - info + edit -->
     <string name="event_date_note">дата события</string>
@@ -120,6 +121,9 @@
 
     <!-- contentDescription -->
     <string name="cd_event_img">Изображение события</string>
+    <string name="cd_filter">Фильтр</string>
+    <string name="cd_sort">Сортировка</string>
+    <string name="cd_add">Добавить</string>
 
     <!-- Прочее -->
     <string name="lower_from_with_space">"с "</string>
