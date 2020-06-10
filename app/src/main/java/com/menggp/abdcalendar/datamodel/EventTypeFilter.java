@@ -61,4 +61,17 @@ public class EventTypeFilter {
     }
     // --- end_getters_setters
 
+    /*
+        Метод проверяет, все ли типы событий выбраны, или какой-то тип отфильтрован
+     */
+    public boolean filterExist() {
+        if ( !this.birthdayOn ) return true;
+        else if ( !this.anniversaryOn) return true;
+        else if ( !this.memodateOn) return true;
+        else if ( !this.holidayOn) return true;
+        else if ( !this.otherOn) return true;
+
+        return false;
+    } // end_method
+
 } // end_class

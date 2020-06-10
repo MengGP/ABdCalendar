@@ -27,7 +27,7 @@
                 style="@style/text14_bold_center"
                 android:text="@string/main_act_type_filter"/>
             <ImageView
-                android:id="@+id/type_filter_on_list"
+                android:id="@+id/type_filter_indicator"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="end"

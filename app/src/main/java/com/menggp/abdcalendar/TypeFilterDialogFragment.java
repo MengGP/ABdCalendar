@@ -2,12 +2,14 @@ package com.menggp.abdcalendar;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.SharedPreferences;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +21,8 @@ import com.menggp.abdcalendar.datamodel.EventTypeFilter;
     Дилог фильтра по типу события
  */
 public class TypeFilterDialogFragment extends DialogFragment {
+
+    private TypeFilterDialogDatable typeFilterDialogDatable;
 
         // ключи сортировки по типу - получаемые во фагменте
     private static final String EV_TYPE_BIRTHDAY_ON = "ev_type_birthday_on";
@@ -33,6 +37,14 @@ public class TypeFilterDialogFragment extends DialogFragment {
     CheckBox typeHolydayBox;
     CheckBox typeOtherBox;
 
+    EventTypeFilter typeFilter;
+
+    // связываем интерфейс TypeFilterDialogDatable с контекстом Activity (из которой вызывается диалог)
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        typeFilterDialogDatable = (TypeFilterDialogDatable) context;
+    } // end_method
 
     @NonNull
     @Override
@@ -62,27 +74,71 @@ public class TypeFilterDialogFragment extends DialogFragment {
         typeHolydayBox.setChecked( eventTypeFilter.isHolidayOn());
         typeOtherBox.setChecked( eventTypeFilter.isOtherOn());
 
-        /*
-        RelativeLayout deseleckAllBlock = (RelativeLayout)view.findViewById(R.id.dialog_deselect_all);
 
-        View.OnClickListener onDeselectAllClockListener = new View.OnClickListener() {
+        // Слушательль для блока "Снять все"
+        RelativeLayout deselectAllBlock = (RelativeLayout)view.findViewById(R.id.dialog_deselect_all_types);
+        View.OnClickListener onDeselectAllClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                typeBirthdayBox.setChecked( false );
+                typeAnniversaryBox.setChecked( false );
+                typeMemodateBox.setChecked( false );
+                typeHolydayBox.setChecked( false );
+                typeOtherBox.setChecked( false );
             }
         };
-        */
+        deselectAllBlock.setOnClickListener( onDeselectAllClickListener );
 
-        /*
-        // Слушатель действия - deleteAction
-        DialogInterface.OnClickListener delAction = new DialogInterface.OnClickListener() {
+        // Слушательль для блока "Выделить все"
+        RelativeLayout selectAllBlock = (RelativeLayout)view.findViewById(R.id.dialog_select_all_types);
+        View.OnClickListener onSelectAllClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                typeBirthdayBox.setChecked( true );
+                typeAnniversaryBox.setChecked( true );
+                typeMemodateBox.setChecked( true );
+                typeHolydayBox.setChecked( true );
+                typeOtherBox.setChecked( true );
+            }
+        };
+        selectAllBlock.setOnClickListener( onSelectAllClickListener );
+
+        // Слушатель действия - flushAction
+        DialogInterface.OnClickListener flushAction = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), R.string.toast_del_accepted, Toast.LENGTH_SHORT).show();
-                if ( eventId != 0 ) eventDelConfirmationDialogDatable.delEvent( eventId );
+                Toast.makeText(getContext(), R.string.toast_type_filter_flush, Toast.LENGTH_SHORT).show();
+                // Устанавиваем все типы событий как активные и передаем объект EventTypeFilter в активити
+                typeFilter = new EventTypeFilter(
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                );
+
+                typeFilterDialogDatable.updTypeFilterPrefs(typeFilter);
             }
         }; // end_listener
-         */
+
+        // Слушатель действия - yesAction
+        DialogInterface.OnClickListener yesAction = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getContext(), R.string.toast_type_filter_flush, Toast.LENGTH_SHORT).show();
+                // Устанавиваем типы событий в соответствии с выбором и передаем объект EventTypeFilter в активити
+                typeFilter = new EventTypeFilter(
+                        typeBirthdayBox.isChecked(),
+                        typeAnniversaryBox.isChecked(),
+                        typeMemodateBox.isChecked(),
+                        typeHolydayBox.isChecked(),
+                        typeOtherBox.isChecked()
+                );
+
+                typeFilterDialogDatable.updTypeFilterPrefs(typeFilter);
+            }
+        }; // end_listener
+
 
         // Создаем конструктор диалога и возвращаем построенный с его помощью диалог
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
@@ -90,34 +146,10 @@ public class TypeFilterDialogFragment extends DialogFragment {
                 .setTitle( R.string.dialog_type_filter_type_filter )                // заголовок
                 .setIcon( R.drawable.filter )                                       // иконка в заголовке
                 .setView( view )                                                    // разметка
-                .setNeutralButton(R.string.dialog_flush_action, null)       // сбросить фильтр
+                .setNeutralButton(R.string.dialog_flush_action, flushAction)       // сбросить фильтр
                 .setNegativeButton(R.string.dialog_cancel_action, null)     // отмена
-                .setPositiveButton(R.string.dialog_yes_action, null)        // да
+                .setPositiveButton(R.string.dialog_yes_action, yesAction)        // да
                 .create();
-    } // end_method
-
-    /*
-        Метод обрабатывает нажатие кнопки "Снять все" в диалоге
-     */
-    private void onClickDeselectAll(View view) {
-        // Помещаем данные на разметку
-        typeBirthdayBox.setChecked( false );
-        typeAnniversaryBox.setChecked( false );
-        typeMemodateBox.setChecked( false );
-        typeHolydayBox.setChecked( false );
-        typeOtherBox.setChecked( false );
-    } // end_method
-
-    /*
-        Метод обрабатывает нажатие кнопки "Выделить все" в диалоге
-     */
-    private void onClickSelectAll(View view) {
-        // Помещаем данные на разметку
-        typeBirthdayBox.setChecked( true );
-        typeAnniversaryBox.setChecked( true );
-        typeMemodateBox.setChecked( true );
-        typeHolydayBox.setChecked( true );
-        typeOtherBox.setChecked( true );
     } // end_method
 
 

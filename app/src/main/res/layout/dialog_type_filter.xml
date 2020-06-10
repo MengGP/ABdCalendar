@@ -18,7 +18,7 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/dialog_deselect_all"
+            android:id="@+id/dialog_deselect_all_types"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -41,12 +41,12 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/dialog_select_all_types"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/gray_light"
-            android:layout_margin="8dp"
-            android:onClick="onClickSelectAll">
+            android:layout_margin="8dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

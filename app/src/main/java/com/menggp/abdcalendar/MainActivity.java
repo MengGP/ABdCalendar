@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TypeFilterDialogDatable {
 
     // --- Constants
     public static final String SHOW_SETTING_ACTIVITY = "com.menggp.SHOW_SETTINGS_ACTIVITY";
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Элементы разметки
     ListView eventListView;
+    ImageView typeFilterIndicator;
 
     /*
         Метод - onCreate
@@ -88,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
         sortAndFilterPrefs = getSharedPreferences(SORT_AND_FILTER_PREFS, MODE_PRIVATE);
         readFilterPrefs();
 
+
+
+
         // Обработка - в зависимости от текущего выбранного вида
         // вид - календаря
         if (isCalendarView) {
@@ -98,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_main_list);
             // Получаем элементы с разметки
             eventListView = (ListView) findViewById(R.id.main_list_event_list);
+
+            // Устанавливаем индикатор фильтра активным, если хотя бы один тип фильтруется
+            typeFilterIndicator = (ImageView)findViewById(R.id.type_filter_indicator);
+            if ( eventTypeFilter.filterExist() ) typeFilterIndicator.setImageResource(R.drawable.filter);
 
             // Слушатель длинного нажатия на элемент списка - запускает EventActivityInfo
             eventListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -287,16 +295,6 @@ public class MainActivity extends AppCompatActivity {
         Метод обработки нажтия на "кнопку" фильтра по типу
      */
     public void onClickTypeFilterOnList(View view) {
-
-        /*
-                EventDelConfirmationDialogFragment dialog = new EventDelConfirmationDialogFragment();
-        Bundle args = new Bundle();
-        args.putLong("id", eventId);
-        dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(),"delConfirmationDioalodFragment");
-
-         */
-
         TypeFilterDialogFragment dialog = new TypeFilterDialogFragment();
         Bundle args = new Bundle();
         args.putBoolean(EV_TYPE_BIRTHDAY_ON, eventTypeFilter.isBirthdayOn() );
@@ -307,15 +305,6 @@ public class MainActivity extends AppCompatActivity {
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(),"TypeFilterDialogFragment");
 
-        ImageView viewImg = (ImageView)view.findViewById(R.id.type_filter_on_list);
-        if (isTypeFilterExist) {
-            isTypeFilterExist=false;
-            viewImg.setImageResource(R.drawable.filter);
-        }
-        else {
-            isTypeFilterExist=true;
-            viewImg.setImageResource(R.drawable.filter_disable);
-        }
     } // end_method
 
     /*
@@ -353,6 +342,14 @@ public class MainActivity extends AppCompatActivity {
         Метод считывает настройки фильтрации в объекты настроек
      */
     private void readFilterPrefs() {
+        readTypeFilterPrefs();
+        readMonthFilterPrefs();
+    } // end_method
+
+    /*
+        Читаем настройки фильтрации по типу события
+     */
+    private void readTypeFilterPrefs() {
         eventTypeFilter = new EventTypeFilter(
                 sortAndFilterPrefs.getBoolean(EV_TYPE_BIRTHDAY_ON, true),
                 sortAndFilterPrefs.getBoolean(EV_TYPE_ANNIVERSARY_ON, true),
@@ -360,6 +357,12 @@ public class MainActivity extends AppCompatActivity {
                 sortAndFilterPrefs.getBoolean(EV_TYPE_HOLIDAY_ON, true),
                 sortAndFilterPrefs.getBoolean(EV_TYPE_OTHER_ON, true)
         );
+    } // end_method
+
+    /*
+        Читаем настройки фильтрации по месяцу
+     */
+    public void readMonthFilterPrefs() {
         eventMonthFilter = new EventMonthFilter(
                 sortAndFilterPrefs.getBoolean(EV_MONTH_ON_01, true),
                 sortAndFilterPrefs.getBoolean(EV_MONTH_ON_02, true),
@@ -374,6 +377,33 @@ public class MainActivity extends AppCompatActivity {
                 sortAndFilterPrefs.getBoolean(EV_MONTH_ON_11, true),
                 sortAndFilterPrefs.getBoolean(EV_MONTH_ON_12, true)
         );
+    } // end_method
+
+
+    /*
+        Реализация метода интерфейса TypeFilterDialogDatable
+     */
+    @Override
+    public void updTypeFilterPrefs(EventTypeFilter typeFilter) {
+
+        // Создаем редактор prefrences
+        SharedPreferences.Editor sortAndFilterPrefsEditor = sortAndFilterPrefs.edit();
+        // Редактируем
+        sortAndFilterPrefsEditor.putBoolean(EV_TYPE_BIRTHDAY_ON, typeFilter.isBirthdayOn());
+        sortAndFilterPrefsEditor.putBoolean(EV_TYPE_ANNIVERSARY_ON, typeFilter.isAnniversaryOn());
+        sortAndFilterPrefsEditor.putBoolean(EV_TYPE_MEMODATE_ON, typeFilter.isMemodateOn());
+        sortAndFilterPrefsEditor.putBoolean(EV_TYPE_HOLIDAY_ON, typeFilter.isHolidayOn());
+        sortAndFilterPrefsEditor.putBoolean(EV_TYPE_OTHER_ON, typeFilter.isOtherOn());
+        // Применяем (не асинхронно)
+        sortAndFilterPrefsEditor.commit();
+
+        // Обновляем объект eventTypeFilter
+        readTypeFilterPrefs();
+
+        // Меняем индикатор фильтра в зависимости от наличия фильтров
+        if ( eventTypeFilter.filterExist() ) typeFilterIndicator.setImageResource(R.drawable.filter);
+        else typeFilterIndicator.setImageResource(R.drawable.filter_disable);
+
     } // end_method
 
 
