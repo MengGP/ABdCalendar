@@ -117,7 +117,7 @@ public class TypeFilterDialogFragment extends DialogFragment {
                   true
                 );
 
-                typeFilterDialogDatable.updTypeFilterPrefs(typeFilter);
+                typeFilterDialogDatable.updTypeFilter(typeFilter);
             }
         }; // end_listener
 
@@ -125,7 +125,7 @@ public class TypeFilterDialogFragment extends DialogFragment {
         DialogInterface.OnClickListener yesAction = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), R.string.toast_type_filter_flush, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.toast_type_filter_changed, Toast.LENGTH_SHORT).show();
                 // Устанавиваем типы событий в соответствии с выбором и передаем объект EventTypeFilter в активити
                 typeFilter = new EventTypeFilter(
                         typeBirthdayBox.isChecked(),
@@ -135,7 +135,7 @@ public class TypeFilterDialogFragment extends DialogFragment {
                         typeOtherBox.isChecked()
                 );
 
-                typeFilterDialogDatable.updTypeFilterPrefs(typeFilter);
+                typeFilterDialogDatable.updTypeFilter(typeFilter);
             }
         }; // end_listener
 

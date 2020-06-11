@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
     // Элементы разметки
     ListView eventListView;
     ImageView typeFilterIndicator;
+    EditText eventNameFilterBox;
 
     /*
         Метод - onCreate
@@ -89,9 +91,6 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         sortAndFilterPrefs = getSharedPreferences(SORT_AND_FILTER_PREFS, MODE_PRIVATE);
         readFilterPrefs();
 
-
-
-
         // Обработка - в зависимости от текущего выбранного вида
         // вид - календаря
         if (isCalendarView) {
@@ -102,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
             setContentView(R.layout.activity_main_list);
             // Получаем элементы с разметки
             eventListView = (ListView) findViewById(R.id.main_list_event_list);
+            eventNameFilterBox = (EditText)findViewById(R.id.event_name_filter_on_list);
 
             // Устанавливаем индикатор фильтра активным, если хотя бы один тип фильтруется
             typeFilterIndicator = (ImageView)findViewById(R.id.type_filter_indicator);
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         // вид - списка
         else {
             // Получаем данные из БД
-            List<Event> events = dbAdapter.getEventsGeneral();
+            List<Event> events = dbAdapter.getEvents(eventTypeFilter, eventMonthFilter, 0);
             // Создаем адапред для списка EVENT
             eventListAdapter = new EventListAdapter(
                     this,               // контекст
@@ -213,16 +213,12 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         switch (id) {
             case 1 :
                 if (!isCalendarView) {
-                    Toast toast_calendarView = Toast.makeText(this, "Calendar view PRESSED", Toast.LENGTH_SHORT);
-                    toast_calendarView.show();
                     isCalendarView = true;
                     recreate();
                 }
                 return true;
             case 2 :
                 if (isCalendarView) {
-                    Toast toast_listView = Toast.makeText(this, "List view PRESSED", Toast.LENGTH_SHORT);
-                    toast_listView.show();
                     isCalendarView = false;
                     recreate();
                 }
@@ -244,10 +240,8 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         startActivity(intent);
     } // end_method
 
-
-    //--------------------------------------------------------------------------------------------------------------------------------------
     /*
-        Тестовые методы
+        Тестовый метод
      */
     public void topBtn(View view){
         TextView tv = (TextView) findViewById(R.id.bottomText);
@@ -285,9 +279,13 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         calendars.add(c1);
         calendars.add(c2);
 
-
-
         calendarView.setHighlightedDays(calendars);
+
+        // ------------------------------------------------------
+        if ( eventNameFilterBox!=null )
+            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, 0);
+        else
+            Toast.makeText(getApplicationContext(), "eventListAdapter === NULL ", Toast.LENGTH_SHORT).show();
 
     } // end_method
 
@@ -384,7 +382,7 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         Реализация метода интерфейса TypeFilterDialogDatable
      */
     @Override
-    public void updTypeFilterPrefs(EventTypeFilter typeFilter) {
+    public void updTypeFilter(EventTypeFilter typeFilter) {
 
         // Создаем редактор prefrences
         SharedPreferences.Editor sortAndFilterPrefsEditor = sortAndFilterPrefs.edit();
@@ -400,10 +398,15 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         // Обновляем объект eventTypeFilter
         readTypeFilterPrefs();
 
+        // Обновляем данные в адаптере - для вида календаря обновляем только фильтр типа
+        if ( eventNameFilterBox!=null )
+            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, 0);
+        else
+            Toast.makeText(getApplicationContext(), "eventListAdapter === NULL ", Toast.LENGTH_SHORT).show();
+
         // Меняем индикатор фильтра в зависимости от наличия фильтров
         if ( eventTypeFilter.filterExist() ) typeFilterIndicator.setImageResource(R.drawable.filter);
         else typeFilterIndicator.setImageResource(R.drawable.filter_disable);
-
     } // end_method
 
 

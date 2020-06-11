@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +18,10 @@ import com.menggp.abdcalendar.R;
 import com.menggp.abdcalendar.datamodel.DateHandler;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
+import com.menggp.abdcalendar.datamodel.EventMonthFilter;
 import com.menggp.abdcalendar.datamodel.EventType;
+import com.menggp.abdcalendar.datamodel.EventTypeFilter;
+import com.menggp.abdcalendar.repository.DatabaseAdapter;
 
 import java.util.List;
 
@@ -108,6 +112,38 @@ public class EventListAdapter extends ArrayAdapter<Event> {
             eventSinceYearOnList = (TextView) view.findViewById(R.id.event_since_year_on_list);
         } // end_constructor
     } // end_private_class
+
+    /*
+        Метод обновляет данные адаптера при задании фитрации и сортировки
+            типы сортировки для аргумента sortType:
+                0 - по умолчанию - от текущей даты
+                1 - от начала года
+                2 - по имени по возрастанию
+     */
+    public void updAdapterData(String nameStrFilter, EventTypeFilter typeFilter, EventMonthFilter monthFilter, int sortType) {
+        // Создаем связь с БД через DatabaseAdapter
+        DatabaseAdapter dbAdapter = new DatabaseAdapter(this.getContext());
+
+        // Очищаем данные адаптера
+        this.clear();
+
+        // Читаем в данные в адаптер с заданными параметрами фильтрации и сортировки
+        if (nameStrFilter.isEmpty() ) this.addAll( dbAdapter.getEvents(typeFilter, monthFilter, sortType));
+        else this.addAll( dbAdapter.getEvents(nameStrFilter, typeFilter, monthFilter, sortType));
+
+        // Актуализируем выводимые адаптером данные
+        this.notifyDataSetChanged();
+    } // end_method
+
+    /*
+        Перегруженный метод updAdapterData - с фильтром только по типу события
+     */
+    public void updAdapterData(EventTypeFilter typeFilter) {
+        this.updAdapterData("", typeFilter, null, 0);
+        Toast.makeText(this.getContext(), "eventNameFilterBox === NULL ", Toast.LENGTH_SHORT).show();
+    } // end_method
+
+
 
 } // end_class
 

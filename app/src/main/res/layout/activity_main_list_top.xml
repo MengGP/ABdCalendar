@@ -104,8 +104,9 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Поле динамического поиска -->
+    <!-- Поле динамического поиска по имени события -->
     <EditText
+        android:id="@+id/event_name_filter_on_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/search_by_name"

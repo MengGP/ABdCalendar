@@ -8,6 +8,6 @@ import com.menggp.abdcalendar.datamodel.EventTypeFilter;
 public interface TypeFilterDialogDatable {
 
     // Метод обновлениея данных фильтрации по типу
-    public void updTypeFilterPrefs(EventTypeFilter typeFilter);
+    public void updTypeFilter(EventTypeFilter typeFilter);
 
 } // end_interface

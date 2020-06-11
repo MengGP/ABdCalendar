@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
+import com.menggp.abdcalendar.datamodel.EventMonthFilter;
 import com.menggp.abdcalendar.datamodel.EventType;
+import com.menggp.abdcalendar.datamodel.EventTypeFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,20 +28,73 @@ public class DatabaseAdapter {
         dbHelper = new DatabaseHelper( context.getApplicationContext() );
     } // end_constructor
 
-    // Метод - открывает соеднение с БД на запись
-    // private DatabaseAdapter open() {
+    /*
+       Метод - открывает соеднение с БД на запись
+     */
     private void open() {
         db = dbHelper.getWritableDatabase();
         // return this;
     } // end_method
 
-    // Метод закрывает соединение с БД
+    /*
+        Метод закрывает соединение с БД
+     */
     private void close() {
         dbHelper.close();
     } // end_method
 
-    // Метод возвращает записи EVENT в виде ArrayList
-    public List<Event> getEventsGeneral() {
+    /*
+        Метод возвращает записи EVENT в соответствии с фильтрами и сортировками
+            типы сортировки для аргумента sortType:
+                0 - по умолчанию - от текущей даты
+                1 - от начала года
+                2 - по имени по возрастанию
+     */
+    public  List<Event> getEvents(String nameFilter, EventTypeFilter typeFilter, EventMonthFilter monthFilter, int sortType) {
+        ArrayList<Event> events = new ArrayList<>();
+        this.open();            // открываем соедиенение с БД
+
+        Cursor cursor = SQLiteQueryHandler.getEvents(db, null, typeFilter, null, 0);
+
+        // Если курсор содержит данные - извлекаем их и помещаем в ArrayList - events
+        if (cursor.moveToFirst() ) {
+            do {
+                long id = cursor.getLong( cursor.getColumnIndex( dbHelper.COL_EVENT_ID) );
+                String eventName = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_NAME) );
+                String eventDate = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_DATE) );
+                EventType eventType = EventType.convertToEventType( cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_TYPE) ) );
+                int eventSinceYear = cursor.getInt( cursor.getColumnIndex(dbHelper.COL_EVENT_SINCE_YEAR) );
+                String eventComment = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_COMMENT) );
+                int eventImg = cursor.getInt( cursor.getColumnIndex(dbHelper.COL_EVENT_IMG) );
+                EventAlertType eventAlertType = EventAlertType.convertToEventAlertType( cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_ALERT_TYPE) ) );
+
+                events.add( new Event(id, eventName, eventDate, eventType, eventSinceYear, eventComment, eventImg, eventAlertType) );
+            } while ( cursor.moveToNext() );
+        }
+        cursor.close();
+
+        this.close();           // закрываем соедиенние с БД
+        return events;
+    } // end_method
+
+    /*
+        Перегруженный метод getEvents - без фильтра по имени события
+     */
+    public  List<Event> getEvents(EventTypeFilter typeFilter, EventMonthFilter monthFilter, int sortType) {
+        return this.getEvents("", typeFilter, monthFilter, sortType);
+    } // end_method
+
+    /*
+        Перегруженный метод getEvents - только фильтр по типу
+    */
+    public  List<Event> getEvents(EventTypeFilter typeFilter) {
+        return this.getEvents("", typeFilter, null, 0);
+    } // end_method
+
+    /*
+        Метод возвращает все записи EVENT в виде ArrayList<Event>
+     */
+    public List<Event> getEventsAll() {
         ArrayList<Event> events = new ArrayList<>();    // ArrayList - для возврата результата метода
         this.open();                                    // открываем соединение с БД
 
@@ -66,7 +121,9 @@ public class DatabaseAdapter {
         return events;
     } // end_method
 
-     // Метод - возващает количество записей в БД
+    /*
+        Метод - возващает количество записей в БД
+     */
     public long geEventCount() {
         long count;
         this.open();
@@ -75,7 +132,9 @@ public class DatabaseAdapter {
         return  count;
     } // end_method
 
-    // Метод - возвращает объект по ID
+    /*
+        Метод - возвращает объект по ID
+     */
     public Event getEvent(long id) {
         Event event = null;
         this.open();
@@ -101,7 +160,9 @@ public class DatabaseAdapter {
         return event;
     } // end_method
 
-    // Метод - добавляет запись в таблицу EVENTS
+    /*
+        Метод - добавляет запись в таблицу EVENTS
+     */
     public long insertEvent(Event event) {
         long result;
         this.open();
@@ -110,6 +171,9 @@ public class DatabaseAdapter {
         return result;
     } // end_method
 
+    /*
+        Метод удаляем запись из БД
+     */
     public long deleteEvent(long eventId) {
         long result;
         this.open();
@@ -118,7 +182,9 @@ public class DatabaseAdapter {
         return  result;
     } // end_method
 
-    // Метод обновляет запись в таблице EVENTS
+    /*
+        Метод обновляет запись в БД
+     */
     public long update(Event event) {
         long result;
         this.open();

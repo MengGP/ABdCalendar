@@ -63,6 +63,7 @@
     <string name="toast_event_created">Событие создано</string>
     <string name="toast_event_change_no_saved">Изменения НЕ сохранены</string>
     <string name="toast_type_filter_flush">Фильтр сброшен</string>
+    <string name="toast_type_filter_changed">Фильтр изменен</string>
 
     <!-- Месяцы -->
     <string name="january">Января</string>
