@@ -4,19 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/text18_bold"
-        android:text="@string/dialog_type_filter_type_filter"/>
-        -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <!-- "Кнопка" - снять все -->
         <RelativeLayout
             android:id="@+id/dialog_deselect_all_types"
             android:layout_width="0dp"
@@ -40,6 +33,7 @@
                 android:contentDescription="@string/dialog_deselect_all"/>
         </RelativeLayout>
 
+        <!-- "Кнопка" - выделить все -->
         <RelativeLayout
             android:id="@+id/dialog_select_all_types"
             android:layout_width="0dp"
@@ -63,52 +57,9 @@
                 android:contentDescription="@string/dialog_select_all"/>
          </RelativeLayout>
 
-        <!--
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:background="@color/gray_light"
-            android:layout_margin="4dp"
-            android:onClick="onClickTypeFilterOnList">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/text14_bold_center"
-                android:text="@string/main_act_type_filter"/>
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="end"
-                android:src="@drawable/checkbox_empty"
-                android:contentDescription="@string/cd_filter"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:background="@color/gray_light"
-            android:layout_margin="4dp"
-            android:onClick="onClickTypeFilterOnList">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/text14_bold_center"
-                android:text="@string/main_act_type_filter"/>
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="end"
-                android:src="@drawable/checkbox_full"
-                android:contentDescription="@string/cd_filter"/>
-        </LinearLayout>
-        -->
-
     </LinearLayout>
 
+    <!-- Выбор типа события -->
     <CheckBox
         android:id="@+id/ev_type_birthday_on_dialog"
         android:layout_width="wrap_content"
