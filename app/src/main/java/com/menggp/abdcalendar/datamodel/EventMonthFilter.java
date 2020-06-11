@@ -145,4 +145,24 @@ public class EventMonthFilter {
     }
     // --- end_getters_setters
 
+    /*
+       Метод проверяет, все ли типы событий выбраны, или какой-то тип отфильтрован
+    */
+    public boolean filterExist() {
+        if ( !this.month01 ) return true;
+        else if ( !this.month02) return true;
+        else if ( !this.month03) return true;
+        else if ( !this.month04) return true;
+        else if ( !this.month05) return true;
+        else if ( !this.month06) return true;
+        else if ( !this.month07) return true;
+        else if ( !this.month08) return true;
+        else if ( !this.month09) return true;
+        else if ( !this.month10) return true;
+        else if ( !this.month11) return true;
+        else if ( !this.month12) return true;
+
+        return false;
+    } // end_method
+
 } // end_class

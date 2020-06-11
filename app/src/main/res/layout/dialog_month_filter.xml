@@ -76,21 +76,42 @@
                 android:layout_height="wrap_content"
                 style="@style/text18"
                 android:layout_margin="8dp"
-                android:text="@string/birthday"/>
+                android:text="@string/january_inf"/>
             <CheckBox
-                android:id="@+id/ev_month_on_dialog_febrary"
+                android:id="@+id/ev_month_on_dialog_february"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/text18"
                 android:layout_margin="8dp"
-                android:text="@string/anniversary"/>
+                android:text="@string/february_inf"/>
             <CheckBox
                 android:id="@+id/ev_month_on_dialog_march"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/text18"
                 android:layout_margin="8dp"
-                android:text="@string/memodate"/>
+                android:text="@string/march_inf"/>
+            <CheckBox
+                android:id="@+id/ev_month_on_dialog_april"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text18"
+                android:layout_margin="8dp"
+                android:text="@string/april_inf"/>
+            <CheckBox
+                android:id="@+id/ev_month_on_dialog_may"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text18"
+                android:layout_margin="8dp"
+                android:text="@string/may_inf"/>
+            <CheckBox
+                android:id="@+id/ev_month_on_dialog_june"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text18"
+                android:layout_margin="8dp"
+                android:text="@string/june_inf"/>
         </LinearLayout>
 
         <!-- 2е полугодие -->
@@ -105,78 +126,44 @@
                 android:layout_height="wrap_content"
                 style="@style/text18"
                 android:layout_margin="8dp"
-                android:text="@string/birthday"/>
+                android:text="@string/july_inf"/>
             <CheckBox
                 android:id="@+id/ev_month_on_dialog_august"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/text18"
                 android:layout_margin="8dp"
-                android:text="@string/anniversary"/>
+                android:text="@string/august_inf"/>
             <CheckBox
                 android:id="@+id/ev_month_on_dialog_september"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/text18"
                 android:layout_margin="8dp"
-                android:text="@string/memodate"/>
+                android:text="@string/september_inf"/>
+            <CheckBox
+                android:id="@+id/ev_month_on_dialog_october"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text18"
+                android:layout_margin="8dp"
+                android:text="@string/october_inf"/>
+            <CheckBox
+                android:id="@+id/ev_month_on_dialog_november"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text18"
+                android:layout_margin="8dp"
+                android:text="@string/november_inf"/>
+            <CheckBox
+                android:id="@+id/ev_month_on_dialog_december"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text18"
+                android:layout_margin="8dp"
+                android:text="@string/december_inf"/>
         </LinearLayout>
     </LinearLayout>
-    <!--
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2">
 
-        <CheckBox
-            android:id="@+id/ev_month_on_dialog_january"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            style="@style/text18"
-            android:layout_margin="8dp"
-            android:text="@string/birthday"/>
-        <CheckBox
-            android:id="@+id/ev_type_anniversary_on_dialog"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            style="@style/text18"
-            android:layout_margin="8dp"
-            android:text="@string/anniversary"/>
-        <CheckBox
-            android:id="@+id/ev_type_memodate_on_dialog"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            style="@style/text18"
-            android:layout_margin="8dp"
-            android:text="@string/memodate"/>
-        <CheckBox
-            android:id="@+id/ev_type_holiday_on_dialog"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            style="@style/text18"
-            android:layout_margin="8dp"
-            android:text="@string/holiday"/>
-        <CheckBox
-            android:id="@+id/ev_type_other_on_dialog"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            style="@style/text18"
-            android:layout_margin="8dp"
-            android:text="@string/other"/>
-        <CheckBox
-            android:id="@+id/ev_type_other_on_dialog"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            style="@style/text18"
-            android:layout_margin="8dp"
-            android:text="@string/other"/>
-    </GridLayout>
-    -->
 
 </LinearLayout>

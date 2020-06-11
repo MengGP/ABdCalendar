@@ -50,12 +50,14 @@ public class TypeFilterDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
+        // Получаем переданные данные о фильтрации по типу в объек EventTypeFilter
+        Bundle args = getArguments();
         EventTypeFilter eventTypeFilter = new EventTypeFilter(
-                getArguments().getBoolean(EV_TYPE_BIRTHDAY_ON),
-                getArguments().getBoolean(EV_TYPE_ANNIVERSARY_ON),
-                getArguments().getBoolean(EV_TYPE_MEMODATE_ON),
-                getArguments().getBoolean(EV_TYPE_HOLIDAY_ON),
-                getArguments().getBoolean(EV_TYPE_OTHER_ON)
+                args.getBoolean(EV_TYPE_BIRTHDAY_ON),
+                args.getBoolean(EV_TYPE_ANNIVERSARY_ON),
+                args.getBoolean(EV_TYPE_MEMODATE_ON),
+                args.getBoolean(EV_TYPE_HOLIDAY_ON),
+                args.getBoolean(EV_TYPE_OTHER_ON)
         );
 
         // Получаем разметку и ее элементы

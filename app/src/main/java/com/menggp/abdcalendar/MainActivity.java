@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TypeFilterDialogDatable {
+public class MainActivity extends AppCompatActivity implements TypeFilterDialogDatable, MonthFilterDialogDatable {
 
     // --- Constants
     public static final String SHOW_SETTING_ACTIVITY = "com.menggp.SHOW_SETTINGS_ACTIVITY";
@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
 
     // Элементы разметки
     ListView eventListView;
-    ImageView typeFilterIndicator;
+    ImageView typeFilterLED;
+    ImageView monthFilterLED;
     EditText eventNameFilterBox;
 
     /*
@@ -102,10 +103,12 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
             // Получаем элементы с разметки
             eventListView = (ListView) findViewById(R.id.main_list_event_list);
             eventNameFilterBox = (EditText)findViewById(R.id.event_name_filter_on_list);
+            typeFilterLED = (ImageView)findViewById(R.id.type_filter_indicator);
+            monthFilterLED = (ImageView)findViewById(R.id.month_filter_on_list);
 
-            // Устанавливаем индикатор фильтра активным, если хотя бы один тип фильтруется
-            typeFilterIndicator = (ImageView)findViewById(R.id.type_filter_indicator);
-            if ( eventTypeFilter.filterExist() ) typeFilterIndicator.setImageResource(R.drawable.filter);
+            // Устанавливаем индикаторы фильтров в зависимости от наличия фильтров
+            if ( eventTypeFilter.filterExist() ) typeFilterLED.setImageResource(R.drawable.filter);
+            if ( eventMonthFilter.filterExist() ) monthFilterLED.setImageResource(R.drawable.filter);
 
             // Слушатель длинного нажатия на элемент списка - запускает EventActivityInfo
             eventListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -302,7 +305,6 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         args.putBoolean(EV_TYPE_OTHER_ON, eventTypeFilter.isOtherOn() );
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(),"TypeFilterDialogFragment");
-
     } // end_method
 
     /*
@@ -325,15 +327,22 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         Метод обработки нажтия на "кнопку" фильтра по месяцу
      */
     public void onClickMonthFilterOnList(View view) {
-        ImageView viewImg = (ImageView)view.findViewById(R.id.month_filter_on_list);
-        if (isMonthFilterExist) {
-            isMonthFilterExist=false;
-            viewImg.setImageResource(R.drawable.filter);
-        }
-        else {
-            isMonthFilterExist=true;
-            viewImg.setImageResource(R.drawable.filter_disable);
-        }
+        MonthFilterDialogFragment dialog = new MonthFilterDialogFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(EV_MONTH_ON_01, eventMonthFilter.isMonth01() );
+        args.putBoolean(EV_MONTH_ON_02, eventMonthFilter.isMonth02() );
+        args.putBoolean(EV_MONTH_ON_03, eventMonthFilter.isMonth03() );
+        args.putBoolean(EV_MONTH_ON_04, eventMonthFilter.isMonth04() );
+        args.putBoolean(EV_MONTH_ON_05, eventMonthFilter.isMonth05() );
+        args.putBoolean(EV_MONTH_ON_06, eventMonthFilter.isMonth06() );
+        args.putBoolean(EV_MONTH_ON_07, eventMonthFilter.isMonth07() );
+        args.putBoolean(EV_MONTH_ON_08, eventMonthFilter.isMonth08() );
+        args.putBoolean(EV_MONTH_ON_09, eventMonthFilter.isMonth09() );
+        args.putBoolean(EV_MONTH_ON_10, eventMonthFilter.isMonth10() );
+        args.putBoolean(EV_MONTH_ON_11, eventMonthFilter.isMonth11() );
+        args.putBoolean(EV_MONTH_ON_12, eventMonthFilter.isMonth12() );
+        dialog.setArguments( args );
+        dialog.show(getSupportFragmentManager(), "onClickMonthFilterOnList");
     } // end_method
 
     /*
@@ -405,9 +414,46 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
             Toast.makeText(getApplicationContext(), "eventListAdapter === NULL ", Toast.LENGTH_SHORT).show();
 
         // Меняем индикатор фильтра в зависимости от наличия фильтров
-        if ( eventTypeFilter.filterExist() ) typeFilterIndicator.setImageResource(R.drawable.filter);
-        else typeFilterIndicator.setImageResource(R.drawable.filter_disable);
+        if ( eventTypeFilter.filterExist() ) typeFilterLED.setImageResource(R.drawable.filter);
+        else typeFilterLED.setImageResource(R.drawable.filter_disable);
     } // end_method
+
+    /*
+        Реализация метода интерфейса MonthFilterDialogDatable
+    */
+    @Override
+    public void updMonthFilter(EventMonthFilter monthFilter) {
+
+        // Создаем редактор prefrences
+        SharedPreferences.Editor sortAndFilterPrefsEditor = sortAndFilterPrefs.edit();
+        // Редактируем
+        sortAndFilterPrefsEditor.putBoolean(EV_MONTH_ON_01, monthFilter.isMonth01() );
+        sortAndFilterPrefsEditor.putBoolean(EV_MONTH_ON_02, monthFilter.isMonth02() );
+        sortAndFilterPrefsEditor.putBoolean(EV_MONTH_ON_03, monthFilter.isMonth03() );
+        sortAndFilterPrefsEditor.putBoolean(EV_MONTH_ON_04, monthFilter.isMonth04() );
+        sortAndFilterPrefsEditor.putBoolean(EV_MONTH_ON_05, monthFilter.isMonth05() );
+        sortAndFilterPrefsEditor.putBoolean(EV_MONTH_ON_06, monthFilter.isMonth06() );
+        sortAndFilterPrefsEditor.putBoolean(EV_MONTH_ON_07, monthFilter.isMonth07() );
+        sortAndFilterPrefsEditor.putBoolean(EV_MONTH_ON_08, monthFilter.isMonth08() );
+        sortAndFilterPrefsEditor.putBoolean(EV_MONTH_ON_09, monthFilter.isMonth09() );
+        sortAndFilterPrefsEditor.putBoolean(EV_MONTH_ON_10, monthFilter.isMonth10() );
+        sortAndFilterPrefsEditor.putBoolean(EV_MONTH_ON_11, monthFilter.isMonth11() );
+        sortAndFilterPrefsEditor.putBoolean(EV_MONTH_ON_12, monthFilter.isMonth12() );
+        // Применяем (не асинхронно)
+        sortAndFilterPrefsEditor.commit();
+
+        // Обновляем объект eventTypeFilter
+        readMonthFilterPrefs();
+
+        // Обновляем данные в адаптере - для вида календаря обновляем только фильтр типа
+        if ( eventNameFilterBox!=null )
+            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, 0);
+
+        // Меняем индикатор фильтра в зависимости от наличия фильтров
+        if ( monthFilter.filterExist() ) monthFilterLED.setImageResource(R.drawable.filter);
+        else monthFilterLED.setImageResource(R.drawable.filter_disable);
+    } // end_method
+
 
 
 } // end_class
