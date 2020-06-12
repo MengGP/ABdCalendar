@@ -37,7 +37,7 @@ public class EventChangeConfirmationDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getContext(), R.string.toast_event_change_no_saved, Toast.LENGTH_SHORT).show();
-                eventChangeConfirmationDialogDatable.noSaveEventChage();
+                eventChangeConfirmationDialogDatable.noSaveEventChange();
             }
         }; // end_listener
 
@@ -45,7 +45,7 @@ public class EventChangeConfirmationDialogFragment extends DialogFragment {
         DialogInterface.OnClickListener yesAction = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                eventChangeConfirmationDialogDatable.saveEventChage();
+                eventChangeConfirmationDialogDatable.saveEventChange();
             }
         }; // end_listener
 

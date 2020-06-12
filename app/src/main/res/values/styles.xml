@@ -38,6 +38,17 @@
     <style name="text18_italic">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">italic</item> </style>
+    <style name="text18_bold_italic">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold|italic</item> </style>
+    <style name="text16">
+        <item name="android:textSize">16sp</item></style>
+    <style name="text16_bold">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item> </style>
+    <style name="text16_italic">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">italic</item> </style>
     <style name="text14">
         <item name="android:textSize">14sp</item> </style>
     <style name="text14_center">

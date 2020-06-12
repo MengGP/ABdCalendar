@@ -6,9 +6,9 @@ package com.menggp.abdcalendar.dialogs;
 public interface EventChangeConfirmationDialogDatable {
 
     // Метод - закрытие редактора события без сохраения изменений
-    void noSaveEventChage();
+    void noSaveEventChange();
 
     // Метод - закрытие редактора события c сохраениенм изменений
-    void saveEventChage();
+    void saveEventChange();
 
 } // end_interface

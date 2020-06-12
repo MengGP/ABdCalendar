@@ -90,7 +90,9 @@ public class DatabaseAdapter {
         Перегруженный метод getEvents - только фильтр по типу
     */
     public  List<Event> getEvents(EventTypeFilter typeFilter) {
-        return this.getEvents("", typeFilter, null, 0);
+        EventMonthFilter monthFilter = new EventMonthFilter( true, true, true, true, true, true, true, true, true, true, true, true );
+        int sortType = 1;
+        return this.getEvents("", typeFilter, monthFilter, sortType);
     } // end_method
 
     /*

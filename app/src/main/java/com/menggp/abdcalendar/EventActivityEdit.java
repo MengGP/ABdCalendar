@@ -285,7 +285,6 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-
             case android.R.id.home: onBackClick(); break;
             case 1 :
                 delConfirmation();
@@ -429,7 +428,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             из интерфейса EventChangeConfirmationDialogDatable
      */
     @Override
-    public void noSaveEventChage() {
+    public void noSaveEventChange() {
         goEventActivityInfo();
     } // end_method
 
@@ -438,7 +437,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             из интерфейса EventChangeConfirmationDialogDatable
      */
     @Override
-    public void saveEventChage() {
+    public void saveEventChange() {
         saveEvent();
     } // end_method
 

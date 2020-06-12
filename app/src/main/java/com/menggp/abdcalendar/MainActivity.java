@@ -27,6 +27,10 @@ import com.menggp.abdcalendar.adapters.EventListAdapter;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventMonthFilter;
 import com.menggp.abdcalendar.datamodel.EventTypeFilter;
+import com.menggp.abdcalendar.dialogs.EventDelConfirmationDialogDatable;
+import com.menggp.abdcalendar.dialogs.EventDelConfirmationDialogFragment;
+import com.menggp.abdcalendar.dialogs.EventInfoDialogDatable;
+import com.menggp.abdcalendar.dialogs.EventInfoDialogFragment;
 import com.menggp.abdcalendar.dialogs.MonthFilterDialogDatable;
 import com.menggp.abdcalendar.dialogs.MonthFilterDialogFragment;
 import com.menggp.abdcalendar.dialogs.SortDialogDatable;
@@ -39,7 +43,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TypeFilterDialogDatable, MonthFilterDialogDatable, SortDialogDatable {
+public class MainActivity extends AppCompatActivity
+        implements TypeFilterDialogDatable, MonthFilterDialogDatable, SortDialogDatable,
+                   EventInfoDialogDatable, EventDelConfirmationDialogDatable {
 
     // --- Constants
     public static final String SHOW_SETTING_ACTIVITY = "com.menggp.SHOW_SETTINGS_ACTIVITY";
@@ -135,6 +141,23 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
                     }
                     // true - не переходим в обработку короткого нажатия
                     return true;
+                }
+            });
+
+            // Слушатель короткого нажатия на элемент списка - запускает EventInfoDialog
+            eventListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // Получаем событие из адаптера
+                    Event event = eventListAdapter.getItem( position );
+                    // Если значение не null - вызываем EventInfoDialog и передаем в него ID события
+                    if (event!=null) {
+                        EventInfoDialogFragment dialog = new EventInfoDialogFragment();
+                        Bundle args = new Bundle();
+                        args.putLong("id", event.getId());
+                        dialog.setArguments(args);
+                        dialog.show(getSupportFragmentManager(), "EventInfoDialogFragment");
+                    }
                 }
             });
 
@@ -317,8 +340,11 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         // ------------------------------------------------------
         if ( eventNameFilterBox!=null )
             eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
-        else
+        else {
             Toast.makeText(getApplicationContext(), "eventListAdapter === NULL ", Toast.LENGTH_SHORT).show();
+            dbAdapter.getEvents(eventTypeFilter);
+        }
+
 
     } // end_method
 
@@ -516,4 +542,30 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         else sortLED.setImageResource(R.drawable.sort_disable);
 
     } // end_method
+
+    /*
+        Реализация метода интерфейса EventInfoDialogDatable
+     */
+    @Override
+    public void getDelConfirmationDialog(long id) {
+        EventDelConfirmationDialogFragment dialog = new EventDelConfirmationDialogFragment();
+        Bundle args = new Bundle();
+        args.putLong("id", id);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(),"delConfirmationDialogFragment");
+    } // end_method
+
+    /*
+    Метод - реализует метод "delEvent(long)" из интерфейса "delConfirmationDialogDatable"
+    для текущей Activity
+ */
+    @Override
+    public void delEvent(long eventId) {
+        dbAdapter.deleteEvent( eventId );
+        // ---
+        // TO DO - заменить на удалени одиночного элемена из адаптера - или нет
+        eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
+        // ---
+    } // end_method
+
 } // end_class

@@ -206,7 +206,6 @@ public class DateHandler{
         SimpleDateFormat monthDateFormat = new SimpleDateFormat("MM");      // только месяц
         int nowMonth = Integer.parseInt( monthDateFormat.format(currDate) );        // текущий месяц
 
-        Log.d(LOG_TAG, " === nowMonth === "+nowMonth);
         return nowMonth;
     } // end_method
 
@@ -218,7 +217,6 @@ public class DateHandler{
         SimpleDateFormat dayDateFormat = new SimpleDateFormat("dd");      // только месяц
         int nowDay = Integer.parseInt( dayDateFormat.format(currDate) );        // текущий месяц
 
-        Log.d(LOG_TAG, " === nowDay === "+nowDay);
         return nowDay;
     } // end_method
 
