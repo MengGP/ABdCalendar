@@ -39,8 +39,12 @@ class SQLiteQueryHandler {
         // Строка условия
         String whereClause = "";
 
-        // Блок отбора по типу
+        // Блок условия гарантированного исполнения - для формироания комплексного условия запроса
+        whereClause += "_id != 0";
+
+        // Блок фильра по типу
         if ( typeFilter.filterExist() ) {
+            whereClause += " AND ";
             whereClause += DatabaseHelper.COL_EVENT_TYPE + " NOT IN ( 'x', ";   // начало строки условия
             if ( !typeFilter.isBirthdayOn() ) whereClause += "'"+EventType.convertToString(EventType.BIRTHDAY)+"', ";
             if ( !typeFilter.isAnniversaryOn() ) whereClause += "'"+EventType.convertToString(EventType.ANNIVERSARY)+"', ";
@@ -49,6 +53,27 @@ class SQLiteQueryHandler {
             if ( !typeFilter.isOtherOn() ) whereClause += "'"+EventType.convertToString(EventType.OTHER)+"', ";
             whereClause += " 'y')";     // завершение строки условия
         }
+
+        // Блок фильтра по месяцу
+        if ( monthFilter.filterExist() ) {
+            whereClause += " AND ";
+            whereClause += "strftime('%m',"+DatabaseHelper.COL_EVENT_DATE+") NOT IN ( 'x', ";      // начало строки условия
+            if ( !monthFilter.isMonth01() ) whereClause += "'01', ";
+            if ( !monthFilter.isMonth02() ) whereClause += "'02', ";
+            if ( !monthFilter.isMonth03() ) whereClause += "'03', ";
+            if ( !monthFilter.isMonth04() ) whereClause += "'04', ";
+            if ( !monthFilter.isMonth05() ) whereClause += "'05', ";
+            if ( !monthFilter.isMonth06() ) whereClause += "'06', ";
+            if ( !monthFilter.isMonth07() ) whereClause += "'07', ";
+            if ( !monthFilter.isMonth08() ) whereClause += "'08', ";
+            if ( !monthFilter.isMonth09() ) whereClause += "'09', ";
+            if ( !monthFilter.isMonth10() ) whereClause += "'10', ";
+            if ( !monthFilter.isMonth11() ) whereClause += "'11', ";
+            if ( !monthFilter.isMonth12() ) whereClause += "'12', ";
+            whereClause += " 'y')";     // завершение строки условия
+        }
+
+
 
 
         return db.query(
