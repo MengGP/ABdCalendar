@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.menggp.abdcalendar.datamodel.DateHandler;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
 import com.menggp.abdcalendar.datamodel.EventMonthFilter;
@@ -38,8 +39,10 @@ class SQLiteQueryHandler {
 
         // Строка условия
         String whereClause = "";
-        // String[] whereArgs = new String[1];
+        // Аргументы условия
         String[] whereArgs = null;
+        // Строка сортировки
+        String orderByClause = "";
 
         // Блок условия гарантированного исполнения - для формироания комплексного условия запроса
         whereClause += "_id != 0";
@@ -57,7 +60,7 @@ class SQLiteQueryHandler {
         }
 
         // Блок фильтра по месяцу
-        if ( monthFilter!=null && monthFilter.filterExist() ) {
+        if ( monthFilter!=null || monthFilter.filterExist() ) {
             whereClause += " AND ";
             whereClause += "strftime('%m',"+DatabaseHelper.COL_EVENT_DATE+") NOT IN ( 'x', ";      // начало строки условия
             if ( !monthFilter.isMonth01() ) whereClause += "'01', ";
@@ -79,9 +82,32 @@ class SQLiteQueryHandler {
         if ( !nameFilter.isEmpty() ) {
             whereClause += " AND ";
             whereClause += DatabaseHelper.COL_EVENT_NAME + " LIKE ?";
-            // whereArgs[0] = "%"+ nameFilter +"%";
             whereArgs = new String[] {"%"+ nameFilter +"%"};
         }
+
+        // Блок сортировки
+        switch (sortType) {
+            case 0: // тип 0 - от текущей даты
+                // Два варианта поведения:
+                //  1 - обычное: если не задана фильтрация по месяцам
+                //  2 - с начала месяца - если задана фильтрация по месяцам - чтобы не дробить текущий месяц
+                if ( monthFilter==null || !monthFilter.filterExist() ) {
+                    orderByClause += "strftime('%m-%d'," + DatabaseHelper.COL_EVENT_DATE + ", '-" +
+                            (DateHandler.getNowMonth() - 1) + " months', '-" +     // смещение месяцев-1
+                            (DateHandler.getNowDay() - 1) + " days')";             // смещение дней-1
+                } else {
+                    orderByClause += "strftime('%m-%d'," + DatabaseHelper.COL_EVENT_DATE + ", '-" +
+                            (DateHandler.getNowMonth() - 1) + " months')";     // смещение месяцев-1
+                }
+                break;
+            case 1: // тип 1 - от начала года
+                orderByClause += DatabaseHelper.COL_EVENT_DATE;
+                break;
+            case 2: // тип 2 - по имени события
+                orderByClause += "UPPER("+DatabaseHelper.COL_EVENT_NAME+")";
+                break;
+        }
+
 
         return db.query(
                 DatabaseHelper.TABLE_EVENTS,        // целевая таблица
@@ -90,7 +116,7 @@ class SQLiteQueryHandler {
                 whereArgs,                          // аргументы условий
                 null,                      // блок группировки
                 null,                       // блок HAVING
-                null                       // блок сортировки
+                orderByClause                       // блок сортировки
         );
     } // end_method
 

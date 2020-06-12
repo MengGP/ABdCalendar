@@ -83,10 +83,9 @@ public class EventListAdapter extends ArrayAdapter<Event> {
         // Количество лет событию и подпись
         if ( event.getEventSinceYear()==0 ) {
             viewHolder.eventPastYearsOnList.setText("--");
-            viewHolder.eventYearsOnList.setVisibility( View.GONE );
-            viewHolder.eventSinceYearPrefixOnList.setVisibility( View.GONE );
-            viewHolder.eventSinceYearOnList.setVisibility( View.GONE );
-
+            viewHolder.eventYearsOnList.setText("");
+            viewHolder.eventSinceYearPrefixOnList.setText("");
+            viewHolder.eventSinceYearOnList.setText("");
         } else {
             int pastYears = DateHandler.timePastYear( event.getEventSinceYear() );
             viewHolder.eventPastYearsOnList.setText( String.valueOf(pastYears) );

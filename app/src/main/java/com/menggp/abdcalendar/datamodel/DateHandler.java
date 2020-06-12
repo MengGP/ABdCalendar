@@ -198,6 +198,30 @@ public class DateHandler{
         return Integer.parseInt(dayPart);
     } // end_method
 
+    /*
+        Метод возвращаем номер текущего месяца
+     */
+    public static int getNowMonth() {
+        Date currDate = new Date();                                                 // текущая дата
+        SimpleDateFormat monthDateFormat = new SimpleDateFormat("MM");      // только месяц
+        int nowMonth = Integer.parseInt( monthDateFormat.format(currDate) );        // текущий месяц
+
+        Log.d(LOG_TAG, " === nowMonth === "+nowMonth);
+        return nowMonth;
+    } // end_method
+
+    /*
+        Метод возвращаем номер текущего дня месяца
+     */
+    public static int getNowDay() {
+        Date currDate = new Date();                                                 // текущая дата
+        SimpleDateFormat dayDateFormat = new SimpleDateFormat("dd");      // только месяц
+        int nowDay = Integer.parseInt( dayDateFormat.format(currDate) );        // текущий месяц
+
+        Log.d(LOG_TAG, " === nowDay === "+nowDay);
+        return nowDay;
+    } // end_method
+
 
 
 

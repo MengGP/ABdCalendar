@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RadioGroup
+        android:id="@+id/sort_type_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/sort_type_0"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/text18"
+            android:layout_margin="8dp"
+            android:text="@string/dialog_sort_type0"/>
+        <RadioButton
+            android:id="@+id/sort_type_1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/text18"
+            android:layout_margin="8dp"
+            android:text="@string/dialog_sort_type1"/>
+        <RadioButton
+            android:id="@+id/sort_type_2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/text18"
+            android:layout_margin="8dp"
+            android:text="@string/dialog_sort_type2"/>
+
+    </RadioGroup>
+
+</LinearLayout>

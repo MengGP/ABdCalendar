@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,6 +29,8 @@ import com.menggp.abdcalendar.datamodel.EventMonthFilter;
 import com.menggp.abdcalendar.datamodel.EventTypeFilter;
 import com.menggp.abdcalendar.dialogs.MonthFilterDialogDatable;
 import com.menggp.abdcalendar.dialogs.MonthFilterDialogFragment;
+import com.menggp.abdcalendar.dialogs.SortDialogDatable;
+import com.menggp.abdcalendar.dialogs.SortDialogFragment;
 import com.menggp.abdcalendar.dialogs.TypeFilterDialogDatable;
 import com.menggp.abdcalendar.dialogs.TypeFilterDialogFragment;
 import com.menggp.abdcalendar.repository.DatabaseAdapter;
@@ -36,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TypeFilterDialogDatable, MonthFilterDialogDatable {
+public class MainActivity extends AppCompatActivity implements TypeFilterDialogDatable, MonthFilterDialogDatable, SortDialogDatable {
 
     // --- Constants
     public static final String SHOW_SETTING_ACTIVITY = "com.menggp.SHOW_SETTINGS_ACTIVITY";
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         // 0 - по умолчанию - от текущей даты
         // 1 - от начала года
         // 2 - по имени по возрастанию
-    private static final String EV_SORT = "ev_sort";
+    private static final String EV_SORT_TYPE = "ev_sort_type";
         // ключи сортировки по месяцам
     private static final String EV_MONTH_ON_01 = "ev_month_on_01";  // январь
     private static final String EV_MONTH_ON_02 = "ev_month_on_02";  // февраль
@@ -77,13 +80,14 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
     SharedPreferences sortAndFilterPrefs;
     EventTypeFilter eventTypeFilter;
     EventMonthFilter eventMonthFilter;
-    int eventSortType = 0;
+    int eventSortType;
     boolean isSortExist = true;                         // флаг наличия сортировки отличной от стандартной
 
     // Элементы разметки
     ListView eventListView;
     ImageView typeFilterLED;
     ImageView monthFilterLED;
+    ImageView sortLED;
     EditText eventNameFilterBox;
 
     /*
@@ -95,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
 
         // Подключаем настройки и чиатем настройки фильтрации (по умолчанию все значения TRUE)
         sortAndFilterPrefs = getSharedPreferences(SORT_AND_FILTER_PREFS, MODE_PRIVATE);
-        readFilterPrefs();
+        readSortAndFilterPrefs();
 
         // Обработка - в зависимости от текущего выбранного вида
         // вид - календаря
@@ -110,10 +114,12 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
             eventNameFilterBox = (EditText)findViewById(R.id.event_name_filter_on_list);
             typeFilterLED = (ImageView)findViewById(R.id.type_filter_indicator);
             monthFilterLED = (ImageView)findViewById(R.id.month_filter_on_list);
+            sortLED = (ImageView)findViewById(R.id.sort_on_list);
 
             // Устанавливаем индикаторы фильтров в зависимости от наличия фильтров
             if ( eventTypeFilter.filterExist() ) typeFilterLED.setImageResource(R.drawable.filter);
             if ( eventMonthFilter.filterExist() ) monthFilterLED.setImageResource(R.drawable.filter);
+            if ( eventSortType != 0 ) sortLED.setImageResource(R.drawable.sort);
 
             // Слушатель длинного нажатия на элемент списка - запускает EventActivityInfo
             eventListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -310,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
 
         // ------------------------------------------------------
         if ( eventNameFilterBox!=null )
-            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, 0);
+            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
         else
             Toast.makeText(getApplicationContext(), "eventListAdapter === NULL ", Toast.LENGTH_SHORT).show();
 
@@ -331,22 +337,6 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         dialog.show(getSupportFragmentManager(),"TypeFilterDialogFragment");
     } // end_method
 
-    /*
-        Метод обработки нажтия на "кнопку" сортировки
-     */
-    public void onClickSortOnList(View view) {
-        ImageView viewImg = (ImageView)view.findViewById(R.id.sort_on_list);
-        if (isSortExist) {
-            isSortExist=false;
-            viewImg.setImageResource(R.drawable.sort);
-        }
-        else {
-            isSortExist=true;
-            viewImg.setImageResource(R.drawable.sort_disable);
-        }
-    } // end_method
-
-    // onClickMonthFilterOnList
     /*
         Метод обработки нажтия на "кнопку" фильтра по месяцу
      */
@@ -370,6 +360,17 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
     } // end_method
 
     /*
+        Метод обработки нажтия на "кнопку" сортировки
+     */
+    public void onClickSortOnList(View view) {
+        SortDialogFragment dialog = new SortDialogFragment();
+        Bundle args = new Bundle();
+        args.putInt(EV_SORT_TYPE, eventSortType);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "SortDialogFragment");
+    } // end_method
+
+    /*
         Метод обрабатывает нажатие кнопки очиски строки фильтра по имени
      */
     public void onNameFilterClearClick(View view) {
@@ -379,9 +380,10 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
     /*
         Метод считывает настройки фильтрации в объекты настроек
      */
-    private void readFilterPrefs() {
+    private void readSortAndFilterPrefs() {
         readTypeFilterPrefs();
         readMonthFilterPrefs();
+        readSortType();
     } // end_method
 
     /*
@@ -417,13 +419,19 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         );
     } // end_method
 
+    /*
+        Читаем из настроек тип сортировки
+     */
+    private void readSortType() {
+        eventSortType = sortAndFilterPrefs.getInt(EV_SORT_TYPE, 0);
+    }
+
 
     /*
         Реализация метода интерфейса TypeFilterDialogDatable
      */
     @Override
     public void updTypeFilter(EventTypeFilter typeFilter) {
-
         // Создаем редактор prefrences
         SharedPreferences.Editor sortAndFilterPrefsEditor = sortAndFilterPrefs.edit();
         // Редактируем
@@ -440,9 +448,9 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
 
         // Обновляем данные в адаптере - для вида календаря обновляем только фильтр типа
         if ( eventNameFilterBox!=null )
-            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, 0);
+            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
         else
-            Toast.makeText(getApplicationContext(), "eventListAdapter === NULL ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "eventNameFilterBox === NULL ", Toast.LENGTH_SHORT).show();
 
         // Меняем индикатор фильтра в зависимости от наличия фильтров
         if ( eventTypeFilter.filterExist() ) typeFilterLED.setImageResource(R.drawable.filter);
@@ -454,7 +462,6 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
     */
     @Override
     public void updMonthFilter(EventMonthFilter monthFilter) {
-
         // Создаем редактор prefrences
         SharedPreferences.Editor sortAndFilterPrefsEditor = sortAndFilterPrefs.edit();
         // Редактируем
@@ -478,13 +485,35 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
 
         // Обновляем данные в адаптере - для вида календаря обновляем только фильтр типа
         if ( eventNameFilterBox!=null )
-            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, 0);
+            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
 
         // Меняем индикатор фильтра в зависимости от наличия фильтров
         if ( monthFilter.filterExist() ) monthFilterLED.setImageResource(R.drawable.filter);
         else monthFilterLED.setImageResource(R.drawable.filter_disable);
     } // end_method
 
+    /*
+        Реализация метода интерфейса SortDialogDatable
+     */
+    @Override
+    public void updSortType(int sortType) {
+        // Создаем редактор prefrences
+        SharedPreferences.Editor sortAndFilterPrefsEditor = sortAndFilterPrefs.edit();
+        // Редактируем
+        sortAndFilterPrefsEditor.putInt(EV_SORT_TYPE, sortType);
+        // Применяем (не асинхронно)
+        sortAndFilterPrefsEditor.commit();
 
+        // Обновляем объект eventTypeFilter
+        readSortType();
 
+        // Обновляем данные в адаптере - для вида календара обновляется только фильтр типа
+        if ( eventNameFilterBox!=null )
+            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
+
+        // Меняем индикатор фильтра в зависимости от наличия фильтров
+        if ( eventSortType!=0 ) sortLED.setImageResource(R.drawable.sort);
+        else sortLED.setImageResource(R.drawable.sort_disable);
+
+    } // end_method
 } // end_class
