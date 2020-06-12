@@ -1,4 +1,4 @@
-package com.menggp.abdcalendar;
+package com.menggp.abdcalendar.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.menggp.abdcalendar.R;
 import com.menggp.abdcalendar.datamodel.EventTypeFilter;
 
 /*

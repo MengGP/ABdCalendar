@@ -1,4 +1,4 @@
-package com.menggp.abdcalendar;
+package com.menggp.abdcalendar.dialogs;
 
 /*
     Вспомогательный интерфейс - для реализации взаиможействия между диалогом "EventDatePickerDialogFragment" и вызывающими Activity

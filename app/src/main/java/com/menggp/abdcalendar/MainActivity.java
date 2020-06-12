@@ -26,6 +26,10 @@ import com.menggp.abdcalendar.adapters.EventListAdapter;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventMonthFilter;
 import com.menggp.abdcalendar.datamodel.EventTypeFilter;
+import com.menggp.abdcalendar.dialogs.MonthFilterDialogDatable;
+import com.menggp.abdcalendar.dialogs.MonthFilterDialogFragment;
+import com.menggp.abdcalendar.dialogs.TypeFilterDialogDatable;
+import com.menggp.abdcalendar.dialogs.TypeFilterDialogFragment;
 import com.menggp.abdcalendar.repository.DatabaseAdapter;
 
 import java.util.ArrayList;

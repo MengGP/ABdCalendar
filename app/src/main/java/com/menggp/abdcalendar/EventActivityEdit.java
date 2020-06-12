@@ -23,6 +23,13 @@ import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
 import com.menggp.abdcalendar.datamodel.EventImgDefaultCollection;
 import com.menggp.abdcalendar.datamodel.EventType;
+import com.menggp.abdcalendar.dialogs.EventChangeConfirmationDialogDatable;
+import com.menggp.abdcalendar.dialogs.EventChangeConfirmationDialogFragment;
+import com.menggp.abdcalendar.dialogs.EventDatePickerDialogDatable;
+import com.menggp.abdcalendar.dialogs.EventDatePickerDialogFragment;
+import com.menggp.abdcalendar.dialogs.EventDelConfirmationDialogDatable;
+import com.menggp.abdcalendar.dialogs.EventDelConfirmationDialogFragment;
+import com.menggp.abdcalendar.dialogs.EventNoNameDialogFragment;
 import com.menggp.abdcalendar.repository.DatabaseAdapter;
 
 import java.util.ArrayList;

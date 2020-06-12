@@ -1,4 +1,4 @@
-package com.menggp.abdcalendar;
+package com.menggp.abdcalendar.dialogs;
 
 import com.menggp.abdcalendar.datamodel.EventTypeFilter;
 

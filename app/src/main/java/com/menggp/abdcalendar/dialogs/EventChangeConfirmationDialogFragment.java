@@ -1,4 +1,4 @@
-package com.menggp.abdcalendar;
+package com.menggp.abdcalendar.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.menggp.abdcalendar.R;
 
 /*
     Диалог подтвержения сохранения внесенных изменений

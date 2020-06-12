@@ -16,6 +16,8 @@ import com.menggp.abdcalendar.datamodel.DateHandler;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
 import com.menggp.abdcalendar.datamodel.EventType;
+import com.menggp.abdcalendar.dialogs.EventDelConfirmationDialogDatable;
+import com.menggp.abdcalendar.dialogs.EventDelConfirmationDialogFragment;
 import com.menggp.abdcalendar.repository.DatabaseAdapter;
 
 /*
