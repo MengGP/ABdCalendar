@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,9 +73,8 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
     SharedPreferences sortAndFilterPrefs;
     EventTypeFilter eventTypeFilter;
     EventMonthFilter eventMonthFilter;
-    boolean isTypeFilterExist = true;                   // флаг наличия фильтра по типу события
+    int eventSortType = 0;
     boolean isSortExist = true;                         // флаг наличия сортировки отличной от стандартной
-    boolean isMonthFilterExist = true;                  // флаг наличия фильтра по месяцам
 
     // Элементы разметки
     ListView eventListView;
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         // вид - списка
         else {
             // Получаем данные из БД
-            List<Event> events = dbAdapter.getEvents(eventTypeFilter, eventMonthFilter, 0);
+            List<Event> events = dbAdapter.getEvents(eventNameFilterBox.getText().toString(), eventTypeFilter, eventMonthFilter, eventSortType);
             // Создаем адапред для списка EVENT
             eventListAdapter = new EventListAdapter(
                     this,               // контекст
@@ -157,7 +158,26 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
             );
             // Устанавливаем адаптер для списка
             eventListView.setAdapter( eventListAdapter );
+
+            // Слушатель изменения текста в поле поиска по имени события
+            eventNameFilterBox.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+                // фильтрация при изменении текста
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    eventListAdapter.updAdapterData(s.toString(), eventTypeFilter, eventMonthFilter, eventSortType);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) { }
+            });
+
+
         }
+
+
 
     } // end_method
 
@@ -343,6 +363,13 @@ public class MainActivity extends AppCompatActivity implements TypeFilterDialogD
         args.putBoolean(EV_MONTH_ON_12, eventMonthFilter.isMonth12() );
         dialog.setArguments( args );
         dialog.show(getSupportFragmentManager(), "onClickMonthFilterOnList");
+    } // end_method
+
+    /*
+        Метод обрабатывает нажатие кнопки очиски строки фильтра по имени
+     */
+    public void onNameFilterClearClick(View view) {
+        eventNameFilterBox.setText("");
     } // end_method
 
     /*

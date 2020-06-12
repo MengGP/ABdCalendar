@@ -54,7 +54,7 @@ public class DatabaseAdapter {
         ArrayList<Event> events = new ArrayList<>();
         this.open();            // открываем соедиенение с БД
 
-        Cursor cursor = SQLiteQueryHandler.getEvents(db, null, typeFilter, monthFilter, 0);
+        Cursor cursor = SQLiteQueryHandler.getEvents(db, nameFilter, typeFilter, monthFilter, 0);
 
         // Если курсор содержит данные - извлекаем их и помещаем в ArrayList - events
         if (cursor.moveToFirst() ) {

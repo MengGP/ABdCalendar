@@ -38,6 +38,8 @@ class SQLiteQueryHandler {
 
         // Строка условия
         String whereClause = "";
+        // String[] whereArgs = new String[1];
+        String[] whereArgs = null;
 
         // Блок условия гарантированного исполнения - для формироания комплексного условия запроса
         whereClause += "_id != 0";
@@ -55,7 +57,7 @@ class SQLiteQueryHandler {
         }
 
         // Блок фильтра по месяцу
-        if ( monthFilter.filterExist() ) {
+        if ( monthFilter!=null && monthFilter.filterExist() ) {
             whereClause += " AND ";
             whereClause += "strftime('%m',"+DatabaseHelper.COL_EVENT_DATE+") NOT IN ( 'x', ";      // начало строки условия
             if ( !monthFilter.isMonth01() ) whereClause += "'01', ";
@@ -73,14 +75,19 @@ class SQLiteQueryHandler {
             whereClause += " 'y')";     // завершение строки условия
         }
 
-
-
+        // Блок сортировки по имени события
+        if ( !nameFilter.isEmpty() ) {
+            whereClause += " AND ";
+            whereClause += DatabaseHelper.COL_EVENT_NAME + " LIKE ?";
+            // whereArgs[0] = "%"+ nameFilter +"%";
+            whereArgs = new String[] {"%"+ nameFilter +"%"};
+        }
 
         return db.query(
                 DatabaseHelper.TABLE_EVENTS,        // целевая таблица
                 columns,                            // поля
-                whereClause,                      // блок условий
-                null,                  // аргументы условий
+                whereClause,                        // блок условий
+                whereArgs,                          // аргументы условий
                 null,                      // блок группировки
                 null,                       // блок HAVING
                 null                       // блок сортировки

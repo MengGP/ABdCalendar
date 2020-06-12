@@ -105,12 +105,28 @@
     </LinearLayout>
 
     <!-- Поле динамического поиска по имени события -->
-    <EditText
-        android:id="@+id/event_name_filter_on_list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/search_by_name"
-        />
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/event_name_filter_on_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:inputType="textFilter"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/event_name_filter_clear_on_list"
+            android:hint="@string/search_by_name"
+            />
+        <ImageView
+            android:id="@+id/event_name_filter_clear_on_list"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/clear"
+            android:onClick="onNameFilterClearClick"/>
+    </RelativeLayout>
 
     <!-- Список EVENTS -->
     <ListView
