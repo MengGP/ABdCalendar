@@ -83,14 +83,19 @@ public class EventListAdapter extends ArrayAdapter<Event> {
         // Количество лет событию и подпись
         if ( event.getEventSinceYear()==0 ) {
             viewHolder.eventPastYearsOnList.setText("--");
-            viewHolder.eventYearsOnList.setText("");
+            viewHolder.eventYearsOnList.setVisibility( View.GONE );
+            viewHolder.eventSinceYearPrefixOnList.setVisibility( View.GONE );
+            viewHolder.eventSinceYearOnList.setVisibility( View.GONE );
+
         } else {
             int pastYears = DateHandler.timePastYear( event.getEventSinceYear() );
             viewHolder.eventPastYearsOnList.setText( String.valueOf(pastYears) );
             viewHolder.eventYearsOnList.setText( res.getQuantityText(R.plurals.years, pastYears) );
+            // Год начала события
+            viewHolder.eventSinceYearOnList.setText( String.valueOf(event.getEventSinceYear()));
         }
-        // Год начала события
-        viewHolder.eventSinceYearOnList.setText( String.valueOf(event.getEventSinceYear()));
+
+
 
         return convertView;
     } // end_method
@@ -99,7 +104,7 @@ public class EventListAdapter extends ArrayAdapter<Event> {
     private  class ViewHolder {
         // Элементы разметки
         final ImageView eventImgOnList;
-        final TextView eventNameOnList, eventDateOnList, eventLeftTimeOnList, eventTypeOnList, eventAlertTypeOnList, eventPastYearsOnList, eventYearsOnList, eventSinceYearOnList;
+        final TextView eventNameOnList, eventDateOnList, eventLeftTimeOnList, eventTypeOnList, eventAlertTypeOnList, eventPastYearsOnList, eventYearsOnList, eventSinceYearPrefixOnList, eventSinceYearOnList;
         ViewHolder(View view) {
             eventImgOnList = (ImageView) view.findViewById(R.id.event_img_on_list);
             eventNameOnList = (TextView) view.findViewById(R.id.event_name_on_list);
@@ -109,6 +114,7 @@ public class EventListAdapter extends ArrayAdapter<Event> {
             eventAlertTypeOnList = (TextView) view.findViewById(R.id.event_alert_type_on_list);
             eventPastYearsOnList= (TextView) view.findViewById(R.id.event_past_years_on_list);
             eventYearsOnList = (TextView) view.findViewById(R.id.event_years_on_list);
+            eventSinceYearPrefixOnList = (TextView) view.findViewById(R.id.event_since_year_prefix_on_list);
             eventSinceYearOnList = (TextView) view.findViewById(R.id.event_since_year_on_list);
         } // end_constructor
     } // end_private_class

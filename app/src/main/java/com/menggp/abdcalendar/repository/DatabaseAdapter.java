@@ -61,7 +61,9 @@ public class DatabaseAdapter {
             do {
                 long id = cursor.getLong( cursor.getColumnIndex( dbHelper.COL_EVENT_ID) );
                 String eventName = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_NAME) );
+                // Для даты получаемой из БД - отбрасываем значение года (которое используется только для удобства хранения в БД)
                 String eventDate = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_DATE) );
+                eventDate = eventDate.substring(5,10);
                 EventType eventType = EventType.convertToEventType( cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_TYPE) ) );
                 int eventSinceYear = cursor.getInt( cursor.getColumnIndex(dbHelper.COL_EVENT_SINCE_YEAR) );
                 String eventComment = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_COMMENT) );
@@ -105,7 +107,9 @@ public class DatabaseAdapter {
             do {
                 long id = cursor.getLong( cursor.getColumnIndex( dbHelper.COL_EVENT_ID) );
                 String eventName = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_NAME) );
+                // Для даты получаемой из БД - отбрасываем значение года (которое используется только для удобства хранения в БД)
                 String eventDate = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_DATE) );
+                eventDate = eventDate.substring(5,10);
                 EventType eventType = EventType.convertToEventType( cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_TYPE) ) );
                 int eventSinceYear = cursor.getInt( cursor.getColumnIndex(dbHelper.COL_EVENT_SINCE_YEAR) );
                 String eventComment = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_COMMENT) );
@@ -145,7 +149,9 @@ public class DatabaseAdapter {
         if (cursor.moveToFirst() ) {
             // long id = cursor.getLong( cursor.getColumnIndex( dbHelper.COL_EVENT_ID) );   // ID - берем из входного аргумента
             String eventName = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_NAME) );
+            // Для даты получаемой из БД - отбрасываем значение года (которое используется только для удобства хранения в БД)
             String eventDate = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_DATE) );
+            eventDate = eventDate.substring(5,10);
             EventType eventType = EventType.convertToEventType( cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_TYPE) ) );
             int eventSinceYear = cursor.getInt( cursor.getColumnIndex(dbHelper.COL_EVENT_SINCE_YEAR) );
             String eventComment = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_COMMENT) );

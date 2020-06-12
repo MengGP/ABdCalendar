@@ -111,7 +111,8 @@ class SQLiteQueryHandler {
         // Создаем объект ContentValues - для передачи в БД
         ContentValues cv = new ContentValues();
         cv.put( DatabaseHelper.COL_EVENT_NAME, event.getEventName() );
-        cv.put( DatabaseHelper.COL_EVENT_DATE, event.getEventDate() );
+        // для поля таблицы EVENTS - events_date - добавляем год (неизменый) для корректной работы с этим полем как с датой функций SQLite
+        cv.put( DatabaseHelper.COL_EVENT_DATE, "2020-"+event.getEventDate() );
         cv.put( DatabaseHelper.COL_EVENT_TYPE, EventType.convertToString(event.getEventType()) );
         cv.put( DatabaseHelper.COL_EVENT_SINCE_YEAR, event.getEventSinceYear() );
         cv.put( DatabaseHelper.COL_EVENT_COMMENT, event.getEventComment() );
@@ -138,7 +139,8 @@ class SQLiteQueryHandler {
         // Создаем объект ContentValues - с данными для обновления
         ContentValues cv = new ContentValues();
         cv.put( DatabaseHelper.COL_EVENT_NAME, event.getEventName() );
-        cv.put( DatabaseHelper.COL_EVENT_DATE, event.getEventDate() );
+        // для поля таблицы EVENTS - events_date - добавляем год (неизменый) для корректной работы с этим полем как с датой функций SQLite
+        cv.put( DatabaseHelper.COL_EVENT_DATE, "2020-"+event.getEventDate() );
         cv.put( DatabaseHelper.COL_EVENT_TYPE, EventType.convertToString(event.getEventType()) );
         cv.put( DatabaseHelper.COL_EVENT_SINCE_YEAR, event.getEventSinceYear() );
         cv.put( DatabaseHelper.COL_EVENT_COMMENT, event.getEventComment() );

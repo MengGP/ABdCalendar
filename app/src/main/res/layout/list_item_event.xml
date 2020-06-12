@@ -90,6 +90,7 @@
             android:orientation="horizontal"
             android:layout_gravity="center">
             <TextView
+                android:id="@+id/event_since_year_prefix_on_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lower_from_with_space"
