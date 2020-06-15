@@ -140,7 +140,7 @@
     <string name="cd_add">Добавить</string>
 
     <!-- Прочее -->
-    <string name="lower_from_with_space">"с "</string>
+    <string name="lower_since_with_space">"с "</string>
     <string name="no_year">без года</string>
 
     <!-- Lorem ipsum text -->

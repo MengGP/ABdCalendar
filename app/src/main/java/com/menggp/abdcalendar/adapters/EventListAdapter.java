@@ -91,6 +91,7 @@ public class EventListAdapter extends ArrayAdapter<Event> {
             viewHolder.eventPastYearsOnList.setText( String.valueOf(pastYears) );
             viewHolder.eventYearsOnList.setText( res.getQuantityText(R.plurals.years, pastYears) );
             // Год начала события
+            viewHolder.eventSinceYearPrefixOnList.setText(R.string.lower_since_with_space);
             viewHolder.eventSinceYearOnList.setText( String.valueOf(event.getEventSinceYear()));
         }
 

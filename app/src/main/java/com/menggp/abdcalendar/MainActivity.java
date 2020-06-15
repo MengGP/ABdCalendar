@@ -562,10 +562,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void delEvent(long eventId) {
         dbAdapter.deleteEvent( eventId );
-        // ---
-        // TO DO - заменить на удалени одиночного элемена из адаптера - или нет
         eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
-        // ---
     } // end_method
 
 } // end_class
