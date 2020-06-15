@@ -22,7 +22,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "SettingActivity";
 
-    public static final String SHOW_ABOUT_PROGRAM_ACTIVITY = "com.menggp.SHOW_ABOUT_PROGRAM_ACTIVITY";
+//    public static final String SHOW_ABOUT_PROGRAM_ACTIVITY = "com.menggp.SHOW_ABOUT_PROGRAM_ACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
     Обработка выбора пункта настроек "О программе / About programm"
     */
     public void aboutProgram(View view) {
-        Intent intentAboutProgram = new Intent(SHOW_ABOUT_PROGRAM_ACTIVITY);
+        Intent intentAboutProgram = new Intent(MainActivity.SHOW_ABOUT_PROGRAM_ACTIVITY);
         startActivity(intentAboutProgram);
 
     } // end_method

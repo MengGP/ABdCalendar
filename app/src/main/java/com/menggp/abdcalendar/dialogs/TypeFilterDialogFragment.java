@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.menggp.abdcalendar.MainActivity;
 import com.menggp.abdcalendar.R;
 import com.menggp.abdcalendar.datamodel.EventTypeFilter;
 
@@ -26,11 +27,11 @@ public class TypeFilterDialogFragment extends DialogFragment {
     private TypeFilterDialogDatable typeFilterDialogDatable;
 
         // ключи сортировки по типу - получаемые во фагменте
-    private static final String EV_TYPE_BIRTHDAY_ON = "ev_type_birthday_on";
-    private static final String EV_TYPE_ANNIVERSARY_ON = "ev_type_anniversary_on";
-    private static final String EV_TYPE_MEMODATE_ON = "ev_type_memodate_on";
-    private static final String EV_TYPE_HOLIDAY_ON = "ev_type_holiday_on";
-    private static final String EV_TYPE_OTHER_ON = "ev_type_other_on";
+//    private static final String EV_TYPE_BIRTHDAY_ON = "ev_type_birthday_on";
+//    private static final String EV_TYPE_ANNIVERSARY_ON = "ev_type_anniversary_on";
+//    private static final String EV_TYPE_MEMODATE_ON = "ev_type_memodate_on";
+//    private static final String EV_TYPE_HOLIDAY_ON = "ev_type_holiday_on";
+//    private static final String EV_TYPE_OTHER_ON = "ev_type_other_on";
 
     CheckBox typeBirthdayBox;
     CheckBox typeAnniversaryBox;
@@ -54,11 +55,11 @@ public class TypeFilterDialogFragment extends DialogFragment {
         // Получаем переданные данные о фильтрации по типу в объек EventTypeFilter
         Bundle args = getArguments();
         EventTypeFilter eventTypeFilter = new EventTypeFilter(
-                args.getBoolean(EV_TYPE_BIRTHDAY_ON),
-                args.getBoolean(EV_TYPE_ANNIVERSARY_ON),
-                args.getBoolean(EV_TYPE_MEMODATE_ON),
-                args.getBoolean(EV_TYPE_HOLIDAY_ON),
-                args.getBoolean(EV_TYPE_OTHER_ON)
+                args.getBoolean(MainActivity.EV_TYPE_BIRTHDAY_ON),
+                args.getBoolean(MainActivity.EV_TYPE_ANNIVERSARY_ON),
+                args.getBoolean(MainActivity.EV_TYPE_MEMODATE_ON),
+                args.getBoolean(MainActivity.EV_TYPE_HOLIDAY_ON),
+                args.getBoolean(MainActivity.EV_TYPE_OTHER_ON)
         );
 
         // Получаем разметку и ее элементы

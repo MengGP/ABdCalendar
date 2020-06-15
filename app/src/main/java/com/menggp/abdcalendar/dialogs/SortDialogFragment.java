@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.menggp.abdcalendar.MainActivity;
 import com.menggp.abdcalendar.R;
 
 /*
@@ -24,7 +25,7 @@ public class SortDialogFragment extends DialogFragment {
 
     private SortDialogDatable sortDialogDatable;
 
-    private static final String EV_SORT_TYPE = "ev_sort_type";
+//    private static final String EV_SORT_TYPE = "ev_sort_type";
 
     RadioGroup sortTypeSwitchBox;
     RadioButton sortBoxType0;
@@ -46,7 +47,7 @@ public class SortDialogFragment extends DialogFragment {
 
         // получаем переданные в диалог данные
         Bundle args = getArguments();
-        sortType = args.getInt(EV_SORT_TYPE);
+        sortType = args.getInt(MainActivity.EV_SORT_TYPE);
 
         // Получаем разметку и элементы
         LayoutInflater inflater = getActivity().getLayoutInflater();

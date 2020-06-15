@@ -40,7 +40,7 @@ import java.util.ArrayList;
 public class EventActivityEdit extends AppCompatActivity implements EventDatePickerDialogDatable, EventDelConfirmationDialogDatable, EventChangeConfirmationDialogDatable {
 
     private static final String LOG_TAG = "EventActivityEdit";
-    public static final String SHOW_EVENT_ACTIVITY_INFO = "com.menggp.SHOW_EVENT_ACTIVITY_INFO";
+//    public static final String SHOW_EVENT_ACTIVITY_INFO = "com.menggp.SHOW_EVENT_ACTIVITY_INFO";
 
     Resources res;
     DatabaseAdapter dbAdapter;
@@ -398,7 +398,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
        Метод вызывает EventActivityInfo и передает в нее ID текущего события
     */
     private void goEventActivityInfo() {
-        Intent intent = new Intent(SHOW_EVENT_ACTIVITY_INFO);
+        Intent intent = new Intent(MainActivity.SHOW_EVENT_ACTIVITY_INFO);
         intent.putExtra("id",eventId );
         startActivity(intent);
     } // end_method

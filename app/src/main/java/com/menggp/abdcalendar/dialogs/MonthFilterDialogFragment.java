@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.menggp.abdcalendar.MainActivity;
 import com.menggp.abdcalendar.R;
 import com.menggp.abdcalendar.datamodel.EventMonthFilter;
 
@@ -26,18 +27,18 @@ public class MonthFilterDialogFragment extends DialogFragment {
     private MonthFilterDialogDatable monthFilterDialogDatable;
 
     // ключи сортировки по месяцам
-    private static final String EV_MONTH_ON_01 = "ev_month_on_01";  // январь
-    private static final String EV_MONTH_ON_02 = "ev_month_on_02";  // февраль
-    private static final String EV_MONTH_ON_03 = "ev_month_on_03";  // март
-    private static final String EV_MONTH_ON_04 = "ev_month_on_04";  // апрель
-    private static final String EV_MONTH_ON_05 = "ev_month_on_05";  // май
-    private static final String EV_MONTH_ON_06 = "ev_month_on_06";  // июнь
-    private static final String EV_MONTH_ON_07 = "ev_month_on_07";  // июль
-    private static final String EV_MONTH_ON_08 = "ev_month_on_08";  // август
-    private static final String EV_MONTH_ON_09 = "ev_month_on_09";  // сентябрь
-    private static final String EV_MONTH_ON_10 = "ev_month_on_10";  // октябрь
-    private static final String EV_MONTH_ON_11 = "ev_month_on_11";  // ноябрь
-    private static final String EV_MONTH_ON_12 = "ev_month_on_12";  // декабрь
+//    private static final String EV_MONTH_ON_01 = "ev_month_on_01";  // январь
+//    private static final String EV_MONTH_ON_02 = "ev_month_on_02";  // февраль
+//    private static final String EV_MONTH_ON_03 = "ev_month_on_03";  // март
+//    private static final String EV_MONTH_ON_04 = "ev_month_on_04";  // апрель
+//    private static final String EV_MONTH_ON_05 = "ev_month_on_05";  // май
+//    private static final String EV_MONTH_ON_06 = "ev_month_on_06";  // июнь
+//    private static final String EV_MONTH_ON_07 = "ev_month_on_07";  // июль
+//    private static final String EV_MONTH_ON_08 = "ev_month_on_08";  // август
+//    private static final String EV_MONTH_ON_09 = "ev_month_on_09";  // сентябрь
+//    private static final String EV_MONTH_ON_10 = "ev_month_on_10";  // октябрь
+//    private static final String EV_MONTH_ON_11 = "ev_month_on_11";  // ноябрь
+//    private static final String EV_MONTH_ON_12 = "ev_month_on_12";  // декабрь
 
     CheckBox monthBox01;
     CheckBox monthBox02;
@@ -68,18 +69,18 @@ public class MonthFilterDialogFragment extends DialogFragment {
         // Получаем переданные в диалог данные фильтрации
         Bundle args = getArguments();
         monthFilter = new EventMonthFilter(
-                getArguments().getBoolean(EV_MONTH_ON_01),
-                getArguments().getBoolean(EV_MONTH_ON_02),
-                getArguments().getBoolean(EV_MONTH_ON_03),
-                getArguments().getBoolean(EV_MONTH_ON_04),
-                getArguments().getBoolean(EV_MONTH_ON_05),
-                getArguments().getBoolean(EV_MONTH_ON_06),
-                getArguments().getBoolean(EV_MONTH_ON_07),
-                getArguments().getBoolean(EV_MONTH_ON_08),
-                getArguments().getBoolean(EV_MONTH_ON_09),
-                getArguments().getBoolean(EV_MONTH_ON_10),
-                getArguments().getBoolean(EV_MONTH_ON_11),
-                getArguments().getBoolean(EV_MONTH_ON_12)
+                getArguments().getBoolean(MainActivity.EV_MONTH_ON_01),
+                getArguments().getBoolean(MainActivity.EV_MONTH_ON_02),
+                getArguments().getBoolean(MainActivity.EV_MONTH_ON_03),
+                getArguments().getBoolean(MainActivity.EV_MONTH_ON_04),
+                getArguments().getBoolean(MainActivity.EV_MONTH_ON_05),
+                getArguments().getBoolean(MainActivity.EV_MONTH_ON_06),
+                getArguments().getBoolean(MainActivity.EV_MONTH_ON_07),
+                getArguments().getBoolean(MainActivity.EV_MONTH_ON_08),
+                getArguments().getBoolean(MainActivity.EV_MONTH_ON_09),
+                getArguments().getBoolean(MainActivity.EV_MONTH_ON_10),
+                getArguments().getBoolean(MainActivity.EV_MONTH_ON_11),
+                getArguments().getBoolean(MainActivity.EV_MONTH_ON_12)
         );
 
         // Получаем элементы разметки

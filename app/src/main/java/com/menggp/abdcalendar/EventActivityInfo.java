@@ -29,7 +29,7 @@ import com.menggp.abdcalendar.repository.DatabaseAdapter;
 public class EventActivityInfo extends AppCompatActivity implements EventDelConfirmationDialogDatable {
 
     private static final String LOG_TAG = "EventActivityInfo";
-    public static final String SHOW_EVENT_ACTIVITY_EDIT = "com.menggp.SHOW_EVENT_ACTIVITY_EDIT";
+    // public static final String SHOW_EVENT_ACTIVITY_EDIT = "com.menggp.SHOW_EVENT_ACTIVITY_EDIT";
 
     DatabaseAdapter dbAdapter;
 
@@ -123,7 +123,7 @@ public class EventActivityInfo extends AppCompatActivity implements EventDelConf
         Метод вызывает EventEditActivity и передает в нее ID текущего события
      */
     private void goEventActivityEdit() {
-        Intent intent = new Intent(SHOW_EVENT_ACTIVITY_EDIT);
+        Intent intent = new Intent(MainActivity.SHOW_EVENT_ACTIVITY_EDIT);
         intent.putExtra("id",eventId );
         startActivity(intent);
     } // end_class

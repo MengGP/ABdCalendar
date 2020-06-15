@@ -52,35 +52,36 @@ public class MainActivity extends AppCompatActivity
     public static final String SHOW_SETTING_ACTIVITY = "com.menggp.SHOW_SETTINGS_ACTIVITY";
     public static final String SHOW_EVENT_ACTIVITY_INFO = "com.menggp.SHOW_EVENT_ACTIVITY_INFO";
     public static final String SHOW_EVENT_ACTIVITY_EDIT = "com.menggp.SHOW_EVENT_ACTIVITY_EDIT";
+    public static final String SHOW_ABOUT_PROGRAM_ACTIVITY = "com.menggp.SHOW_ABOUT_PROGRAM_ACTIVITY";
     // тэги
     public static final String FROM_MAIN_ACTIVITY = "from_main_activity";
 
     // --- Prefrences
     private static final String SORT_AND_FILTER_PREFS = "sort_and_filter_prefs";    // имя настроек сортировки и фильтрации
         // ключи сортировки по типу
-    private static final String EV_TYPE_BIRTHDAY_ON = "ev_type_birthday_on";
-    private static final String EV_TYPE_ANNIVERSARY_ON = "ev_type_anniversary_on";
-    private static final String EV_TYPE_MEMODATE_ON = "ev_type_memodate_on";
-    private static final String EV_TYPE_HOLIDAY_ON = "ev_type_holiday_on";
-    private static final String EV_TYPE_OTHER_ON = "ev_type_other_on";
+    public static final String EV_TYPE_BIRTHDAY_ON = "ev_type_birthday_on";
+    public static final String EV_TYPE_ANNIVERSARY_ON = "ev_type_anniversary_on";
+    public static final String EV_TYPE_MEMODATE_ON = "ev_type_memodate_on";
+    public static final String EV_TYPE_HOLIDAY_ON = "ev_type_holiday_on";
+    public static final String EV_TYPE_OTHER_ON = "ev_type_other_on";
         // ключ типа сортировки
         // 0 - по умолчанию - от текущей даты
         // 1 - от начала года
         // 2 - по имени по возрастанию
-    private static final String EV_SORT_TYPE = "ev_sort_type";
+    public static final String EV_SORT_TYPE = "ev_sort_type";
         // ключи сортировки по месяцам
-    private static final String EV_MONTH_ON_01 = "ev_month_on_01";  // январь
-    private static final String EV_MONTH_ON_02 = "ev_month_on_02";  // февраль
-    private static final String EV_MONTH_ON_03 = "ev_month_on_03";  // март
-    private static final String EV_MONTH_ON_04 = "ev_month_on_04";  // апрель
-    private static final String EV_MONTH_ON_05 = "ev_month_on_05";  // май
-    private static final String EV_MONTH_ON_06 = "ev_month_on_06";  // июнь
-    private static final String EV_MONTH_ON_07 = "ev_month_on_07";  // июль
-    private static final String EV_MONTH_ON_08 = "ev_month_on_08";  // август
-    private static final String EV_MONTH_ON_09 = "ev_month_on_09";  // сентябрь
-    private static final String EV_MONTH_ON_10 = "ev_month_on_10";  // октябрь
-    private static final String EV_MONTH_ON_11 = "ev_month_on_11";  // ноябрь
-    private static final String EV_MONTH_ON_12 = "ev_month_on_12";  // декабрь
+    public static final String EV_MONTH_ON_01 = "ev_month_on_01";  // январь
+    public static final String EV_MONTH_ON_02 = "ev_month_on_02";  // февраль
+    public static final String EV_MONTH_ON_03 = "ev_month_on_03";  // март
+    public static final String EV_MONTH_ON_04 = "ev_month_on_04";  // апрель
+    public static final String EV_MONTH_ON_05 = "ev_month_on_05";  // май
+    public static final String EV_MONTH_ON_06 = "ev_month_on_06";  // июнь
+    public static final String EV_MONTH_ON_07 = "ev_month_on_07";  // июль
+    public static final String EV_MONTH_ON_08 = "ev_month_on_08";  // август
+    public static final String EV_MONTH_ON_09 = "ev_month_on_09";  // сентябрь
+    public static final String EV_MONTH_ON_10 = "ev_month_on_10";  // октябрь
+    public static final String EV_MONTH_ON_11 = "ev_month_on_11";  // ноябрь
+    public static final String EV_MONTH_ON_12 = "ev_month_on_12";  // декабрь
 
     // --- Attributes
     public static boolean isCalendarView = true;        // определяет какой вид необходимо отобрахать на главном экране: календарь или список
