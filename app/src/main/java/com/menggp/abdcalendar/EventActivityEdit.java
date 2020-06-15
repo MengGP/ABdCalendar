@@ -156,7 +156,8 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             eventDateBox.setText( DateHandler.convertDbToHumanNotation(res, eventDateStr));
             // год начала события
             eventSinceYear = event.getEventSinceYear();
-            eventSinceYearBox.setSelection( eventSinceYearSpinnerAdapter.getPosition( String.valueOf(eventSinceYear) ) );
+            if (eventSinceYear==0) eventSinceYearBox.setSelection(0);
+            else eventSinceYearBox.setSelection( eventSinceYearSpinnerAdapter.getPosition( String.valueOf(eventSinceYear) ) );
             // тип события
             eventType = event.getEventType();
             eventTypeBox.setSelection( EventType.getIndexByEventType(eventType) );
