@@ -5,9 +5,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.menggp.abdcalendar.datamodel.Event;
@@ -22,6 +25,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "SettingActivity";
 
+    SharedPreferences generalPrefs;
+
 //    public static final String SHOW_ABOUT_PROGRAM_ACTIVITY = "com.menggp.SHOW_ABOUT_PROGRAM_ACTIVITY";
 
     @Override
@@ -35,10 +40,44 @@ public class SettingsActivity extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);                   // активируем кнопку "home"
         actionBar.setDisplayHomeAsUpEnabled(true);              // отображаем кнопку "home"
 
+        // Получаем настройки
+        generalPrefs = getSharedPreferences(MainActivity.GENERAL_PREFS, MODE_PRIVATE);
+
+        // Получаем элементы с разметки
+        RadioGroup defaultAppView = (RadioGroup)findViewById(R.id.setting_default_app_view);
+        //RadioButton isCalendarViewRadBtn = (RadioButton)findViewById(R.id.radio_is_calendar_view);
+
+        // значения элементтов по умолчанию
+        if ( generalPrefs.getBoolean(MainActivity.DEF_VIEW_IS_CALENDAR, true) ) {
+            RadioButton isCalendarViewRadBtn = (RadioButton)findViewById(R.id.radio_is_calendar_view);
+            isCalendarViewRadBtn.setChecked(true);
+        } else {
+            RadioButton isListViewRadBtn = (RadioButton)findViewById(R.id.radio_is_list_view);
+            isListViewRadBtn.setChecked(true);
+        }
+
+        // Слушатель изменения
+        defaultAppView.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // Создаем редактор prefrences
+                SharedPreferences.Editor generalPrefsEdit = generalPrefs.edit();
+                switch(checkedId) {
+                    case R.id.radio_is_calendar_view:
+                        generalPrefsEdit.putBoolean(MainActivity.DEF_VIEW_IS_CALENDAR, true);
+                        break;
+                    case R.id.radio_is_list_view:
+                        generalPrefsEdit.putBoolean(MainActivity.DEF_VIEW_IS_CALENDAR, false);
+                        break;
+                }
+                generalPrefsEdit.apply();
+            }
+        });
+
     } // end_method
 
     /*
-    Обработка нажатия меню в Action bar
+     Обработка нажатия меню в Action bar
         - кнопка "home" ( дефолтный ID = android.R.id.home )
      */
     @Override

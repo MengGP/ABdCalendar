@@ -57,19 +57,24 @@ public class MainActivity extends AppCompatActivity
     public static final String FROM_MAIN_ACTIVITY = "from_main_activity";
 
     // --- Prefrences
-    private static final String SORT_AND_FILTER_PREFS = "sort_and_filter_prefs";    // имя настроек сортировки и фильтрации
-        // ключи сортировки по типу
+    // общие настройки - имя настроек
+    public static final String GENERAL_PREFS = "general_prefs";
+    // ключи общих настроек
+    public static final String DEF_VIEW_IS_CALENDAR = "def_view_is_calendar";
+    // настройки сортировки и фильтрации - имя настроек
+    public static final String SORT_AND_FILTER_PREFS = "sort_and_filter_prefs";
+    // ключи сортировки по типу
     public static final String EV_TYPE_BIRTHDAY_ON = "ev_type_birthday_on";
     public static final String EV_TYPE_ANNIVERSARY_ON = "ev_type_anniversary_on";
     public static final String EV_TYPE_MEMODATE_ON = "ev_type_memodate_on";
     public static final String EV_TYPE_HOLIDAY_ON = "ev_type_holiday_on";
     public static final String EV_TYPE_OTHER_ON = "ev_type_other_on";
-        // ключ типа сортировки
+    // ключ типа сортировки
         // 0 - по умолчанию - от текущей даты
         // 1 - от начала года
         // 2 - по имени по возрастанию
     public static final String EV_SORT_TYPE = "ev_sort_type";
-        // ключи сортировки по месяцам
+    // ключи сортировки по месяцам
     public static final String EV_MONTH_ON_01 = "ev_month_on_01";  // январь
     public static final String EV_MONTH_ON_02 = "ev_month_on_02";  // февраль
     public static final String EV_MONTH_ON_03 = "ev_month_on_03";  // март
@@ -83,6 +88,8 @@ public class MainActivity extends AppCompatActivity
     public static final String EV_MONTH_ON_11 = "ev_month_on_11";  // ноябрь
     public static final String EV_MONTH_ON_12 = "ev_month_on_12";  // декабрь
 
+
+
     // --- Attributes
     public static boolean isCalendarView = true;        // определяет какой вид необходимо отобрахать на главном экране: календарь или список
     DatabaseAdapter dbAdapter;
@@ -91,7 +98,6 @@ public class MainActivity extends AppCompatActivity
     EventTypeFilter eventTypeFilter;
     EventMonthFilter eventMonthFilter;
     int eventSortType;
-    boolean isSortExist = true;                         // флаг наличия сортировки отличной от стандартной
 
     // Элементы разметки
     ListView eventListView;
@@ -107,9 +113,17 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Проверяем - если приложение запущено первый раз, читаем GENERAL_PREFS
+        if ( savedInstanceState == null ) {
+            // Читаем общие настройки - отображение по умолчанию
+            SharedPreferences generalPrefs = getSharedPreferences(GENERAL_PREFS, MODE_PRIVATE);
+            isCalendarView = generalPrefs.getBoolean(DEF_VIEW_IS_CALENDAR, true);
+        }
+
         // Подключаем настройки и чиатем настройки фильтрации (по умолчанию все значения TRUE)
         sortAndFilterPrefs = getSharedPreferences(SORT_AND_FILTER_PREFS, MODE_PRIVATE);
         readSortAndFilterPrefs();
+
 
         // Обработка - в зависимости от текущего выбранного вида
         // вид - календаря

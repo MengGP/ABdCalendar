@@ -5,10 +5,10 @@
     android:layout_height="match_parent">
 
     <TextView
-        style="@style/settingsTextStyle"
+        style="@style/settings_text_style"
         android:text="Layout - TOP"/>
     <Button
-        style="@style/settingsTextStyle"
+        style="@style/settings_text_style"
         android:text="TOP - btn"
         android:onClick="topBtn"
         />

@@ -63,7 +63,7 @@
         <item name="android:gravity">center</item> </style>
 
     <!-- Settings text style -->
-    <style name="settingsTextStyle">
+    <style name="settings_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">22sp</item>

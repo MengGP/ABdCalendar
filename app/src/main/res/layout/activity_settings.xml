@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="aboutProgram"
+        android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
         <ImageView
             android:src="@drawable/about_program"
@@ -18,19 +19,72 @@
             android:contentDescription="@null"/>
         <TextView
             android:text="@string/about_program"
-            style="@style/settingsTextStyle" />
+            style="@style/settings_text_style" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <ImageView
+            android:src="@drawable/set_default_view"
+            style="@style/settings_images_style"
+            android:layout_gravity="top"
+            android:contentDescription="@null"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/settings_text_style"
+                android:text="@string/default_app_view" />
+
+            <RadioGroup
+                android:id="@+id/setting_default_app_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp">
+
+                <RadioButton
+                    android:id="@+id/radio_is_calendar_view"
+                    style="@style/text18"
+                    android:layout_margin="8dp"
+                    android:text="@string/setting_is_calendar_view"/>
+
+                <RadioButton
+                    android:id="@+id/radio_is_list_view"
+                    style="@style/text18"
+                    android:layout_margin="8dp"
+                    android:text="@string/setting_is_list_view"/>
+
+
+            </RadioGroup>
+
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:onClick="genRndData">
         <ImageView
             android:src="@drawable/profile_action"
             style="@style/settings_images_style" />
         <TextView
             android:text="@string/generate_random_data"
-            style="@style/settingsTextStyle" />
+            style="@style/settings_text_style" />
     </LinearLayout>
 
 </LinearLayout>
