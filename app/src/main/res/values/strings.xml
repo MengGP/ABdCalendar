@@ -51,6 +51,7 @@
     <string name="dialog_no_action">Нет</string>
     <string name="dialog_flush_action">Сбросить</string>
     <string name="dialog_back_action">Назад</string>
+    <string name="dialog_edit_action">Изменить</string>
     <string name="dialog_event_date_picker">Выбор даты события</string>
     <string name="dialog_type_filter_type_filter">Фильтр по типу события:</string>
     <string name="dialog_deselect_all">Снять все</string>

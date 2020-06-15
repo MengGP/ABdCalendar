@@ -48,9 +48,12 @@ public class MainActivity extends AppCompatActivity
                    EventInfoDialogDatable, EventDelConfirmationDialogDatable {
 
     // --- Constants
+    // intent-фильтры
     public static final String SHOW_SETTING_ACTIVITY = "com.menggp.SHOW_SETTINGS_ACTIVITY";
     public static final String SHOW_EVENT_ACTIVITY_INFO = "com.menggp.SHOW_EVENT_ACTIVITY_INFO";
     public static final String SHOW_EVENT_ACTIVITY_EDIT = "com.menggp.SHOW_EVENT_ACTIVITY_EDIT";
+    // тэги
+    public static final String FROM_MAIN_ACTIVITY = "from_main_activity";
 
     // --- Prefrences
     private static final String SORT_AND_FILTER_PREFS = "sort_and_filter_prefs";    // имя настроек сортировки и фильтрации
@@ -293,6 +296,7 @@ public class MainActivity extends AppCompatActivity
     public void onAddBtnClickOnList(View view) {
         Intent intent = new Intent(SHOW_EVENT_ACTIVITY_EDIT);
         intent.putExtra("id",0);
+        intent.putExtra(FROM_MAIN_ACTIVITY, true);
         startActivity(intent);
     } // end_method
 

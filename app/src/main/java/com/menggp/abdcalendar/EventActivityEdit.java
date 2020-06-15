@@ -45,6 +45,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
     Resources res;
     DatabaseAdapter dbAdapter;
     static long eventId = 0;
+    static boolean fromMainActivivty = false;
     Event event;
     String eventDateStr;            // дата события в нотации БД
     int eventSinceYear;             // год начала события
@@ -134,6 +135,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
         Bundle extras = getIntent().getExtras();
         if ( extras != null ) {
             eventId = extras.getLong("id");
+            fromMainActivivty =extras.getBoolean(MainActivity.FROM_MAIN_ACTIVITY);
         }
 
         // Создаем БД адаптер
@@ -340,7 +342,6 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
     Метод описывает обработка нажатия кнопки назад
  */
     private void onBackClick() {
-        // TO DO - доработать с возможностью созданию нового события
         // Если событие редактируется
         if (eventId>0) {
             // Проверяем были ли внесены изменения в событие:
@@ -359,7 +360,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             if (isChanged) {
                 EventChangeConfirmationDialogFragment dialog = new EventChangeConfirmationDialogFragment();
                 dialog.show(getSupportFragmentManager(), "EventChangeConfirmationDialogFragment");
-            } else goEventActivityInfo();
+            } else goBackActivity();
         }
         // если событие новое
         else {
@@ -374,16 +375,24 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
                 isChanged = true;
             else if (!eventAlertType.equals(EventAlertType.NO_ALERT)) isChanged = true;
 
-            // Если были внесены изменения - вызываем диалог подтвержения сохраения из менний, иначе переходим на EventActivityInfo
+            // Если были внесены изменения - вызываем диалог подтвержения сохраения из менний, иначе переходим на MainActivity
             if (isChanged) {
                 EventChangeConfirmationDialogFragment dialog = new EventChangeConfirmationDialogFragment();
                 dialog.show(getSupportFragmentManager(), "EventChangeConfirmationDialogFragment");
-            } else goEventActivityInfo();
+            } else goMainActivity();
         }
 
 
     } // end_method
 
+    /*
+        Метод возращает на предыдущую Activity - если в события не были внесены изменения
+            - в зависимости от того с какой ACtivity был осуществлен переход
+     */
+    private void goBackActivity() {
+        if ( fromMainActivivty ) goMainActivity();
+        else goEventActivityInfo();
+    } // end_method
 
     /*
        Метод вызывает EventActivityInfo и передает в нее ID текущего события
@@ -392,7 +401,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
         Intent intent = new Intent(SHOW_EVENT_ACTIVITY_INFO);
         intent.putExtra("id",eventId );
         startActivity(intent);
-    } // end_class
+    } // end_method
 
     /*
         Метод - возвращает на MAIN_ACTIVITY
@@ -430,7 +439,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
      */
     @Override
     public void noSaveEventChange() {
-        goEventActivityInfo();
+        goBackActivity();
     } // end_method
 
     /*

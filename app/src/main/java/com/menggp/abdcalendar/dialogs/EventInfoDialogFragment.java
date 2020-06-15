@@ -4,21 +4,25 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.menggp.abdcalendar.MainActivity;
 import com.menggp.abdcalendar.R;
 import com.menggp.abdcalendar.datamodel.DateHandler;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
 import com.menggp.abdcalendar.datamodel.EventType;
+import com.menggp.abdcalendar.datamodel.EventTypeFilter;
 import com.menggp.abdcalendar.repository.DatabaseAdapter;
 
 /*
@@ -88,26 +92,17 @@ public class EventInfoDialogFragment extends DialogFragment {
             }
         }; // end_listener
 
-        /*
-        // Слушатель действия - yesAction
-        DialogInterface.OnClickListener yesAction = new DialogInterface.OnClickListener() {
+
+        // Слушатель действия - editAction
+        DialogInterface.OnClickListener editAction = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), R.string.toast_type_filter_changed, Toast.LENGTH_SHORT).show();
-                // Устанавиваем типы событий в соответствии с выбором и передаем объект EventTypeFilter в активити
-                typeFilter = new EventTypeFilter(
-                        typeBirthdayBox.isChecked(),
-                        typeAnniversaryBox.isChecked(),
-                        typeMemodateBox.isChecked(),
-                        typeHolydayBox.isChecked(),
-                        typeOtherBox.isChecked()
-                );
-
-                typeFilterDialogDatable.updTypeFilter(typeFilter);
+                Intent intent = new Intent(MainActivity.SHOW_EVENT_ACTIVITY_EDIT);
+                intent.putExtra("id",eventId);
+                intent.putExtra(MainActivity.FROM_MAIN_ACTIVITY, true);
+                startActivity(intent);
             }
         }; // end_listener
-
-         */
 
 
         // Создаем конструктор диалога и возвращаем построенный с его помощью диалог
@@ -117,8 +112,8 @@ public class EventInfoDialogFragment extends DialogFragment {
                 .setIcon( event.getEventImg() )                                       // иконка в заголовке
                 .setView( view )                                                    // разметка
                 .setNeutralButton(R.string.dialog_del_action, delAction)       // сбросить фильтр
-                // .setNegativeButton(R.string.dialog_back_action, null)     // отмена
-                .setPositiveButton(R.string.dialog_back_action, null)        // да
+                .setNegativeButton(R.string.dialog_edit_action, editAction)     // редактировать
+                .setPositiveButton(R.string.dialog_back_action, null)        // назад
                 .create();
 
 
