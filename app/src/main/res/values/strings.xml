@@ -23,6 +23,7 @@
     <string name="default_app_view">Вид по умолчанию:</string>
     <string name="setting_is_calendar_view">вид календаря</string>
     <string name="setting_is_list_view">вид списка</string>
+    <string name="setting_flush_sort_and_filter">Сброс фильтров и сортировки</string>
 
     <!-- About programm / О программе-->
     <string name="cc_licence_text">В этом проекте использованы материалы по лицензии \"Creative Commons Attribution-NoDerivs 3.0 Unported\" ( https://creativecommons.org/licenses/by-nd/3.0/ )</string>
@@ -63,6 +64,7 @@
     <string name="dialog_sort_type0">от текущей даты (по умолчанию)</string>
     <string name="dialog_sort_type1">с начала года</string>
     <string name="dialog_sort_type2">по имени события</string>
+    <string name="dialog_sort_and_filter_flush">Сбросить фильтры и сортировки?</string>
 
 
     <!-- Тосты -->
@@ -75,6 +77,8 @@
     <string name="toast_type_filter_changed">Фильтр изменен</string>
     <string name="toast_sort_default">Сортировка по умолчанию</string>
     <string name="toast_sort_changed">Тип сортировки изменен</string>
+    <string name="toast_sort_and_filter_flush">Фильтры и сортировки сброшены</string>
+
 
 
     <!-- Месяцы -->

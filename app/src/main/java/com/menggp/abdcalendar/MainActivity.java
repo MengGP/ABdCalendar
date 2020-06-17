@@ -113,17 +113,12 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Проверяем - если приложение запущено первый раз, читаем GENERAL_PREFS
+        // Проверяем - если приложение не было запущено, читаем GENERAL_PREFS
         if ( savedInstanceState == null ) {
             // Читаем общие настройки - отображение по умолчанию
             SharedPreferences generalPrefs = getSharedPreferences(GENERAL_PREFS, MODE_PRIVATE);
             isCalendarView = generalPrefs.getBoolean(DEF_VIEW_IS_CALENDAR, true);
         }
-
-        // Подключаем настройки и чиатем настройки фильтрации (по умолчанию все значения TRUE)
-        sortAndFilterPrefs = getSharedPreferences(SORT_AND_FILTER_PREFS, MODE_PRIVATE);
-        readSortAndFilterPrefs();
-
 
         // Обработка - в зависимости от текущего выбранного вида
         // вид - календаря
@@ -139,11 +134,6 @@ public class MainActivity extends AppCompatActivity
             typeFilterLED = (ImageView)findViewById(R.id.type_filter_indicator);
             monthFilterLED = (ImageView)findViewById(R.id.month_filter_on_list);
             sortLED = (ImageView)findViewById(R.id.sort_on_list);
-
-            // Устанавливаем индикаторы фильтров в зависимости от наличия фильтров
-            if ( eventTypeFilter.filterExist() ) typeFilterLED.setImageResource(R.drawable.filter);
-            if ( eventMonthFilter.filterExist() ) monthFilterLED.setImageResource(R.drawable.filter);
-            if ( eventSortType != 0 ) sortLED.setImageResource(R.drawable.sort);
 
             // Слушатель длинного нажатия на элемент списка - запускает EventActivityInfo
             eventListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -179,37 +169,6 @@ public class MainActivity extends AppCompatActivity
                 }
             });
 
-        }
-
-
-    } // end_method
-
-    /*
-        Метод - onResume
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // Подключаем БД
-        dbAdapter = new DatabaseAdapter(this);
-
-        // Обработка - в зависимости от текущего выбранного вида
-        // вид - календаря
-        if (isCalendarView) { }
-        // вид - списка
-        else {
-            // Получаем данные из БД
-            List<Event> events = dbAdapter.getEvents(eventNameFilterBox.getText().toString(), eventTypeFilter, eventMonthFilter, eventSortType);
-            // Создаем адапред для списка EVENT
-            eventListAdapter = new EventListAdapter(
-                    this,               // контекст
-                    R.layout.list_item_event,   // разметка
-                    events                      // данные
-            );
-            // Устанавливаем адаптер для списка
-            eventListView.setAdapter( eventListAdapter );
-
             // Слушатель изменения текста в поле поиска по имени события
             eventNameFilterBox.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -225,10 +184,52 @@ public class MainActivity extends AppCompatActivity
                 public void afterTextChanged(Editable s) { }
             });
 
-
         }
 
 
+    } // end_method
+
+    /*
+        Метод - onResume
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Подключаем настройки и чиатем настройки фильтрации (по умолчанию все значения TRUE)
+        sortAndFilterPrefs = getSharedPreferences(SORT_AND_FILTER_PREFS, MODE_PRIVATE);
+        readSortAndFilterPrefs();
+
+        // Подключаем БД
+        dbAdapter = new DatabaseAdapter(this);
+
+        // Обработка - в зависимости от текущего выбранного вида
+        // вид - календаря
+        if (isCalendarView) {
+            // TO DO - добавится
+        }
+        // вид - списка
+        else {
+            // Устанавливаем индикаторы фильтров в зависимости от наличия фильтров
+            if ( eventTypeFilter.filterExist() ) typeFilterLED.setImageResource(R.drawable.filter);
+            else typeFilterLED.setImageResource(R.drawable.filter_disable);
+            if ( eventMonthFilter.filterExist() ) monthFilterLED.setImageResource(R.drawable.filter);
+            else monthFilterLED.setImageResource(R.drawable.filter_disable);
+            if ( eventSortType != 0 ) sortLED.setImageResource(R.drawable.sort);
+            else sortLED.setImageResource(R.drawable.sort_disable);
+
+            // Получаем данные из БД
+            List<Event> events = dbAdapter.getEvents(eventNameFilterBox.getText().toString(), eventTypeFilter, eventMonthFilter, eventSortType);
+            // Создаем адапред для списка EVENT
+            eventListAdapter = new EventListAdapter(
+                    this,               // контекст
+                    R.layout.list_item_event,   // разметка
+                    events                      // данные
+            );
+            // Устанавливаем адаптер для списка
+            eventListView.setAdapter( eventListAdapter );
+
+        }
 
     } // end_method
 

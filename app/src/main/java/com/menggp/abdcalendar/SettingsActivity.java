@@ -16,12 +16,14 @@ import android.widget.Toast;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
 import com.menggp.abdcalendar.datamodel.EventType;
+import com.menggp.abdcalendar.dialogs.SortAndFilterFlushDialogDatable;
+import com.menggp.abdcalendar.dialogs.SortAndFilterFlushDialogFragment;
 import com.menggp.abdcalendar.repository.DatabaseAdapter;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements SortAndFilterFlushDialogDatable {
 
     private static final String LOG_TAG = "SettingActivity";
 
@@ -36,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // настройка Action bar
         ActionBar actionBar = getSupportActionBar();            // получем доступ к action bar
-        actionBar.setTitle(R.string.title_activity_settings);   // меняем заголовок
+        actionBar.setTitle(R.string.title_activity_settings);                        // меняем заголовок
         actionBar.setHomeButtonEnabled(true);                   // активируем кнопку "home"
         actionBar.setDisplayHomeAsUpEnabled(true);              // отображаем кнопку "home"
 
@@ -85,24 +87,72 @@ public class SettingsActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home :
-                this.finish();
+                goMainActivity();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     } // end_method
 
     /*
-    Обработка выбора пункта настроек "О программе / About programm"
+        Метод - возвращает на MAIN_ACTIVITY
+    */
+    private void goMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    } // end_method
+
+    /*
+        Обработка выбора пункта настроек "О программе / About programm"
     */
     public void aboutProgram(View view) {
         Intent intentAboutProgram = new Intent(MainActivity.SHOW_ABOUT_PROGRAM_ACTIVITY);
         startActivity(intentAboutProgram);
-
     } // end_method
 
     /*
-        Метод генерирует услучайные EVENT-ы и записывает их в БД
+        Обработка "сброса фильтров и сортировки "
      */
+    public void flushSortAndFilters(View view) {
+        SortAndFilterFlushDialogFragment dialog = new SortAndFilterFlushDialogFragment();
+        dialog.show(getSupportFragmentManager(), "SortAndFilterFlushDialogFragmen");
+    }  // end_method
+
+    /*
+        Реализация метода интерфейса SortAbdFilterFlushDialogDatable
+     */
+    @Override
+    public void flushSortAndFilter() {
+        SharedPreferences sp = getSharedPreferences(MainActivity.SORT_AND_FILTER_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor spEditor = sp.edit();
+        // фильтарция по типу события - умолчания
+        spEditor.putBoolean(MainActivity.EV_TYPE_BIRTHDAY_ON, true);
+        spEditor.putBoolean(MainActivity.EV_TYPE_ANNIVERSARY_ON, true);
+        spEditor.putBoolean(MainActivity.EV_TYPE_MEMODATE_ON, true);
+        spEditor.putBoolean(MainActivity.EV_TYPE_HOLIDAY_ON, true);
+        spEditor.putBoolean(MainActivity.EV_TYPE_OTHER_ON, true);
+        // тип сортировки - по умолчанию
+        spEditor.putInt(MainActivity.EV_SORT_TYPE,0);
+        // фильтрация по месяцам - по умолчаию
+        spEditor.putBoolean(MainActivity.EV_MONTH_ON_01, true);
+        spEditor.putBoolean(MainActivity.EV_MONTH_ON_02, true);
+        spEditor.putBoolean(MainActivity.EV_MONTH_ON_03, true);
+        spEditor.putBoolean(MainActivity.EV_MONTH_ON_04, true);
+        spEditor.putBoolean(MainActivity.EV_MONTH_ON_05, true);
+        spEditor.putBoolean(MainActivity.EV_MONTH_ON_06, true);
+        spEditor.putBoolean(MainActivity.EV_MONTH_ON_07, true);
+        spEditor.putBoolean(MainActivity.EV_MONTH_ON_08, true);
+        spEditor.putBoolean(MainActivity.EV_MONTH_ON_09, true);
+        spEditor.putBoolean(MainActivity.EV_MONTH_ON_10, true);
+        spEditor.putBoolean(MainActivity.EV_MONTH_ON_11, true);
+        spEditor.putBoolean(MainActivity.EV_MONTH_ON_12, true);
+
+        spEditor.apply();
+    } // end_method
+
+    /*
+            Метод генерирует услучайные EVENT-ы и записывает их в БД
+         */
     public void genRndData(View view) {
         Toast.makeText(getApplicationContext(), "Gen option - checked.", Toast.LENGTH_SHORT).show();
         // Данные для генерации:
