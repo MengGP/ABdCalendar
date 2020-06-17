@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include
+        android:id="@+id/activity_main_calendar_top"
         layout="@layout/activity_main_calendar_top"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
 
     <include
         layout="@layout/activity_main_calendar_middle"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/activity_main_calendar_top"/>
 
-    <include
-        layout="@layout/activity_main_calendar_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        />
-
-</LinearLayout>
+</RelativeLayout>

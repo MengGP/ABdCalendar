@@ -3,7 +3,8 @@
     Основная разметка режима списка главной активити
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!-- Блок кнопок: кнопки / фильтры / сортировки -->

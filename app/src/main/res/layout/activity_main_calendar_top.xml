@@ -2,16 +2,71 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:baselineAligned="false">
 
-    <TextView
-        style="@style/settings_text_style"
-        android:text="Layout - TOP"/>
-    <Button
-        style="@style/settings_text_style"
-        android:text="TOP - btn"
-        android:onClick="topBtn"
-        />
+    <!-- Блок кнопок: кнопки / фильтры / сортировки -->
+        <!-- Фильтрация по типу -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@color/gray_light"
+            android:layout_margin="4dp"
+            android:onClick="onClickTypeFilterOnList">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text14_bold_center"
+                android:text="@string/main_act_type_filter"/>
+            <ImageView
+                android:id="@+id/type_filter_indicator"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="end"
+                android:src="@drawable/filter_disable"
+                android:contentDescription="@string/cd_filter"/>
+        </LinearLayout>
 
+        <!-- empty box -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_margin="4dp">
+        </LinearLayout>
+
+        <!-- empty box -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_margin="4dp">
+        </LinearLayout>
+
+        <!-- Добавление нового события -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@color/gray_light"
+            android:layout_margin="4dp"
+            android:onClick="onAddBtnClickOnList">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text14_bold_center"
+                android:text="@string/main_act_add"/>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="end"
+                android:src="@drawable/add"
+                android:contentDescription="@string/cd_add"/>
+        </LinearLayout>
 
 </LinearLayout>

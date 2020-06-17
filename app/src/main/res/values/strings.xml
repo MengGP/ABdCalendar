@@ -155,6 +155,30 @@
     <string name="lower_since_with_space">"с "</string>
     <string name="no_year">без года</string>
 
+    <!-- Перевод для календаря Applandeo -->
+    <string name="material_calendar_monday">ПН</string>
+    <string name="material_calendar_tuesday">ВТ</string>
+    <string name="material_calendar_wednesday">СР</string>
+    <string name="material_calendar_thursday">ЧТ</string>
+    <string name="material_calendar_friday">ПТ</string>
+    <string name="material_calendar_saturday">СБ</string>
+    <string name="material_calendar_sunday">ВС</string>
+
+    <array name="material_calendar_months_array">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </array>
+
 
     <!-- Lorem ipsum text -->
     <string name="lorem_ipsum"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum faucibus nisi leo, a auctor risus molestie ac. Donec ultrices venenatis sagittis. Sed faucibus dui est, at congue sapien auctor id. In mollis ultricies urna sit amet condimentum. Mauris eu orci id velit blandit euismod ultricies vitae diam. Nam quis tellus urna. Mauris vitae diam nulla. Nam et enim vel nulla dictum hendrerit. Cras vehicula lacinia neque ut laoreet. Nullam pretium urna ultrices lorem fringilla laoreet.

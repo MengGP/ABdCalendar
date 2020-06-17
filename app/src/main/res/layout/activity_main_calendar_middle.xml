@@ -9,8 +9,16 @@
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:highlightedDaysLabelsColor="#ff0000"
+        app:headerColor="@color/gray_light"
+        app:headerLabelColor="@color/red"
+        app:previousButtonSrc="@drawable/arrow_left"
+        app:forwardButtonSrc="@drawable/arrow_right"
         />
+
+    <!--
+    app:previousButtonSrc="@drawable/arrow_left"
+        app:forwardButtonSrc="@drawable/arrow_right"
+    -->
 
 
 
