@@ -264,7 +264,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
                     , 1
                     , 0
                     , "DeleteBtn")
-                    .setIcon(R.drawable.act_bar_trash_bin)
+                    .setIcon(R.drawable.delete)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
 

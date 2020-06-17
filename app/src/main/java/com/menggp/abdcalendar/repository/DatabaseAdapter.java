@@ -201,7 +201,14 @@ public class DatabaseAdapter {
         return result;
     } // end_method
 
-
+    /*
+        Метод страет все данные БД
+     */
+    public void hardResetData() {
+        this.open();
+        SQLiteQueryHandler.flushDB(db);
+        this.close();
+    } // end_method
 
 
 

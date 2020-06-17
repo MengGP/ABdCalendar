@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventAlertType;
 import com.menggp.abdcalendar.datamodel.EventType;
+import com.menggp.abdcalendar.dialogs.DelAllDataDialogDatable;
+import com.menggp.abdcalendar.dialogs.DelAllDataDialogFragment;
 import com.menggp.abdcalendar.dialogs.SortAndFilterFlushDialogDatable;
 import com.menggp.abdcalendar.dialogs.SortAndFilterFlushDialogFragment;
 import com.menggp.abdcalendar.repository.DatabaseAdapter;
@@ -23,7 +25,7 @@ import com.menggp.abdcalendar.repository.DatabaseAdapter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class SettingsActivity extends AppCompatActivity implements SortAndFilterFlushDialogDatable {
+public class SettingsActivity extends AppCompatActivity implements SortAndFilterFlushDialogDatable, DelAllDataDialogDatable {
 
     private static final String LOG_TAG = "SettingActivity";
 
@@ -119,10 +121,17 @@ public class SettingsActivity extends AppCompatActivity implements SortAndFilter
     }  // end_method
 
     /*
-        Реализация метода интерфейса SortAbdFilterFlushDialogDatable
+        Реализация метода интерфейса SortAndFilterFlushDialogDatable
      */
     @Override
     public void flushSortAndFilter() {
+        loadDefSortAndFilterPrefs();
+    } // end_method
+
+    /*
+        Метод сбрасывает настройки сортировки и фильтрации на умолчания
+     */
+    private void loadDefSortAndFilterPrefs() {
         SharedPreferences sp = getSharedPreferences(MainActivity.SORT_AND_FILTER_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor spEditor = sp.edit();
         // фильтарция по типу события - умолчания
@@ -151,8 +160,36 @@ public class SettingsActivity extends AppCompatActivity implements SortAndFilter
     } // end_method
 
     /*
-            Метод генерирует услучайные EVENT-ы и записывает их в БД
-         */
+        Обработка пункта "Удалить все данные"
+     */
+    public void delAllData(View view) {
+        DelAllDataDialogFragment dialog = new DelAllDataDialogFragment();
+        dialog.show(getSupportFragmentManager(), "DelAllDataDialogFragment");
+    } // end_method
+
+    /*
+        Реализация метода интерфейса DelAllDataDialog
+     */
+    @Override
+    public void hardResetData() {
+        // Подключаем БД
+        DatabaseAdapter dbAdapter = new DatabaseAdapter(this);
+        // Очищаем БД
+        dbAdapter.hardResetData();
+        // Сбрасываем настройки фильтров и сортировки на умолчания
+        loadDefSortAndFilterPrefs();
+        // Сбрасываем "общие" настройки на умолчаемя
+        SharedPreferences sp = getSharedPreferences(MainActivity.GENERAL_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor spEditor = sp.edit();
+        spEditor.putBoolean(MainActivity.DEF_VIEW_IS_CALENDAR, true);
+        spEditor.apply();
+        // Возвращаемся на MainActivity
+        goMainActivity();
+    } // end_method
+
+    /*
+                Метод генерирует услучайные EVENT-ы и записывает их в БД
+             */
     public void genRndData(View view) {
         Toast.makeText(getApplicationContext(), "Gen option - checked.", Toast.LENGTH_SHORT).show();
         // Данные для генерации:

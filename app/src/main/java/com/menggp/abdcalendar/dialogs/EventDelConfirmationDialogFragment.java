@@ -66,7 +66,7 @@ public class EventDelConfirmationDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         return builder
                 .setTitle( R.string.dialog_del_confirmation_title )             // заголовок
-                .setIcon( R.drawable.act_bar_trash_bin )                        // иконка в заголовке
+                .setIcon( R.drawable.delete)                        // иконка в заголовке
                 .setView( view )                                                // разметка
                 .setNegativeButton(R.string.dialog_del_action, delAction)       // delete
                 .setPositiveButton(R.string.dialog_cancel_action, null) // cancel

@@ -24,6 +24,7 @@
     <string name="setting_is_calendar_view">вид календаря</string>
     <string name="setting_is_list_view">вид списка</string>
     <string name="setting_flush_sort_and_filter">Сброс фильтров и сортировки</string>
+    <string name="setting_del_data">Удалить все данные</string>
 
     <!-- About programm / О программе-->
     <string name="cc_licence_text">В этом проекте использованы материалы по лицензии \"Creative Commons Attribution-NoDerivs 3.0 Unported\" ( https://creativecommons.org/licenses/by-nd/3.0/ )</string>
@@ -65,6 +66,8 @@
     <string name="dialog_sort_type1">с начала года</string>
     <string name="dialog_sort_type2">по имени события</string>
     <string name="dialog_sort_and_filter_flush">Сбросить фильтры и сортировки?</string>
+    <string name="dialog_del_all_data_title">Удаление данных приложения</string>
+    <string name="dialog_del_all_data">Все данные о событиях будут безвозвратно удалены. Подтвердите удаление?</string>
 
 
     <!-- Тосты -->
@@ -78,6 +81,7 @@
     <string name="toast_sort_default">Сортировка по умолчанию</string>
     <string name="toast_sort_changed">Тип сортировки изменен</string>
     <string name="toast_sort_and_filter_flush">Фильтры и сортировки сброшены</string>
+    <string name="toast_del_all_data">Все данные приложения удалены</string>
 
 
 

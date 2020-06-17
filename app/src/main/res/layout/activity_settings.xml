@@ -80,6 +80,23 @@
                 style="@style/settings_text_style" />
         </LinearLayout>
 
+        <!-- Очистка данных -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables"
+            android:layout_marginTop="16dp"
+            android:onClick="delAllData">
+            <ImageView
+                android:src="@drawable/delete"
+                style="@style/settings_images_style"
+                android:contentDescription="@null"/>
+            <TextView
+                android:text="@string/setting_del_data"
+                style="@style/settings_text_style" />
+        </LinearLayout>
+
         <!-- Генерация случайных событий-->
         <LinearLayout
             android:layout_width="match_parent"

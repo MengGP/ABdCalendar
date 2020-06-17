@@ -215,6 +215,10 @@ class SQLiteQueryHandler {
 
     } // end_method
 
+    // Метод стирает все данные БД
+    static void flushDB(SQLiteDatabase db) {
+        db.execSQL("DELETE FROM " + DatabaseHelper.TABLE_EVENTS);
+    } // end_method
 
 
 
