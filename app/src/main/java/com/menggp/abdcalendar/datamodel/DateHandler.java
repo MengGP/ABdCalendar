@@ -220,6 +220,15 @@ public class DateHandler{
         return nowDay;
     } // end_method
 
+    /*
+        Метод возвращает текущую дату в нотации БД
+     */
+    public static String getNowDayDbNotation() {
+        Date currDate = new Date();
+        SimpleDateFormat dbDateFormat = new SimpleDateFormat("MM-dd");
+        return dbDateFormat.format(currDate);
+    } // end_method
+
 
 
 

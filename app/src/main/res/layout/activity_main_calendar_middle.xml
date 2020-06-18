@@ -13,6 +13,7 @@
         app:headerLabelColor="@color/red"
         app:previousButtonSrc="@drawable/arrow_left"
         app:forwardButtonSrc="@drawable/arrow_right"
+        android:layout_margin="8dp"
         />
 
     <!--

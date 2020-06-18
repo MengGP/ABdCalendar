@@ -174,7 +174,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             // Изображение по умолчанию для спиннера изображения
             eventImgBox.setSelection( eventImgSpinnerAdapter.getPosition( R.drawable.a01_ev_img_default ));
             // Дата по умолчанию = "01-01"
-            eventDateStr = "01-01";
+            eventDateStr = DateHandler.getNowDayDbNotation();
             eventDateBox.setText( DateHandler.convertDbToHumanNotation(res, eventDateStr) );
             // Год начала события - по умолчаению = "без года"
             eventSinceYear = 0;
@@ -367,7 +367,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             // Проверяем - было ли заполнено хотябы одно поле, если да, выводим диалог подтверждения
             boolean isChanged = false;
             if ( eventNameBox.getText().toString().length()>0 ) isChanged = true;
-            else if ( !eventDateStr.equals("01-01") ) isChanged = true;
+            else if ( !eventDateStr.equals(DateHandler.getNowDayDbNotation()) ) isChanged = true;
             else if ( !eventType.equals(EventType.OTHER) ) isChanged = true;
             else if ( eventSinceYear != 0 ) isChanged = true;
             else if ( eventCommentBox.getText().toString().length()>0 ) isChanged = true;
