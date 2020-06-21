@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.applandeo.materialcalendarview.CalendarUtils;
@@ -141,7 +139,7 @@ public class MainActivity extends AppCompatActivity
             try {
                 calendarView.setDate( currMonthOnCalendarView );
             } catch (OutOfDateRangeException ex ) {
-                Log.d(LOG_TAG, ex.getMessage());
+                if (ex.getMessage()!=null) Log.d(LOG_TAG, ex.getMessage());
             }
 
             // Слушатель изменения месяца на календаре - вперед
@@ -435,6 +433,18 @@ public class MainActivity extends AppCompatActivity
      */
     public void onNameFilterClearClick(View view) {
         eventNameFilterBox.setText("");
+    } // end_method
+
+    /*
+        Метод обрабатывает установку текущего месяца на виде календаря
+     */
+    public void onClickSetNowMonthOnCalendarView(View view){
+        currMonthOnCalendarView = Calendar.getInstance();
+        try {
+            calendarView.setDate( currMonthOnCalendarView );
+        } catch (OutOfDateRangeException ex) {
+            if (ex.getMessage()!=null) Log.d(LOG_TAG, ex.getMessage());
+        }
     } // end_method
 
     /*

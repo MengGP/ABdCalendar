@@ -35,7 +35,9 @@
     <string name="main_act_sort"       >СОРТИРОВКА</string>
     <string name="main_act_month"      >МЕСЯЦ     </string>
     <string name="main_act_add"        >ДОБАВИТЬ  </string>
+    <string name="main_act_now_month"  >ТЕКУЩИЙ</string>
     <string name="search_by_name">Поиск по имени</string>
+
 
     <!-- EventActivity - info + edit -->
     <string name="event_date_note">дата события</string>
@@ -150,6 +152,7 @@
     <string name="cd_filter">Фильтр</string>
     <string name="cd_sort">Сортировка</string>
     <string name="cd_add">Добавить</string>
+    <string name="cd_now_month">Установить текущий месяц</string>
 
     <!-- Прочее -->
     <string name="lower_since_with_space">"с "</string>
