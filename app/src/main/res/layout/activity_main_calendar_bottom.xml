@@ -3,16 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        style="@style/settings_text_style"
-        android:text="Layout - BOTTOM"/>
-    <TextView
-        android:id="@+id/bottomText"
-        style="@style/settings_text_style"
-        android:text="default text"/>
-    <ImageView
-        android:id="@+id/bottomDrawble"
-        style="@style/settings_text_style"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test btn"
+        android:layout_gravity="end"
+        android:onClick="calendarTest"/>
 
 
 

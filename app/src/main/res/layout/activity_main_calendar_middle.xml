@@ -6,20 +6,17 @@
     android:layout_height="match_parent">
 
     <com.applandeo.materialcalendarview.CalendarView
-        android:id="@+id/calendarView"
+        android:id="@+id/calendar_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:headerColor="@color/gray_light"
         app:headerLabelColor="@color/red"
+        app:todayLabelColor="@color/red"
         app:previousButtonSrc="@drawable/arrow_left"
         app:forwardButtonSrc="@drawable/arrow_right"
         android:layout_margin="8dp"
+        app:swipeEnabled="true"
         />
-
-    <!--
-    app:previousButtonSrc="@drawable/arrow_left"
-        app:forwardButtonSrc="@drawable/arrow_right"
-    -->
 
 
 

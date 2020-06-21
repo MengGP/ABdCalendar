@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.applandeo.materialcalendarview.CalendarUtils;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
+import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
+import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener;
 import com.menggp.abdcalendar.adapters.EventListAdapter;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventMonthFilter;
@@ -41,6 +43,7 @@ import com.menggp.abdcalendar.repository.DatabaseAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity
                    EventInfoDialogDatable, EventDelConfirmationDialogDatable {
 
     // --- Constants
+    private static final String LOG_TAG = "MainActivity";
     // intent-фильтры
     public static final String SHOW_SETTING_ACTIVITY = "com.menggp.SHOW_SETTINGS_ACTIVITY";
     public static final String SHOW_EVENT_ACTIVITY_INFO = "com.menggp.SHOW_EVENT_ACTIVITY_INFO";
@@ -91,15 +95,18 @@ public class MainActivity extends AppCompatActivity
 
 
     // --- Attributes
-    public static boolean isCalendarView = true;        // определяет какой вид необходимо отобрахать на главном экране: календарь или список
-    DatabaseAdapter dbAdapter;
-    EventListAdapter eventListAdapter;
-    SharedPreferences sortAndFilterPrefs;
+    private static boolean isCalendarView = true;    // определяет какой вид необходимо отобрахать на главном экране: календарь или список
+    private static Calendar currMonthOnCalendarView;
+    DatabaseAdapter dbAdapter;                      // адаптер БД
+    EventListAdapter eventListAdapter;              // адаптер списка событий
+    SharedPreferences sortAndFilterPrefs;           // настройки сортировки и фильтрации
     EventTypeFilter eventTypeFilter;
     EventMonthFilter eventMonthFilter;
     int eventSortType;
 
+
     // Элементы разметки
+    CalendarView calendarView;
     ListView eventListView;
     ImageView typeFilterLED;
     ImageView monthFilterLED;
@@ -118,12 +125,46 @@ public class MainActivity extends AppCompatActivity
             // Читаем общие настройки - отображение по умолчанию
             SharedPreferences generalPrefs = getSharedPreferences(GENERAL_PREFS, MODE_PRIVATE);
             isCalendarView = generalPrefs.getBoolean(DEF_VIEW_IS_CALENDAR, true);
+
+            // текущий месяц на виде календаря - при старте приложения
+            currMonthOnCalendarView = Calendar.getInstance();
         }
 
         // Обработка - в зависимости от текущего выбранного вида
         // вид - календаря
         if (isCalendarView) {
             setContentView(R.layout.activity_main_calendar);
+            // Получаем элементы с разметки
+            calendarView = findViewById(R.id.calendar_view);
+
+            // Установка элементов разметки
+            try {
+                calendarView.setDate( currMonthOnCalendarView );
+            } catch (OutOfDateRangeException ex ) {
+                Log.d(LOG_TAG, ex.getMessage());
+            }
+
+            // Слушатель изменения месяца на календаре - вперед
+            calendarView.setOnPreviousPageChangeListener(new OnCalendarPageChangeListener() {
+                @Override
+                public void onChange() {
+                    // сохраняем - текущий выбранный месяц
+                    currMonthOnCalendarView = calendarView.getCurrentPageDate();
+                }
+            });
+
+            // Слушатель изменения месяца на календаре - вперед
+            calendarView.setOnForwardPageChangeListener(new OnCalendarPageChangeListener() {
+                @Override
+                public void onChange() {
+                    // сохраняем - текущий выбранный месяц
+                    currMonthOnCalendarView = calendarView.getCurrentPageDate();
+                }
+            });
+
+
+
+
         }
         // вид - списка
         else {
@@ -319,51 +360,24 @@ public class MainActivity extends AppCompatActivity
     /*
         Тестовый метод
      */
-    public void topBtn(View view){
-        TextView tv = (TextView) findViewById(R.id.bottomText);
-        tv.setText("TOP bnt was pressed");
+    public void calendarTest(View view) throws OutOfDateRangeException {
 
-        ImageView iv = (ImageView) findViewById(R.id.bottomDrawble);
-        iv.setImageDrawable(CalendarUtils.getDrawableText(this, "img", null,  android.R.color.black, 8));
-
-        List<EventDay> events = new ArrayList<>();
+        //        calendarView.showCurrentMonthPage();
+        /*
         Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        events.add(new EventDay(
-                cal1,
-                // R.drawable.action_bar_main_settings,
-                // CalendarUtils.getDrawableText(this, "img", null,  android.R.color.black, 8),
-                R.drawable.sample_icon,
-                //Color.parseColor("#228822")
-                android.R.color.holo_green_dark
-        ));
-        cal2.set(2020, 01, 05);
-        events.add(new EventDay(
-                cal2,
-                R.drawable.sample_icon,
-                Color.parseColor("#228822")
-        ));
+        cal1.set(2020, 7, 15);
+        calendarView.setDate( cal1 );
 
-        CalendarView calendarView = (CalendarView)findViewById(R.id.calendarView);
-        calendarView.setEvents(events);
+        Date date1 = calendarView.getCurrentPageDate().getTime();
+        Toast.makeText(this, date1.toString(), Toast.LENGTH_LONG).show();
+         */
 
-        Calendar c1 = Calendar.getInstance();
-        c1.set(2020,01,06);
-        Calendar c2 = Calendar.getInstance();
-        c2.set(2020,01,03);
-        List<Calendar> calendars = new ArrayList<>();
-        calendars.add(c1);
-        calendars.add(c2);
+        currMonthOnCalendarView.set(2020, 2, 1);
+        calendarView.setDate(currMonthOnCalendarView);
+        Date mDate = currMonthOnCalendarView.getTime();
+        Toast.makeText(this, mDate.toString(), Toast.LENGTH_LONG).show();
 
-        calendarView.setHighlightedDays(calendars);
 
-        // ------------------------------------------------------
-        if ( eventNameFilterBox!=null )
-            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
-        else {
-            Toast.makeText(getApplicationContext(), "eventListAdapter === NULL ", Toast.LENGTH_SHORT).show();
-            dbAdapter.getEvents(eventTypeFilter);
-        }
 
 
     } // end_method
