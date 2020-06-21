@@ -22,9 +22,9 @@ import java.util.Calendar;
 /*
     Диалог выбора отображаемого месяца на виде календаря
  */
-public class MonthChoiceDialogFragment extends DialogFragment {
+public class ChoiceMonthDialogFragment extends DialogFragment {
 
-    private MonthAndYearChoiceDialogDatable monthAndYearChoiceDialogDatable;
+    private ChoiceMonthAndYearDialogDatable choiceMonthAndYearDialogDatable;
 
     int currYear;
     int currMonth;
@@ -33,7 +33,7 @@ public class MonthChoiceDialogFragment extends DialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        monthAndYearChoiceDialogDatable = (MonthAndYearChoiceDialogDatable) context;
+        choiceMonthAndYearDialogDatable = (ChoiceMonthAndYearDialogDatable) context;
     } // end_method
 
     @NonNull
@@ -119,7 +119,7 @@ public class MonthChoiceDialogFragment extends DialogFragment {
         setNowDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                monthAndYearChoiceDialogDatable.selectMonthAndYearOnCalendarView( Calendar.getInstance() );
+                choiceMonthAndYearDialogDatable.selectMonthAndYearOnCalendarView( Calendar.getInstance() );
                 dismiss();
             }
         });
@@ -130,7 +130,7 @@ public class MonthChoiceDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Calendar currCal = Calendar.getInstance();
                 currCal.set(currYear, 0, 1); // текущий год
-                monthAndYearChoiceDialogDatable.selectMonthAndYearOnCalendarView(currCal);
+                choiceMonthAndYearDialogDatable.selectMonthAndYearOnCalendarView(currCal);
                 dismiss();
             }
         });
@@ -140,7 +140,7 @@ public class MonthChoiceDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Calendar currCal = Calendar.getInstance();
                 currCal.set(currYear, 1, 1); // текущий год
-                monthAndYearChoiceDialogDatable.selectMonthAndYearOnCalendarView(currCal);
+                choiceMonthAndYearDialogDatable.selectMonthAndYearOnCalendarView(currCal);
                 dismiss();
             }
         });
@@ -150,7 +150,7 @@ public class MonthChoiceDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Calendar currCal = Calendar.getInstance();
                 currCal.set(currYear, 2, 1); // текущий год
-                monthAndYearChoiceDialogDatable.selectMonthAndYearOnCalendarView(currCal);
+                choiceMonthAndYearDialogDatable.selectMonthAndYearOnCalendarView(currCal);
                 dismiss();
             }
         });
@@ -160,7 +160,7 @@ public class MonthChoiceDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Calendar currCal = Calendar.getInstance();
                 currCal.set(currYear, 3, 1); // текущий год
-                monthAndYearChoiceDialogDatable.selectMonthAndYearOnCalendarView(currCal);
+                choiceMonthAndYearDialogDatable.selectMonthAndYearOnCalendarView(currCal);
                 dismiss();
             }
         });
@@ -170,7 +170,7 @@ public class MonthChoiceDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Calendar currCal = Calendar.getInstance();
                 currCal.set(currYear, 4, 1); // текущий год
-                monthAndYearChoiceDialogDatable.selectMonthAndYearOnCalendarView(currCal);
+                choiceMonthAndYearDialogDatable.selectMonthAndYearOnCalendarView(currCal);
                 dismiss();
             }
         });
@@ -180,7 +180,7 @@ public class MonthChoiceDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Calendar currCal = Calendar.getInstance();
                 currCal.set(currYear, 5, 1); // текущий год
-                monthAndYearChoiceDialogDatable.selectMonthAndYearOnCalendarView(currCal);
+                choiceMonthAndYearDialogDatable.selectMonthAndYearOnCalendarView(currCal);
                 dismiss();
             }
         });
@@ -190,7 +190,7 @@ public class MonthChoiceDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Calendar currCal = Calendar.getInstance();
                 currCal.set(currYear, 6, 1); // текущий год
-                monthAndYearChoiceDialogDatable.selectMonthAndYearOnCalendarView(currCal);
+                choiceMonthAndYearDialogDatable.selectMonthAndYearOnCalendarView(currCal);
                 dismiss();
             }
         });
@@ -200,7 +200,7 @@ public class MonthChoiceDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Calendar currCal = Calendar.getInstance();
                 currCal.set(currYear, 7, 1); // текущий год
-                monthAndYearChoiceDialogDatable.selectMonthAndYearOnCalendarView(currCal);
+                choiceMonthAndYearDialogDatable.selectMonthAndYearOnCalendarView(currCal);
                 dismiss();
             }
         });
@@ -210,7 +210,7 @@ public class MonthChoiceDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Calendar currCal = Calendar.getInstance();
                 currCal.set(currYear, 8, 1); // текущий год
-                monthAndYearChoiceDialogDatable.selectMonthAndYearOnCalendarView(currCal);
+                choiceMonthAndYearDialogDatable.selectMonthAndYearOnCalendarView(currCal);
                 dismiss();
             }
         });
@@ -220,7 +220,7 @@ public class MonthChoiceDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Calendar currCal = Calendar.getInstance();
                 currCal.set(currYear, 9, 1); // текущий год
-                monthAndYearChoiceDialogDatable.selectMonthAndYearOnCalendarView(currCal);
+                choiceMonthAndYearDialogDatable.selectMonthAndYearOnCalendarView(currCal);
                 dismiss();
             }
         });
@@ -230,7 +230,7 @@ public class MonthChoiceDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Calendar currCal = Calendar.getInstance();
                 currCal.set(currYear, 10, 1); // текущий год
-                monthAndYearChoiceDialogDatable.selectMonthAndYearOnCalendarView(currCal);
+                choiceMonthAndYearDialogDatable.selectMonthAndYearOnCalendarView(currCal);
                 dismiss();
             }
         });
@@ -240,42 +240,10 @@ public class MonthChoiceDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Calendar currCal = Calendar.getInstance();
                 currCal.set(currYear, 11, 1); // текущий год
-                monthAndYearChoiceDialogDatable.selectMonthAndYearOnCalendarView(currCal);
+                choiceMonthAndYearDialogDatable.selectMonthAndYearOnCalendarView(currCal);
                 dismiss();
             }
         });
-
-        /*
-        // Слушательль для блока "Снять все"
-        RelativeLayout deselectAllBlock = (RelativeLayout)view.findViewById(R.id.dialog_deselect_all_types);
-        View.OnClickListener onDeselectAllClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                typeBirthdayBox.setChecked( false );
-                typeAnniversaryBox.setChecked( false );
-                typeMemodateBox.setChecked( false );
-                typeHolydayBox.setChecked( false );
-                typeOtherBox.setChecked( false );
-            }
-        };
-        deselectAllBlock.setOnClickListener( onDeselectAllClickListener );
-
-        // Слушательль для блока "Выделить все"
-        RelativeLayout selectAllBlock = (RelativeLayout)view.findViewById(R.id.dialog_select_all_types);
-        View.OnClickListener onSelectAllClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                typeBirthdayBox.setChecked( true );
-                typeAnniversaryBox.setChecked( true );
-                typeMemodateBox.setChecked( true );
-                typeHolydayBox.setChecked( true );
-                typeOtherBox.setChecked( true );
-            }
-        };
-        selectAllBlock.setOnClickListener( onSelectAllClickListener );
-        */
-
-
 
         // Создаем конструктор диалога и возвращаем построенный с его помощью диалог
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );

@@ -137,6 +137,20 @@ public class DateHandler{
     } // end_method
 
     /*
+        Метод возвращает ArrayList<String> лет от 0-го года для +100 к текущему - в обратном порядке
+    */
+    public static ArrayList<String> getYearsFutureStrList() {
+        // Получаем текущий год
+        Date currDate = new Date();                                                 // текущая дата
+        SimpleDateFormat yearDateFormat = new SimpleDateFormat("yyyy");     // только год
+        int nowYear = Integer.parseInt( yearDateFormat.format(currDate) );          // текущий год
+        ArrayList<String> yearsFutureStrList = new ArrayList<>();
+        for (int i=(nowYear+100); i>=0; i--)
+            yearsFutureStrList.add( String.valueOf(i) );
+        return yearsFutureStrList;
+    } // end_method
+
+    /*
         Метод возвращает ArrayList<String> со списком месяцев
      */
     public static ArrayList<String> getMonthStrList(Resources res) {

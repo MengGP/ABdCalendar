@@ -25,12 +25,13 @@ import com.menggp.abdcalendar.adapters.EventListAdapter;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventMonthFilter;
 import com.menggp.abdcalendar.datamodel.EventTypeFilter;
+import com.menggp.abdcalendar.dialogs.ChoiceYearDialogFragment;
 import com.menggp.abdcalendar.dialogs.EventDelConfirmationDialogDatable;
 import com.menggp.abdcalendar.dialogs.EventDelConfirmationDialogFragment;
 import com.menggp.abdcalendar.dialogs.EventInfoDialogDatable;
 import com.menggp.abdcalendar.dialogs.EventInfoDialogFragment;
-import com.menggp.abdcalendar.dialogs.MonthAndYearChoiceDialogDatable;
-import com.menggp.abdcalendar.dialogs.MonthChoiceDialogFragment;
+import com.menggp.abdcalendar.dialogs.ChoiceMonthAndYearDialogDatable;
+import com.menggp.abdcalendar.dialogs.ChoiceMonthDialogFragment;
 import com.menggp.abdcalendar.dialogs.MonthFilterDialogDatable;
 import com.menggp.abdcalendar.dialogs.MonthFilterDialogFragment;
 import com.menggp.abdcalendar.dialogs.SortDialogDatable;
@@ -45,7 +46,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements TypeFilterDialogDatable, MonthFilterDialogDatable, SortDialogDatable,
-                   EventInfoDialogDatable, EventDelConfirmationDialogDatable, MonthAndYearChoiceDialogDatable {
+                   EventInfoDialogDatable, EventDelConfirmationDialogDatable, ChoiceMonthAndYearDialogDatable {
 
     // --- Constants
     private static final String LOG_TAG = "MainActivity";
@@ -435,27 +436,27 @@ public class MainActivity extends AppCompatActivity
     } // end_method
 
     /*
-        Метод обрабатывает установку текущего месяца на виде календаря
-     */
-    public void onClickSetNowMonthOnCalendarView(View view){
-        currMonthOnCalendarView = Calendar.getInstance();
-        try {
-            calendarView.setDate( currMonthOnCalendarView );
-        } catch (OutOfDateRangeException ex) {
-            if (ex.getMessage()!=null) Log.d(LOG_TAG, ex.getMessage());
-        }
-    } // end_method
-
-    /*
         Метод обрабатывает выбор месяца на виде календаря
      */
     public void onClickChoiceMonthOnCalendarView(View view) {
-        MonthChoiceDialogFragment dialog = new MonthChoiceDialogFragment();
+        ChoiceMonthDialogFragment dialog = new ChoiceMonthDialogFragment();
         Bundle args = new Bundle();
         args.putInt(CURR_YEAR_VIEW, currMonthOnCalendarView.get(Calendar.YEAR));
         args.putInt(CURR_MONTH_ON_VIEW, currMonthOnCalendarView.get(Calendar.MONTH));
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "MonthChoiceDialogFragment");
+    } // end_method
+
+    /*
+        Метод обрабатывает выбор года на виде календаря
+     */
+    public void onClickChoiceYearOnCalendarView(View view) {
+        ChoiceYearDialogFragment dialog = new ChoiceYearDialogFragment();
+        Bundle args = new Bundle();
+        args.putInt(CURR_YEAR_VIEW, currMonthOnCalendarView.get(Calendar.YEAR));
+        args.putInt(CURR_MONTH_ON_VIEW, currMonthOnCalendarView.get(Calendar.MONTH));
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "ChoiceYearDialogFragment");
     } // end_method
 
 

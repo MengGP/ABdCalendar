@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Устновка текущей даты -->
+    <RelativeLayout
+        android:id="@+id/dialog_set_now_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_light"
+        android:layout_margin="8dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/img_set_default_month"
+            android:layout_centerVertical="true"
+            android:padding="4dp"
+            style="@style/text18_bold_center"
+            android:text="@string/dialog_set_now_date"/>
+        <ImageView
+            android:id="@+id/img_set_default_month"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/month_now_stroke"
+            android:contentDescription="@string/cd_now_month"/>
+    </RelativeLayout>
+
+    <!-- Выбор года -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="8dp">
+        <!-- 1е полугодие -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="12dp"
+            style="@style/text18_bold"
+            android:gravity="end"
+            android:layout_gravity="center_vertical"
+            android:text="@string/dialog_year">
+        </TextView>
+        <Spinner
+            android:id="@+id/year_on_calendar_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="12dp"
+            android:background="@color/gray_light" />
+    </LinearLayout>
+
+
+</LinearLayout>

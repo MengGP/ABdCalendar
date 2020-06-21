@@ -29,28 +29,6 @@
                 android:contentDescription="@string/cd_filter"/>
         </LinearLayout>
 
-        <!-- Устновка текущего месяца -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:background="@color/gray_light"
-            android:layout_margin="4dp"
-            android:onClick="onClickSetNowMonthOnCalendarView">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/text14_bold_center"
-                android:text="@string/main_act_now_month"/>
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="end"
-                android:src="@drawable/month_now_stroke"
-                android:contentDescription="@string/cd_now_month"/>
-        </LinearLayout>
-
         <!-- Выбор месяца -->
         <LinearLayout
             android:layout_width="0dp"
@@ -71,6 +49,28 @@
                 android:layout_gravity="end"
                 android:src="@drawable/month_choice_stroke"
                 android:contentDescription="@string/cd_month_choice"/>
+        </LinearLayout>
+
+        <!-- Выбор года -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@color/gray_light"
+            android:layout_margin="4dp"
+            android:onClick="onClickChoiceYearOnCalendarView">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text14_bold_center"
+                android:text="@string/main_act_year"/>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="end"
+                android:src="@drawable/month_choice_stroke"
+                android:contentDescription="@string/cd_year_choice"/>
         </LinearLayout>
 
         <!-- Добавление нового события -->

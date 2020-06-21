@@ -63,8 +63,8 @@ public class EventDatePickerDialogFragment extends DialogFragment {
         ArrayList<String> monthListStr = DateHandler.getMonthStrList(res);
         eventMonthSpinnerAdapter = new StrSpinnerAdapter(
                 this.getContext(),
-                R.layout.spinner_event_date_picker_item,
-                R.layout.spinner_event_date_picker_dropdown,
+                R.layout.spinner_dialog_date_picker_item,
+                R.layout.spinner_dialog_date_picker_dropdown,
                 monthListStr
         );
         eventMonthBox.setAdapter(eventMonthSpinnerAdapter);
@@ -74,8 +74,8 @@ public class EventDatePickerDialogFragment extends DialogFragment {
         ArrayList<String> dayListStr = DateHandler.getDayStrList( eventMonth );
         eventDaySpinnerAdapter = new StrSpinnerAdapter(
                 this.getContext(),
-                R.layout.spinner_event_date_picker_item,
-                R.layout.spinner_event_date_picker_dropdown,
+                R.layout.spinner_dialog_date_picker_item,
+                R.layout.spinner_dialog_date_picker_dropdown,
                 dayListStr
         );
         eventDayBox.setAdapter(eventDaySpinnerAdapter);
