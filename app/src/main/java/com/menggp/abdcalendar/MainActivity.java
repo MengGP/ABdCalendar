@@ -18,9 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.applandeo.materialcalendarview.CalendarUtils;
 import com.applandeo.materialcalendarview.CalendarView;
-import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener;
 import com.menggp.abdcalendar.adapters.EventListAdapter;
@@ -31,6 +29,8 @@ import com.menggp.abdcalendar.dialogs.EventDelConfirmationDialogDatable;
 import com.menggp.abdcalendar.dialogs.EventDelConfirmationDialogFragment;
 import com.menggp.abdcalendar.dialogs.EventInfoDialogDatable;
 import com.menggp.abdcalendar.dialogs.EventInfoDialogFragment;
+import com.menggp.abdcalendar.dialogs.MonthAndYearChoiceDialogDatable;
+import com.menggp.abdcalendar.dialogs.MonthChoiceDialogFragment;
 import com.menggp.abdcalendar.dialogs.MonthFilterDialogDatable;
 import com.menggp.abdcalendar.dialogs.MonthFilterDialogFragment;
 import com.menggp.abdcalendar.dialogs.SortDialogDatable;
@@ -39,14 +39,13 @@ import com.menggp.abdcalendar.dialogs.TypeFilterDialogDatable;
 import com.menggp.abdcalendar.dialogs.TypeFilterDialogFragment;
 import com.menggp.abdcalendar.repository.DatabaseAdapter;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements TypeFilterDialogDatable, MonthFilterDialogDatable, SortDialogDatable,
-                   EventInfoDialogDatable, EventDelConfirmationDialogDatable {
+                   EventInfoDialogDatable, EventDelConfirmationDialogDatable, MonthAndYearChoiceDialogDatable {
 
     // --- Constants
     private static final String LOG_TAG = "MainActivity";
@@ -57,6 +56,8 @@ public class MainActivity extends AppCompatActivity
     public static final String SHOW_ABOUT_PROGRAM_ACTIVITY = "com.menggp.SHOW_ABOUT_PROGRAM_ACTIVITY";
     // тэги
     public static final String FROM_MAIN_ACTIVITY = "from_main_activity";
+    public static final String CURR_MONTH_ON_VIEW = "curr_month_on_view";
+    public static final String CURR_YEAR_VIEW = "curr_year_view";
 
     // --- Prefrences
     // общие настройки - имя настроек
@@ -89,8 +90,6 @@ public class MainActivity extends AppCompatActivity
     public static final String EV_MONTH_ON_10 = "ev_month_on_10";  // октябрь
     public static final String EV_MONTH_ON_11 = "ev_month_on_11";  // ноябрь
     public static final String EV_MONTH_ON_12 = "ev_month_on_12";  // декабрь
-
-
 
     // --- Attributes
     private static boolean isCalendarView = true;    // определяет какой вид необходимо отобрахать на главном экране: календарь или список
@@ -448,6 +447,19 @@ public class MainActivity extends AppCompatActivity
     } // end_method
 
     /*
+        Метод обрабатывает выбор месяца на виде календаря
+     */
+    public void onClickChoiceMonthOnCalendarView(View view) {
+        MonthChoiceDialogFragment dialog = new MonthChoiceDialogFragment();
+        Bundle args = new Bundle();
+        args.putInt(CURR_YEAR_VIEW, currMonthOnCalendarView.get(Calendar.YEAR));
+        args.putInt(CURR_MONTH_ON_VIEW, currMonthOnCalendarView.get(Calendar.MONTH));
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "MonthChoiceDialogFragment");
+    } // end_method
+
+
+    /*
         Метод считывает настройки фильтрации в объекты настроек
      */
     private void readSortAndFilterPrefs() {
@@ -600,13 +612,25 @@ public class MainActivity extends AppCompatActivity
     } // end_method
 
     /*
-    Метод - реализует метод "delEvent(long)" из интерфейса "delConfirmationDialogDatable"
-    для текущей Activity
- */
+        Метод - реализует метод "delEvent(long)" из интерфейса "delConfirmationDialogDatable" для текущей Activity
+    */
     @Override
     public void delEvent(long eventId) {
         dbAdapter.deleteEvent( eventId );
         eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
+    } // end_method
+
+    /*
+        Реализация метода интерфейса MonthChoiceDialogDatable
+     */
+    @Override
+    public void selectMonthAndYearOnCalendarView(Calendar currCal) {
+        currMonthOnCalendarView = currCal;
+        try {
+            calendarView.setDate(currCal);
+        } catch (OutOfDateRangeException ex ) {
+            Log.d(LOG_TAG, ex.getMessage() );
+        }
     } // end_method
 
 } // end_class

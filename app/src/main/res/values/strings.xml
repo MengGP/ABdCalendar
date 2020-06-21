@@ -31,12 +31,13 @@
     <string name="icon8_text">В этом проекте использованы материалы полученные с ресурса ICON8 ( https://icons8.ru ) </string>
 
     <!-- MainACtivity -->
-    <string name="main_act_type_filter">ТИП       </string>
-    <string name="main_act_sort"       >СОРТИРОВКА</string>
-    <string name="main_act_month"      >МЕСЯЦ     </string>
-    <string name="main_act_add"        >ДОБАВИТЬ  </string>
-    <string name="main_act_now_month"  >ТЕКУЩИЙ</string>
+    <string name="main_act_type_filter" >ТИП       </string>
+    <string name="main_act_sort"        >СОРТИРОВКА</string>
+    <string name="main_act_month"       >МЕСЯЦ     </string>
+    <string name="main_act_add"         >ДОБАВИТЬ  </string>
+    <string name="main_act_now_month"   >ТЕКУЩИЙ   </string>
     <string name="search_by_name">Поиск по имени</string>
+
 
 
     <!-- EventActivity - info + edit -->
@@ -70,6 +71,8 @@
     <string name="dialog_sort_and_filter_flush">Сбросить фильтры и сортировки?</string>
     <string name="dialog_del_all_data_title">Удаление данных приложения</string>
     <string name="dialog_del_all_data">Все данные о событиях будут безвозвратно удалены. Подтвердите удаление?</string>
+    <string name="dialog_month_choice_title">Выбор месяца:</string>
+    <string name="dialog_set_now_date">Вернуться к текущему месяцу</string>
 
 
     <!-- Тосты -->
@@ -153,6 +156,7 @@
     <string name="cd_sort">Сортировка</string>
     <string name="cd_add">Добавить</string>
     <string name="cd_now_month">Установить текущий месяц</string>
+    <string name="cd_month_choice">Выбор месяца</string>
 
     <!-- Прочее -->
     <string name="lower_since_with_space">"с "</string>

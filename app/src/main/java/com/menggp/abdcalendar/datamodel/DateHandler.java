@@ -229,9 +229,6 @@ public class DateHandler{
         return dbDateFormat.format(currDate);
     } // end_method
 
-
-
-
 } // end_class
 
 
