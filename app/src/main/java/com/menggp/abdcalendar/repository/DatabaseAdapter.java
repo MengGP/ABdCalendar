@@ -89,8 +89,23 @@ public class DatabaseAdapter {
     /*
         Перегруженный метод getEvents - только фильтр по типу
     */
-    public  List<Event> getEvents(EventTypeFilter typeFilter) {
-        EventMonthFilter monthFilter = new EventMonthFilter( true, true, true, true, true, true, true, true, true, true, true, true );
+    public  List<Event> getEvents(EventTypeFilter typeFilter, int month) {
+        EventMonthFilter monthFilter = new EventMonthFilter();
+        // в зависимости от полученого месяца - устанвливаем фильтр только по этому месяцу
+        switch (month) {
+            case 0: monthFilter.setMonth01(true); break;
+            case 1: monthFilter.setMonth02(true); break;
+            case 2: monthFilter.setMonth03(true); break;
+            case 3: monthFilter.setMonth04(true); break;
+            case 4: monthFilter.setMonth05(true); break;
+            case 5: monthFilter.setMonth06(true); break;
+            case 6: monthFilter.setMonth07(true); break;
+            case 7: monthFilter.setMonth08(true); break;
+            case 8: monthFilter.setMonth09(true); break;
+            case 9: monthFilter.setMonth10(true); break;
+            case 10: monthFilter.setMonth11(true); break;
+            case 11: monthFilter.setMonth12(true); break;
+        }
         int sortType = 1;
         return this.getEvents("", typeFilter, monthFilter, sortType);
     } // end_method

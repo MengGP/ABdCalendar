@@ -18,6 +18,12 @@ public class EventMonthFilter {
     private boolean month11;    // ноябрь
     private boolean month12;    // декабрь
 
+    // Конструктор без аргументов - по умолчанию все аттрибуты = false
+    public EventMonthFilter() {
+        this(false,false,false,false,false,false,false,false,false,false,false,false);
+    } // end_constructor
+
+    // Конструктор - с заданием всех аргументов
     public EventMonthFilter(boolean month01,
                             boolean month02,
                             boolean month03,

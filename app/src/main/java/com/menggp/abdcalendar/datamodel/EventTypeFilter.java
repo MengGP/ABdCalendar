@@ -11,6 +11,12 @@ public class EventTypeFilter {
     private boolean holidayOn;
     private boolean otherOn;
 
+    // Конструктор без аргументов - по умолчанию все аттрибуты = false
+    public EventTypeFilter() {
+        this(false, false, false, false, false);
+    } // end_constructor
+
+    // Конструктор - с задаем всех аргументов
     public EventTypeFilter(boolean birthdayOn, boolean anniversaryOn, boolean memodateOn, boolean holidayOn, boolean otherOn) {
         this.birthdayOn = birthdayOn;
         this.anniversaryOn = anniversaryOn;
@@ -72,6 +78,31 @@ public class EventTypeFilter {
         else if ( !this.otherOn) return true;
 
         return false;
+    } // end_method
+
+    /*
+        Метод устанвливает все фильтры в FALSE
+     */
+    public void setAllFalse() {
+        this.birthdayOn = false;
+        this.anniversaryOn = false;
+        this.memodateOn = false;
+        this.holidayOn = false;
+        this.otherOn = false;
+    } // end_method
+
+    /*
+        Метод устанавливает занчаение TRUE - для укзанного типа события
+     */
+    public void setTypeTrue(EventType type) {
+        // установка типа для текущего события
+        switch ( type ) {
+            case BIRTHDAY: this.setBirthdayOn(true); break;
+            case ANNIVERSARY: this.setBirthdayOn(true); break;
+            case MEMODATE: this.setBirthdayOn(true); break;
+            case HOLIDAY: this.setBirthdayOn(true); break;
+            case OTHER: this.setBirthdayOn(true); break;
+        }
     } // end_method
 
 } // end_class

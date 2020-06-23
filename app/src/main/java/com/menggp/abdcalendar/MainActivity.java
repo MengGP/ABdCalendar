@@ -19,11 +19,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener;
 import com.menggp.abdcalendar.adapters.EventListAdapter;
+import com.menggp.abdcalendar.datamodel.DateHandler;
 import com.menggp.abdcalendar.datamodel.Event;
 import com.menggp.abdcalendar.datamodel.EventMonthFilter;
+import com.menggp.abdcalendar.datamodel.EventType;
 import com.menggp.abdcalendar.datamodel.EventTypeFilter;
 import com.menggp.abdcalendar.dialogs.ChoiceYearDialogFragment;
 import com.menggp.abdcalendar.dialogs.EventDelConfirmationDialogDatable;
@@ -40,6 +43,7 @@ import com.menggp.abdcalendar.dialogs.TypeFilterDialogDatable;
 import com.menggp.abdcalendar.dialogs.TypeFilterDialogFragment;
 import com.menggp.abdcalendar.repository.DatabaseAdapter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -94,7 +98,7 @@ public class MainActivity extends AppCompatActivity
 
     // --- Attributes
     private static boolean isCalendarView = true;    // определяет какой вид необходимо отобрахать на главном экране: календарь или список
-    private static Calendar currMonthOnCalendarView;
+    private static Calendar currDateOnCalendarView;
     DatabaseAdapter dbAdapter;                      // адаптер БД
     EventListAdapter eventListAdapter;              // адаптер списка событий
     SharedPreferences sortAndFilterPrefs;           // настройки сортировки и фильтрации
@@ -125,7 +129,7 @@ public class MainActivity extends AppCompatActivity
             isCalendarView = generalPrefs.getBoolean(DEF_VIEW_IS_CALENDAR, true);
 
             // текущий месяц на виде календаря - при старте приложения
-            currMonthOnCalendarView = Calendar.getInstance();
+            currDateOnCalendarView = Calendar.getInstance();
         }
 
         // Обработка - в зависимости от текущего выбранного вида
@@ -137,7 +141,7 @@ public class MainActivity extends AppCompatActivity
 
             // Установка элементов разметки
             try {
-                calendarView.setDate( currMonthOnCalendarView );
+                calendarView.setDate(currDateOnCalendarView);
             } catch (OutOfDateRangeException ex ) {
                 if (ex.getMessage()!=null) Log.d(LOG_TAG, ex.getMessage());
             }
@@ -147,7 +151,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onChange() {
                     // сохраняем - текущий выбранный месяц
-                    currMonthOnCalendarView = calendarView.getCurrentPageDate();
+                    currDateOnCalendarView = calendarView.getCurrentPageDate();
                 }
             });
 
@@ -156,12 +160,9 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onChange() {
                     // сохраняем - текущий выбранный месяц
-                    currMonthOnCalendarView = calendarView.getCurrentPageDate();
+                    currDateOnCalendarView = calendarView.getCurrentPageDate();
                 }
             });
-
-
-
 
         }
         // вид - списка
@@ -245,7 +246,15 @@ public class MainActivity extends AppCompatActivity
         // Обработка - в зависимости от текущего выбранного вида
         // вид - календаря
         if (isCalendarView) {
-            // TO DO - добавится
+
+            // Список событий на календаре
+            List<EventDay> calendarEvents;
+            // Получение списка событий для установки на календаре - для текущего отображаемого месяца
+            calendarEvents = composeFromEvents(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
+            // Передаем события календаря в вид календаря
+            if (calendarEvents!=null)
+                calendarView.setEvents(calendarEvents);
+
         }
         // вид - списка
         else {
@@ -370,9 +379,9 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this, date1.toString(), Toast.LENGTH_LONG).show();
          */
 
-        currMonthOnCalendarView.set(2020, 2, 1);
-        calendarView.setDate(currMonthOnCalendarView);
-        Date mDate = currMonthOnCalendarView.getTime();
+        currDateOnCalendarView.set(2020, 2, 1);
+        calendarView.setDate(currDateOnCalendarView);
+        Date mDate = currDateOnCalendarView.getTime();
         Toast.makeText(this, mDate.toString(), Toast.LENGTH_LONG).show();
 
 
@@ -441,8 +450,8 @@ public class MainActivity extends AppCompatActivity
     public void onClickChoiceMonthOnCalendarView(View view) {
         ChoiceMonthDialogFragment dialog = new ChoiceMonthDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(CURR_YEAR_VIEW, currMonthOnCalendarView.get(Calendar.YEAR));
-        args.putInt(CURR_MONTH_ON_VIEW, currMonthOnCalendarView.get(Calendar.MONTH));
+        args.putInt(CURR_YEAR_VIEW, currDateOnCalendarView.get(Calendar.YEAR));
+        args.putInt(CURR_MONTH_ON_VIEW, currDateOnCalendarView.get(Calendar.MONTH));
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "MonthChoiceDialogFragment");
     } // end_method
@@ -453,8 +462,8 @@ public class MainActivity extends AppCompatActivity
     public void onClickChoiceYearOnCalendarView(View view) {
         ChoiceYearDialogFragment dialog = new ChoiceYearDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(CURR_YEAR_VIEW, currMonthOnCalendarView.get(Calendar.YEAR));
-        args.putInt(CURR_MONTH_ON_VIEW, currMonthOnCalendarView.get(Calendar.MONTH));
+        args.putInt(CURR_YEAR_VIEW, currDateOnCalendarView.get(Calendar.YEAR));
+        args.putInt(CURR_MONTH_ON_VIEW, currDateOnCalendarView.get(Calendar.MONTH));
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "ChoiceYearDialogFragment");
     } // end_method
@@ -626,12 +635,110 @@ public class MainActivity extends AppCompatActivity
      */
     @Override
     public void selectMonthAndYearOnCalendarView(Calendar currCal) {
-        currMonthOnCalendarView = currCal;
+        currDateOnCalendarView = currCal;
         try {
             calendarView.setDate(currCal);
         } catch (OutOfDateRangeException ex ) {
             Log.d(LOG_TAG, ex.getMessage() );
         }
+    } // end_method
+
+    /*
+        Метод компанует события из БД в события для отображения на календаре - для заданного месяца
+     */
+    private List<EventDay> composeFromEvents(EventTypeFilter typeFilter, int month) {
+        List<EventDay> calEvents = new ArrayList<>();                           // списко для результата
+        List<Event> eventsOnMonth = dbAdapter.getEvents(typeFilter, month);     // события из БД
+
+        // Если событий в заданном месяце нет
+        if (eventsOnMonth.isEmpty()) return null;
+
+        // Набор типиов событий для дня в календаре
+        EventTypeFilter currEventTypeFilter = new EventTypeFilter();
+
+        // Если в заданном месяце одно событие
+        if (eventsOnMonth.size()==1) {
+            currEventTypeFilter.setTypeTrue( eventsOnMonth.get(0).getEventType() );
+            Calendar currCal = Calendar.getInstance();
+            currCal.set(
+                    currDateOnCalendarView.get(Calendar.YEAR),                                        // год - отображаемый на календаре
+                    DateHandler.getMonthFromDbDate(eventsOnMonth.get(0).getEventDate())-1,  // месяц - из собыяти, с коррекцией на 1
+                    DateHandler.getDayFromDbDate(eventsOnMonth.get(0).getEventDate())               // день - из собятия
+            );
+            // TO DO - устновка составного изображения
+            calEvents.add( new EventDay(currCal, R.drawable.a02_ev_img_ballon) );
+            return calEvents;
+        }
+
+        // Если событий 2 и более
+        String currEventDate;
+        String prevEventDate;
+        // Для первого события - "помечаем тип"
+        currEventTypeFilter.setTypeTrue( eventsOnMonth.get(0).getEventType() );
+        // Цикл по событиям - для текущего месяца - без первого и последнего события
+        for (int i=1; i<(eventsOnMonth.size()-1); i++) {
+            Calendar currCal = Calendar.getInstance();
+            currEventDate = eventsOnMonth.get(i).getEventDate();
+            prevEventDate = eventsOnMonth.get(i-1).getEventDate();
+          // Если дата текущего события совпадает с датой предыдуещего (по индексу в списке) - добаялем тип события в объект фильра
+            if( currEventDate.equals(prevEventDate) )
+                currEventTypeFilter.setTypeTrue( eventsOnMonth.get(i).getEventType() );
+                // Иначе - записываем "предыдущее" событие с датой как собятие с типом по накопленному фильтру
+                //  - очищаем фильтр и после устанвливаем фильр для текущего события
+            else {
+                currCal.set(
+                        currDateOnCalendarView.get(Calendar.YEAR),                                        // год - отображаемый на календаре
+                        DateHandler.getMonthFromDbDate(eventsOnMonth.get(i-1).getEventDate())-1,  // месяц - из собыяти, с коррекцией на 1
+                        DateHandler.getDayFromDbDate(eventsOnMonth.get(i-1).getEventDate())               // день - из собятия
+                );
+                // TO DO - устновка составного изображения
+                calEvents.add( new EventDay(currCal, R.drawable.a02_ev_img_ballon) );
+                // сброс установленных типов
+                currEventTypeFilter.setAllFalse();
+                // установка типа для текущего события
+                currEventTypeFilter.setTypeTrue( eventsOnMonth.get(i).getEventType() );
+            }
+        }
+        // Для последнего события - если даты совпадают с предпоследним - пишем как в один день, если нет, в отдельные
+        int lastInd = eventsOnMonth.size()-1;   // индекс последнего события
+        int penultInd = eventsOnMonth.size()-2; // индекс предпоследнего события
+        currEventDate = eventsOnMonth.get(lastInd).getEventDate();
+        prevEventDate = eventsOnMonth.get(penultInd).getEventDate();
+        if ( currEventDate.equals(prevEventDate)) {
+            currEventTypeFilter.setTypeTrue( eventsOnMonth.get(lastInd).getEventType() );
+            Calendar currCal = Calendar.getInstance();
+            currCal.set(
+                    currDateOnCalendarView.get(Calendar.YEAR),                                        // год - отображаемый на календаре
+                    DateHandler.getMonthFromDbDate(eventsOnMonth.get(lastInd).getEventDate())-1,  // месяц - из собыяти, с коррекцией на 1
+                    DateHandler.getDayFromDbDate(eventsOnMonth.get(lastInd).getEventDate())               // день - из собятия
+            );
+            // TO DO - устновка составного изображения
+            calEvents.add( new EventDay(currCal, R.drawable.a02_ev_img_ballon) );
+        } else {
+            // Записываем предпоследее события
+            Calendar penultCal = Calendar.getInstance();
+            penultCal.set(
+                    currDateOnCalendarView.get(Calendar.YEAR),                                            // год - отображаемый на календаре
+                    DateHandler.getMonthFromDbDate(eventsOnMonth.get(penultInd).getEventDate())-1,  // месяц - из собыяти, с коррекцией на 1
+                    DateHandler.getDayFromDbDate(eventsOnMonth.get(penultInd).getEventDate())               // день - из собятия
+            );
+            // TO DO - устновка составного изображения
+            calEvents.add( new EventDay(penultCal, R.drawable.a02_ev_img_ballon) );
+
+            // Записываем последнее событие
+            currEventTypeFilter.setAllFalse();
+            currEventTypeFilter.setTypeTrue( eventsOnMonth.get(lastInd).getEventType() );
+            Calendar lastCal = Calendar.getInstance();
+            lastCal.set(
+                    currDateOnCalendarView.get(Calendar.YEAR),                                        // год - отображаемый на календаре
+                    DateHandler.getMonthFromDbDate(eventsOnMonth.get(lastInd).getEventDate())-1,  // месяц - из собыяти, с коррекцией на 1
+                    DateHandler.getDayFromDbDate(eventsOnMonth.get(lastInd).getEventDate())               // день - из собятия
+            );
+            // TO DO - устновка составного изображения
+            calEvents.add( new EventDay(lastCal, R.drawable.a02_ev_img_ballon) );
+        }
+
+        return calEvents;
     } // end_method
 
 } // end_class
