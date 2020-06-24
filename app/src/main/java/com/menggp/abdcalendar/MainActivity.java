@@ -665,8 +665,7 @@ public class MainActivity extends AppCompatActivity
                     DateHandler.getMonthFromDbDate(eventsOnMonth.get(0).getEventDate())-1,  // месяц - из собыяти, с коррекцией на 1
                     DateHandler.getDayFromDbDate(eventsOnMonth.get(0).getEventDate())               // день - из собятия
             );
-            // TO DO - устновка составного изображения
-            calEvents.add( new EventDay(currCal, R.drawable.a02_ev_img_ballon) );
+            calEvents.add( new EventDay(currCal, getCalendarEventsIcon(currEventTypeFilter) ));
             return calEvents;
         }
 
@@ -680,7 +679,7 @@ public class MainActivity extends AppCompatActivity
             Calendar currCal = Calendar.getInstance();
             currEventDate = eventsOnMonth.get(i).getEventDate();
             prevEventDate = eventsOnMonth.get(i-1).getEventDate();
-          // Если дата текущего события совпадает с датой предыдуещего (по индексу в списке) - добаялем тип события в объект фильра
+            // Если дата текущего события совпадает с датой предыдуещего (по индексу в списке) - добаялем тип события в объект фильра
             if( currEventDate.equals(prevEventDate) )
                 currEventTypeFilter.setTypeTrue( eventsOnMonth.get(i).getEventType() );
                 // Иначе - записываем "предыдущее" событие с датой как собятие с типом по накопленному фильтру
@@ -691,8 +690,8 @@ public class MainActivity extends AppCompatActivity
                         DateHandler.getMonthFromDbDate(eventsOnMonth.get(i-1).getEventDate())-1,  // месяц - из собыяти, с коррекцией на 1
                         DateHandler.getDayFromDbDate(eventsOnMonth.get(i-1).getEventDate())               // день - из собятия
                 );
-                // TO DO - устновка составного изображения
-                calEvents.add( new EventDay(currCal, R.drawable.a02_ev_img_ballon) );
+
+                calEvents.add( new EventDay(currCal, getCalendarEventsIcon(currEventTypeFilter)) );
                 // сброс установленных типов
                 currEventTypeFilter.setAllFalse();
                 // установка типа для текущего события
@@ -712,8 +711,8 @@ public class MainActivity extends AppCompatActivity
                     DateHandler.getMonthFromDbDate(eventsOnMonth.get(lastInd).getEventDate())-1,  // месяц - из собыяти, с коррекцией на 1
                     DateHandler.getDayFromDbDate(eventsOnMonth.get(lastInd).getEventDate())               // день - из собятия
             );
-            // TO DO - устновка составного изображения
-            calEvents.add( new EventDay(currCal, R.drawable.a02_ev_img_ballon) );
+
+            calEvents.add( new EventDay(currCal, getCalendarEventsIcon(currEventTypeFilter)) );
         } else {
             // Записываем предпоследее события
             Calendar penultCal = Calendar.getInstance();
@@ -722,8 +721,8 @@ public class MainActivity extends AppCompatActivity
                     DateHandler.getMonthFromDbDate(eventsOnMonth.get(penultInd).getEventDate())-1,  // месяц - из собыяти, с коррекцией на 1
                     DateHandler.getDayFromDbDate(eventsOnMonth.get(penultInd).getEventDate())               // день - из собятия
             );
-            // TO DO - устновка составного изображения
-            calEvents.add( new EventDay(penultCal, R.drawable.a02_ev_img_ballon) );
+
+            calEvents.add( new EventDay(penultCal, getCalendarEventsIcon(currEventTypeFilter)) );
 
             // Записываем последнее событие
             currEventTypeFilter.setAllFalse();
@@ -734,11 +733,44 @@ public class MainActivity extends AppCompatActivity
                     DateHandler.getMonthFromDbDate(eventsOnMonth.get(lastInd).getEventDate())-1,  // месяц - из собыяти, с коррекцией на 1
                     DateHandler.getDayFromDbDate(eventsOnMonth.get(lastInd).getEventDate())               // день - из собятия
             );
-            // TO DO - устновка составного изображения
-            calEvents.add( new EventDay(lastCal, R.drawable.a02_ev_img_ballon) );
+
+            calEvents.add( new EventDay(lastCal, getCalendarEventsIcon(currEventTypeFilter)) );
         }
 
         return calEvents;
+    } // end_method
+
+    /*
+        Метод возвраащет "номер" ресурса drawable - иконки событий для дня - в зависимости от типов событий в этот день
+     */
+    private int getCalendarEventsIcon(EventTypeFilter tf) {
+        int imgRes = R.drawable.i4_1_m;
+        // Получаем типы событий для дня - закодированные в разрядах числа
+        int imgNum = 0;
+        if (tf.isBirthdayOn()) imgNum = imgNum + 1000;
+        if (tf.isAnniversaryOn())imgNum = imgNum + 100;
+        if (tf.isHolidayOn()) imgNum = imgNum + 10;
+        if (tf.isMemodateOn() || tf.isOtherOn()) imgNum = imgNum + 1;
+
+        switch (imgNum) {
+            case 1000: imgRes=R.drawable.i1_1_b; break;
+            case  100: imgRes=R.drawable.i2_1_a; break;
+            case   10: imgRes=R.drawable.i3_1_h; break;
+            case    1: imgRes=R.drawable.i4_1_m; break;
+            case 1100: imgRes=R.drawable.i5_2_ba; break;
+            case 1010: imgRes=R.drawable.i6_2_bh; break;
+            case 1001: imgRes=R.drawable.i7_2_bm; break;
+            case  110: imgRes=R.drawable.i8_2_ah; break;
+            case  101: imgRes=R.drawable.i9_2_am; break;
+            case   11: imgRes=R.drawable.i10_2_hm; break;
+            case 1110: imgRes=R.drawable.i11_3_bah; break;
+            case 1101: imgRes=R.drawable.i12_3_bam; break;
+            case 1011: imgRes=R.drawable.i13_3_bhm; break;
+            case  111: imgRes=R.drawable.i14_3_ahm; break;
+            case 1111: imgRes=R.drawable.i15_4_bahm; break;
+        }
+
+        return imgRes;
     } // end_method
 
 } // end_class

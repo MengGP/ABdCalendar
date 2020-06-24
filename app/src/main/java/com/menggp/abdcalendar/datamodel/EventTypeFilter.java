@@ -98,10 +98,10 @@ public class EventTypeFilter {
         // установка типа для текущего события
         switch ( type ) {
             case BIRTHDAY: this.setBirthdayOn(true); break;
-            case ANNIVERSARY: this.setBirthdayOn(true); break;
-            case MEMODATE: this.setBirthdayOn(true); break;
-            case HOLIDAY: this.setBirthdayOn(true); break;
-            case OTHER: this.setBirthdayOn(true); break;
+            case ANNIVERSARY: this.setAnniversaryOn(true); break;
+            case MEMODATE: this.setMemodateOn(true); break;
+            case HOLIDAY: this.setHolidayOn(true); break;
+            case OTHER: this.setOtherOn(true); break;
         }
     } // end_method
 
