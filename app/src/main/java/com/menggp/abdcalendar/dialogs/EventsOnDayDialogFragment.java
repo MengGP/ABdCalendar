@@ -3,6 +3,7 @@ package com.menggp.abdcalendar.dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -91,6 +92,7 @@ public class EventsOnDayDialogFragment extends DialogFragment {
         // Устанавливаем адатре для списка на разметке
         eventOnDayListView.setAdapter( eventDialogAdapter );
 
+        // Слушатель короткого нажатия на событие в дилоге
         AdapterView.OnItemClickListener onEventClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -101,6 +103,23 @@ public class EventsOnDayDialogFragment extends DialogFragment {
             }
         };
         eventOnDayListView.setOnItemClickListener(onEventClickListener);
+
+        // Слушатель длинного нажатия на событие в диалоге
+        AdapterView.OnItemLongClickListener onEventLongClickListener = new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                // Получаем событие из адаптера
+                Event event = eventDialogAdapter.getItem( position );
+                // Если значение не null - вызываем EventActivityInfo и передаем в нее ID события
+                if (event!=null)
+                    eventsOnDayDialogDatable.getEventActivityInfoFromCalendarView( event.getId() );
+                dismiss();
+                // true - не переходим в обработку короткого нажатия
+                return true;
+            }
+        };
+        eventOnDayListView.setOnItemLongClickListener(onEventLongClickListener);
+
 
         // Создаем конструктор диалога и возвращаем построенный с его помощью диалог
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );

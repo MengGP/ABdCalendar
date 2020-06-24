@@ -6,9 +6,14 @@ package com.menggp.abdcalendar.dialogs;
 public interface EventsOnDayDialogDatable {
 
     /*
-        Метод отображет диалог с карточкой события
+        Метод переходит к диалогу с карточкой события
      */
     void getEventInfoDialogFromCalendarView(long id);
+
+    /*
+        Метод переходит к EventActivityInfo (активити с карточкой события)
+     */
+    void getEventActivityInfoFromCalendarView(long id);
 
 
 } // end_interface

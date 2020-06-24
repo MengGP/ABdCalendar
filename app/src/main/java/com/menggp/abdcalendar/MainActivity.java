@@ -217,9 +217,7 @@ public class MainActivity extends AppCompatActivity
                     Event event = eventListAdapter.getItem( position );
                     // Если значение не null - вызываем EventActivityInfo и передаем в нее ID события
                     if (event!=null) {
-                        Intent intent = new Intent(SHOW_EVENT_ACTIVITY_INFO);
-                        intent.putExtra("id",event.getId() );
-                        startActivity(intent);
+                        goEventActivityInfo( event.getId() );
                     }
                     // true - не переходим в обработку короткого нажатия
                     return true;
@@ -234,7 +232,7 @@ public class MainActivity extends AppCompatActivity
                     Event event = eventListAdapter.getItem( position );
                     // Если значение не null - вызываем EventInfoDialog и передаем в него ID события
                     if (event!=null) {
-                        dispEventInfoDialod( event.getId() );
+                        dispEventInfoDialog( event.getId() );
                     }
                 }
             });
@@ -766,7 +764,7 @@ public class MainActivity extends AppCompatActivity
     /*
         Метод вызывате диалог с информационной карточкой собыяти - в диалог передается ID события
      */
-    private void dispEventInfoDialod(long id) {
+    private void dispEventInfoDialog(long id) {
         EventInfoDialogFragment dialog = new EventInfoDialogFragment();
         Bundle args = new Bundle();
         args.putLong("id", id);
@@ -779,7 +777,24 @@ public class MainActivity extends AppCompatActivity
      */
     @Override
     public void getEventInfoDialogFromCalendarView(long id) {
-        dispEventInfoDialod(id);
+        dispEventInfoDialog(id);
+    } // end_method
+
+    /*
+         Реализация метода интерфейса EventsOnDayDialogDatable
+     */
+    @Override
+    public void getEventActivityInfoFromCalendarView(long id) {
+        goEventActivityInfo(id);
+    } // end_method
+
+    /*
+       Метод вызывает EventActivityInfo
+     */
+    private void goEventActivityInfo(long id) {
+        Intent intent = new Intent(SHOW_EVENT_ACTIVITY_INFO);
+        intent.putExtra("id",id);
+        startActivity(intent);
     } // end_method
 
 
