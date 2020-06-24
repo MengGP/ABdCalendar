@@ -34,6 +34,7 @@ import com.menggp.abdcalendar.dialogs.EventInfoDialogDatable;
 import com.menggp.abdcalendar.dialogs.EventInfoDialogFragment;
 import com.menggp.abdcalendar.dialogs.ChoiceMonthAndYearDialogDatable;
 import com.menggp.abdcalendar.dialogs.ChoiceMonthDialogFragment;
+import com.menggp.abdcalendar.dialogs.EventsOnDayDialogDatable;
 import com.menggp.abdcalendar.dialogs.EventsOnDayDialogFragment;
 import com.menggp.abdcalendar.dialogs.MonthFilterDialogDatable;
 import com.menggp.abdcalendar.dialogs.MonthFilterDialogFragment;
@@ -49,7 +50,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements TypeFilterDialogDatable, MonthFilterDialogDatable, SortDialogDatable,
-                   EventInfoDialogDatable, EventDelConfirmationDialogDatable, ChoiceMonthAndYearDialogDatable {
+                   EventInfoDialogDatable, EventDelConfirmationDialogDatable, ChoiceMonthAndYearDialogDatable,
+                   EventsOnDayDialogDatable  {
 
     // --- Constants
     private static final String LOG_TAG = "MainActivity";
@@ -232,11 +234,7 @@ public class MainActivity extends AppCompatActivity
                     Event event = eventListAdapter.getItem( position );
                     // Если значение не null - вызываем EventInfoDialog и передаем в него ID события
                     if (event!=null) {
-                        EventInfoDialogFragment dialog = new EventInfoDialogFragment();
-                        Bundle args = new Bundle();
-                        args.putLong("id", event.getId());
-                        dialog.setArguments(args);
-                        dialog.show(getSupportFragmentManager(), "EventInfoDialogFragment");
+                        dispEventInfoDialod( event.getId() );
                     }
                 }
             });
@@ -656,8 +654,12 @@ public class MainActivity extends AppCompatActivity
     */
     @Override
     public void delEvent(long eventId) {
-        dbAdapter.deleteEvent( eventId );
-        eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
+        dbAdapter.deleteEvent(eventId);
+        if ( !isCalendarView ) {
+            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString(), eventTypeFilter, eventMonthFilter, eventSortType);
+        } else {
+            updCalendarEvents();
+        }
     } // end_method
 
     /*
@@ -758,10 +760,27 @@ public class MainActivity extends AppCompatActivity
         // Получение списка событий для установки на календаре - для текущего отображаемого месяца
         calendarEvents = composeFromEvents(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
         // Передаем события календаря в вид календаря - если событий нет, очищаем передачей пустого списка
-        // if (calendarEvents!=null)
         calendarView.setEvents(calendarEvents);
-        // else
-        // calendarView.setEvents( new ArrayList<EventDay>() );
     } // end_method
+
+    /*
+        Метод вызывате диалог с информационной карточкой собыяти - в диалог передается ID события
+     */
+    private void dispEventInfoDialod(long id) {
+        EventInfoDialogFragment dialog = new EventInfoDialogFragment();
+        Bundle args = new Bundle();
+        args.putLong("id", id);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "EventInfoDialogFragment");
+    } // end_method
+
+    /*
+         Реализация метода интерфейса EventsOnDayDialogDatable
+     */
+    @Override
+    public void getEventInfoDialogFromCalendarView(long id) {
+        dispEventInfoDialod(id);
+    } // end_method
+
 
 } // end_class
