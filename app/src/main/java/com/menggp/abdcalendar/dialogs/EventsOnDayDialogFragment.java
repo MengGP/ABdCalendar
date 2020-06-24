@@ -38,6 +38,7 @@ public class EventsOnDayDialogFragment extends DialogFragment {
         // Получаем переданные данные о фильтрации по типу в объек EventTypeFilter
         Bundle args = getArguments();
         String date = args.getString(MainActivity.DATE_DB_NOTATION);
+        int year = args.getInt(MainActivity.YEAR_ON_CALENDAR_VIEW);
         EventTypeFilter typeFilter = new EventTypeFilter(
                 args.getBoolean(MainActivity.EV_TYPE_BIRTHDAY_ON),
                 args.getBoolean(MainActivity.EV_TYPE_ANNIVERSARY_ON),
@@ -46,15 +47,25 @@ public class EventsOnDayDialogFragment extends DialogFragment {
                 args.getBoolean(MainActivity.EV_TYPE_OTHER_ON)
         );
 
-        // Получаем события из БД - для текущей даты
-        DatabaseAdapter dbAdapter = new DatabaseAdapter( this.getContext() );
-        List<Event> eventsOnDay = dbAdapter.getEventsOnDay(typeFilter, date);
-
         // Объект resource - для использования в вызываемых методах
         Resources res = getResources();
 
         // Строка заголовка диалога
         String dateString = DateHandler.convertDbToHumanNotation(res, date);
+
+        // Получаем события из БД - для текущей даты
+        DatabaseAdapter dbAdapter = new DatabaseAdapter( this.getContext() );
+        List<Event> eventsOnDay = dbAdapter.getEventsOnDay(typeFilter, date);
+
+        // События с датой 29е февраля - в невисокосные годы - отображаются 28го
+        //      - если такие есть, добавлем их в список и меняем заголовок
+        if ( date.equals("02-28") && !DateHandler.isLeapYear(year) ) {
+            List<Event> eventsOnDayLeap = dbAdapter.getEventsOnDay(typeFilter, "02-29");
+            if ( !eventsOnDayLeap.isEmpty() ) {
+                eventsOnDay.addAll(eventsOnDayLeap);
+                dateString = res.getString(R.string.dialog_29_feb_no_leap);
+            }
+        }
 
         // Получаем разметку и ее элементы
         LayoutInflater inflater = getActivity().getLayoutInflater();

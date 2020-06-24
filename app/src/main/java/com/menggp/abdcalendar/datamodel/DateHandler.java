@@ -268,6 +268,16 @@ public class DateHandler{
         return date;
     } // end_method
 
+    /*
+        Метод определяет, является ли год вискосным
+     */
+    public static boolean isLeapYear(int year) {
+        Calendar calendar= Calendar.getInstance();
+        calendar.set(Calendar.YEAR,year);
+        return calendar.getActualMaximum(Calendar.DAY_OF_YEAR) > 365;
+    } // end_method
+
+
 } // end_class
 
 

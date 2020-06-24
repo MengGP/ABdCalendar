@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
     public static final String CURR_MONTH_ON_VIEW = "curr_month_on_view";
     public static final String CURR_YEAR_VIEW = "curr_year_view";
     public static final String DATE_DB_NOTATION = "date_db_notation";
+    public static final String YEAR_ON_CALENDAR_VIEW = "year_on_calendar_view";
 
     // --- Prefrences
     // общие настройки - имя настроек
@@ -152,12 +153,15 @@ public class MainActivity extends AppCompatActivity
                 public void onDayClick(EventDay eventDay) {
                     // Получаем дату события в виде строки в нотации БД
                     String date = DateHandler.getDBNotationDate( eventDay.getCalendar() );
+                    int year = eventDay.getCalendar().get(Calendar.YEAR);
                     // Если есть события с сыбранной датой (проверяем в БД) - отображаем диалог
                     if ( dbAdapter.getEventCountOnDay(date, eventTypeFilter)>0 ) {
                         EventsOnDayDialogFragment dialog = new EventsOnDayDialogFragment();
                         Bundle args = new Bundle();
-                        // Дата, на собятия которой будут просматриваться
+                        // Дата, собятия которой будут просматриваться
                         args.putString(DATE_DB_NOTATION, date);
+                        // Год отображаемый на календаре
+                        args.putInt(YEAR_ON_CALENDAR_VIEW, year);
                         // Данные фильтрации
                         args.putBoolean(EV_TYPE_BIRTHDAY_ON, eventTypeFilter.isBirthdayOn() );
                         args.putBoolean(EV_TYPE_ANNIVERSARY_ON, eventTypeFilter.isAnniversaryOn() );
@@ -681,18 +685,31 @@ public class MainActivity extends AppCompatActivity
     private List<EventDay> composeFromEvents(EventTypeFilter typeFilter, int month) {
         List<EventDay> calEvents = new ArrayList<>();                           // списко для результата
 
+        EventTypeFilter currTypeFilter = new EventTypeFilter();
+        boolean isLeapYear = DateHandler.isLeapYear( currDateOnCalendarView.get(Calendar.YEAR) );
         // Цикл по дням месяца:
         for (int i=1; i<=31; i++) {
             // Получаем события на заданный день
             List<Event> eventsOnDay = dbAdapter.getEventsOnDay(typeFilter, DateHandler.getDbNotationDate(month+1, i));
+            // Если в эту дату есть одно и более события - фиксируем типы этих событий
             if ( !eventsOnDay.isEmpty() ) {
-                EventTypeFilter currTypeFilter = new EventTypeFilter();
                 Calendar currCalendar = Calendar.getInstance();
-                currCalendar.set(currDateOnCalendarView.get(Calendar.YEAR), month, i);
-                for (Event iter : eventsOnDay ) {
-                     currTypeFilter.setTypeTrue( iter.getEventType() );
+                // Исключение: события 29-февряля,
+                // если год отображаемый на календаре не високосный - совмещаем события 28го и 29го февраля
+                if ( month==1 && i==29 && !isLeapYear ) {
+                    currCalendar.set(currDateOnCalendarView.get(Calendar.YEAR), month, i-1);
+                    for (Event iter : eventsOnDay)
+                        currTypeFilter.setTypeTrue(iter.getEventType());
+                    calEvents.set( calEvents.size()-1, new EventDay(currCalendar, getCalendarEventsIcon(currTypeFilter)));
+                    // calEvents.add(new EventDay(currCalendar, getCalendarEventsIcon(currTypeFilter)));
+                } else {
+                    // обычное поведение - не все дни кроме 29го февраля невисокосного года
+                    currTypeFilter.setAllFalse();
+                    currCalendar.set(currDateOnCalendarView.get(Calendar.YEAR), month, i);
+                    for (Event iter : eventsOnDay)
+                        currTypeFilter.setTypeTrue(iter.getEventType());
+                    calEvents.add(new EventDay(currCalendar, getCalendarEventsIcon(currTypeFilter)));
                 }
-                calEvents.add(new EventDay(currCalendar, getCalendarEventsIcon(currTypeFilter)) );
             }
         }
         return calEvents;
