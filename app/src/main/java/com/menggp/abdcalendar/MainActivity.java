@@ -152,6 +152,11 @@ public class MainActivity extends AppCompatActivity
                 public void onChange() {
                     // сохраняем - текущий выбранный месяц
                     currDateOnCalendarView = calendarView.getCurrentPageDate();
+                    List<EventDay> calendarEvents;  // Список событий для календаре
+                    // Получение списка событий для установки на календаре - для текущего отображаемого месяца
+                    calendarEvents = composeFromEvents(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
+                    if (calendarEvents!=null)
+                        calendarView.setEvents(calendarEvents); // Передаем события календаря в вид календаря
                 }
             });
 
@@ -161,6 +166,11 @@ public class MainActivity extends AppCompatActivity
                 public void onChange() {
                     // сохраняем - текущий выбранный месяц
                     currDateOnCalendarView = calendarView.getCurrentPageDate();
+                    List<EventDay> calendarEvents;  // Список событий для календаре
+                    // Получение списка событий для установки на календаре - для текущего отображаемого месяца
+                    calendarEvents = composeFromEvents(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
+                    if (calendarEvents!=null)
+                        calendarView.setEvents(calendarEvents); // Передаем события календаря в вид календаря
                 }
             });
 
@@ -246,7 +256,6 @@ public class MainActivity extends AppCompatActivity
         // Обработка - в зависимости от текущего выбранного вида
         // вид - календаря
         if (isCalendarView) {
-
             // Список событий на календаре
             List<EventDay> calendarEvents;
             // Получение списка событий для установки на календаре - для текущего отображаемого месяца
@@ -254,7 +263,6 @@ public class MainActivity extends AppCompatActivity
             // Передаем события календаря в вид календаря
             if (calendarEvents!=null)
                 calendarView.setEvents(calendarEvents);
-
         }
         // вид - списка
         else {
@@ -641,6 +649,12 @@ public class MainActivity extends AppCompatActivity
         } catch (OutOfDateRangeException ex ) {
             Log.d(LOG_TAG, ex.getMessage() );
         }
+        // Устанавливаем события для выбранного месяца
+        List<EventDay> calendarEvents;  // Список событий для календаре
+        // Получение списка событий для установки на календаре - для текущего отображаемого месяца
+        calendarEvents = composeFromEvents(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
+        if (calendarEvents!=null)
+            calendarView.setEvents(calendarEvents); // Передаем события календаря в вид календаря
     } // end_method
 
     /*
