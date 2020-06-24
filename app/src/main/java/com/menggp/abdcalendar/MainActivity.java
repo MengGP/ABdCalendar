@@ -23,6 +23,7 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener;
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.menggp.abdcalendar.adapters.EventListAdapter;
 import com.menggp.abdcalendar.datamodel.DateHandler;
 import com.menggp.abdcalendar.datamodel.Event;
@@ -36,6 +37,7 @@ import com.menggp.abdcalendar.dialogs.EventInfoDialogDatable;
 import com.menggp.abdcalendar.dialogs.EventInfoDialogFragment;
 import com.menggp.abdcalendar.dialogs.ChoiceMonthAndYearDialogDatable;
 import com.menggp.abdcalendar.dialogs.ChoiceMonthDialogFragment;
+import com.menggp.abdcalendar.dialogs.EventsOnDayDialogFragment;
 import com.menggp.abdcalendar.dialogs.MonthFilterDialogDatable;
 import com.menggp.abdcalendar.dialogs.MonthFilterDialogFragment;
 import com.menggp.abdcalendar.dialogs.SortDialogDatable;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity
     public static final String FROM_MAIN_ACTIVITY = "from_main_activity";
     public static final String CURR_MONTH_ON_VIEW = "curr_month_on_view";
     public static final String CURR_YEAR_VIEW = "curr_year_view";
+    public static final String DATE_DB_NOTATION = "date_db_notation";
 
     // --- Prefrences
     // общие настройки - имя настроек
@@ -140,12 +143,36 @@ public class MainActivity extends AppCompatActivity
             calendarView = (CalendarView)findViewById(R.id.calendar_view);
             typeFilterLED = (ImageView)findViewById(R.id.type_filter_indicator);
 
-            // Установка элементов разметки
+            // Установка отображаемого календарем месяца/года
             try {
                 calendarView.setDate(currDateOnCalendarView);
             } catch (OutOfDateRangeException ex ) {
                 if (ex.getMessage()!=null) Log.d(LOG_TAG, ex.getMessage());
             }
+
+            // Слушатель короткого нажатия на событие
+            calendarView.setOnDayClickListener(new OnDayClickListener() {
+                @Override
+                public void onDayClick(EventDay eventDay) {
+                    // Получаем дату события в виде строки в нотации БД
+                    String date = DateHandler.getDBNotationDateFromCalendar( eventDay.getCalendar() );
+                    // Если есть события с сыбранной датой (проверяем в БД) - отображаем диалог
+                    if ( dbAdapter.getEventCountOnDay(date, eventTypeFilter)>0 ) {
+                        EventsOnDayDialogFragment dialog = new EventsOnDayDialogFragment();
+                        Bundle args = new Bundle();
+                        // Дата, на собятия которой будут просматриваться
+                        args.putString(DATE_DB_NOTATION, date);
+                        // Данные фильтрации
+                        args.putBoolean(EV_TYPE_BIRTHDAY_ON, eventTypeFilter.isBirthdayOn() );
+                        args.putBoolean(EV_TYPE_ANNIVERSARY_ON, eventTypeFilter.isAnniversaryOn() );
+                        args.putBoolean(EV_TYPE_MEMODATE_ON, eventTypeFilter.isMemodateOn() );
+                        args.putBoolean(EV_TYPE_HOLIDAY_ON, eventTypeFilter.isHolidayOn() );
+                        args.putBoolean(EV_TYPE_OTHER_ON, eventTypeFilter.isOtherOn() );
+                        dialog.setArguments(args);
+                        dialog.show(getSupportFragmentManager(), "EventsOnDayDialogFragment");
+                    }
+                }
+            });
 
             // Слушатель изменения месяца на календаре - вперед
             calendarView.setOnPreviousPageChangeListener(new OnCalendarPageChangeListener() {
@@ -257,7 +284,6 @@ public class MainActivity extends AppCompatActivity
 
             // Обновляем данные на календаре
             updCalendarEvents();
-
         }
         // вид - списка
         else {

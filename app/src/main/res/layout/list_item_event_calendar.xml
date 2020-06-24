@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Разметка для адаптера EventAdapter
-        - вывод списка EVENT в режиме List в MainActivity
+    Разметка для адаптера
+        - вывод списка EVENT в режиме Calendar в диалоге - при выборе даты
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -10,8 +10,8 @@
     <!-- Блок изображения события -->
     <ImageView
         android:id="@+id/event_img_on_list"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:contentDescription="@string/cd_event_img"/>
@@ -22,46 +22,44 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_toEndOf="@id/event_img_on_list"
-        android:layout_toStartOf="@id/event_list_item_ages_block"
+        android:layout_toStartOf="@id/event_type_icon_on_list"
         android:layout_marginStart="8dp">
 
+        <!-- Имя собятия -->
         <TextView
             android:id="@+id/event_name_on_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            style="@style/text18_bold_vert_center" />
+            style="@style/text16_bold_vert_center" />
 
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="2">
-            <TextView
-                android:id="@+id/event_date_on_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                style="@style/text14" />
-            <TextView
-                android:id="@+id/event_left_time_on_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                style="@style/text14" />
+            <!-- тип события -->
             <TextView
                 android:id="@+id/event_type_on_list"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 style="@style/text14" />
+            <!-- дней до события -->
             <TextView
-                android:id="@+id/event_alert_type_on_list"
+                android:id="@+id/event_left_time_on_list"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 style="@style/text14" />
         </GridLayout>
     </LinearLayout>
+
+    <!-- Иконка типа события -->
+    <ImageView
+        android:id="@+id/event_type_icon_on_list"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_toStartOf="@id/event_list_item_ages_block"
+        android:layout_alignParentBottom="true"/>
 
     <!-- Правый блок информации - информации и годах -->
     <LinearLayout
@@ -75,12 +73,7 @@
             android:id="@+id/event_past_years_on_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/text22_bold_center" />
-        <TextView
-            android:id="@+id/event_years_on_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/text14_center" />
+            style="@style/text18_bold_center" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

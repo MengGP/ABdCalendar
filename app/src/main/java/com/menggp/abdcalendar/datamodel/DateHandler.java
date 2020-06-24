@@ -243,6 +243,15 @@ public class DateHandler{
         return dbDateFormat.format(currDate);
     } // end_method
 
+    /*
+        Метод возвращает строку даты (месяц-день) в нотации БД из даты в формателе Calendar
+     */
+    public static String getDBNotationDateFromCalendar(Calendar cal) {
+        Date date = cal.getTime();
+        SimpleDateFormat dbDateFormat = new SimpleDateFormat("MM-dd");
+        return dbDateFormat.format(date);
+    } // end_method
+
 } // end_class
 
 

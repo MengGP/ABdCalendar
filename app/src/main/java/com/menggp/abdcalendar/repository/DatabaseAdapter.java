@@ -89,7 +89,7 @@ public class DatabaseAdapter {
     /*
         Перегруженный метод getEvents - только фильтр по типу
     */
-    public  List<Event> getEvents(EventTypeFilter typeFilter, int month) {
+    public List<Event> getEvents(EventTypeFilter typeFilter, int month) {
         EventMonthFilter monthFilter = new EventMonthFilter();
         // в зависимости от полученого месяца - устанвливаем фильтр только по этому месяцу
         switch (month) {
@@ -108,6 +108,38 @@ public class DatabaseAdapter {
         }
         int sortType = 1;
         return this.getEvents("", typeFilter, monthFilter, sortType);
+    } // end_method
+
+    /*
+        Метод возвращает события на указанный день - с фильтрацией по типу
+     */
+    public List<Event> getEventsOnDay(EventTypeFilter typeFilter, String date) {
+        ArrayList<Event> events = new ArrayList<>();
+        this.open();
+
+        Cursor cursor = SQLiteQueryHandler.getEventsOnDay(db, typeFilter, date);
+
+        // Если курсор содержит данные - извлекаем их и помещаем в ArrayList - events
+        if (cursor.moveToFirst() ) {
+            do {
+                long id = cursor.getLong( cursor.getColumnIndex( dbHelper.COL_EVENT_ID) );
+                String eventName = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_NAME) );
+                // Для даты получаемой из БД - отбрасываем значение года (которое используется только для удобства хранения в БД)
+                String eventDate = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_DATE) );
+                eventDate = eventDate.substring(5,10);
+                EventType eventType = EventType.convertToEventType( cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_TYPE) ) );
+                int eventSinceYear = cursor.getInt( cursor.getColumnIndex(dbHelper.COL_EVENT_SINCE_YEAR) );
+                String eventComment = cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_COMMENT) );
+                int eventImg = cursor.getInt( cursor.getColumnIndex(dbHelper.COL_EVENT_IMG) );
+                EventAlertType eventAlertType = EventAlertType.convertToEventAlertType( cursor.getString( cursor.getColumnIndex(dbHelper.COL_EVENT_ALERT_TYPE) ) );
+
+                events.add( new Event(id, eventName, eventDate, eventType, eventSinceYear, eventComment, eventImg, eventAlertType) );
+            } while ( cursor.moveToNext() );
+        }
+        cursor.close();
+
+        this.close();
+        return events;
     } // end_method
 
     /*
@@ -151,6 +183,17 @@ public class DatabaseAdapter {
         count = DatabaseUtils.queryNumEntries(db, dbHelper.TABLE_EVENTS);
         this.close();
         return  count;
+    } // end_method
+
+    /*
+        Метод возвращаеи количество записей в БД - для определенной даты
+     */
+    public long getEventCountOnDay(String date, EventTypeFilter typeFilter) {
+        long count;
+        this.open();
+        count = SQLiteQueryHandler.getEventCountOnDay(db, date, typeFilter);
+        this.close();
+        return count;
     } // end_method
 
     /*
