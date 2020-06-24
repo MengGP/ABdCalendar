@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -260,9 +261,12 @@ public class MainActivity extends AppCompatActivity
             List<EventDay> calendarEvents;
             // Получение списка событий для установки на календаре - для текущего отображаемого месяца
             calendarEvents = composeFromEvents(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
-            // Передаем события календаря в вид календаря
+            // Передаем события календаря в вид календаря - если событий нет, очищаем передачей пустого списка
             if (calendarEvents!=null)
                 calendarView.setEvents(calendarEvents);
+            else
+                calendarView.setEvents( new ArrayList<EventDay>() );
+
         }
         // вид - списка
         else {
@@ -387,13 +391,12 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this, date1.toString(), Toast.LENGTH_LONG).show();
          */
 
+        /*
         currDateOnCalendarView.set(2020, 2, 1);
         calendarView.setDate(currDateOnCalendarView);
         Date mDate = currDateOnCalendarView.getTime();
         Toast.makeText(this, mDate.toString(), Toast.LENGTH_LONG).show();
-
-
-
+         */
 
     } // end_method
 
