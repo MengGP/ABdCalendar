@@ -71,7 +71,6 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
         actionBar.setHomeButtonEnabled(true);                   // активируем кнопку "home"
         actionBar.setDisplayHomeAsUpEnabled(true);              // отображаем кнопку "home"
 
-
         // Объект resources для вызываемых методов
         res = getResources();
 

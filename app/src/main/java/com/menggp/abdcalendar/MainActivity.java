@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity
     EventMonthFilter eventMonthFilter;
     int eventSortType;
 
-
     // Элементы разметки
     CalendarView calendarView;
     ListView eventListView;
@@ -138,7 +137,8 @@ public class MainActivity extends AppCompatActivity
         if (isCalendarView) {
             setContentView(R.layout.activity_main_calendar);
             // Получаем элементы с разметки
-            calendarView = findViewById(R.id.calendar_view);
+            calendarView = (CalendarView)findViewById(R.id.calendar_view);
+            typeFilterLED = (ImageView)findViewById(R.id.type_filter_indicator);
 
             // Установка элементов разметки
             try {
@@ -153,11 +153,8 @@ public class MainActivity extends AppCompatActivity
                 public void onChange() {
                     // сохраняем - текущий выбранный месяц
                     currDateOnCalendarView = calendarView.getCurrentPageDate();
-                    List<EventDay> calendarEvents;  // Список событий для календаре
-                    // Получение списка событий для установки на календаре - для текущего отображаемого месяца
-                    calendarEvents = composeFromEvents(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
-                    if (calendarEvents!=null)
-                        calendarView.setEvents(calendarEvents); // Передаем события календаря в вид календаря
+                    // Обновляем данные на календаре
+                    updCalendarEvents();
                 }
             });
 
@@ -167,11 +164,8 @@ public class MainActivity extends AppCompatActivity
                 public void onChange() {
                     // сохраняем - текущий выбранный месяц
                     currDateOnCalendarView = calendarView.getCurrentPageDate();
-                    List<EventDay> calendarEvents;  // Список событий для календаре
-                    // Получение списка событий для установки на календаре - для текущего отображаемого месяца
-                    calendarEvents = composeFromEvents(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
-                    if (calendarEvents!=null)
-                        calendarView.setEvents(calendarEvents); // Передаем события календаря в вид календаря
+                    // Обновляем данные на календаре
+                    updCalendarEvents();
                 }
             });
 
@@ -257,15 +251,12 @@ public class MainActivity extends AppCompatActivity
         // Обработка - в зависимости от текущего выбранного вида
         // вид - календаря
         if (isCalendarView) {
-            // Список событий на календаре
-            List<EventDay> calendarEvents;
-            // Получение списка событий для установки на календаре - для текущего отображаемого месяца
-            calendarEvents = composeFromEvents(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
-            // Передаем события календаря в вид календаря - если событий нет, очищаем передачей пустого списка
-            if (calendarEvents!=null)
-                calendarView.setEvents(calendarEvents);
-            else
-                calendarView.setEvents( new ArrayList<EventDay>() );
+            // Устанавливаем индикаторы фильтров в зависимости от наличия фильтров
+            if ( eventTypeFilter.filterExist() ) typeFilterLED.setImageResource(R.drawable.filter);
+            else typeFilterLED.setImageResource(R.drawable.filter_disable);
+
+            // Обновляем данные на календаре
+            updCalendarEvents();
 
         }
         // вид - списка
@@ -403,7 +394,7 @@ public class MainActivity extends AppCompatActivity
     /*
         Метод обработки нажтия на "кнопку" фильтра по типу
      */
-    public void onClickTypeFilterOnList(View view) {
+    public void onClickTypeFilter(View view) {
         TypeFilterDialogFragment dialog = new TypeFilterDialogFragment();
         Bundle args = new Bundle();
         args.putBoolean(EV_TYPE_BIRTHDAY_ON, eventTypeFilter.isBirthdayOn() );
@@ -550,10 +541,10 @@ public class MainActivity extends AppCompatActivity
         readTypeFilterPrefs();
 
         // Обновляем данные в адаптере - для вида календаря обновляем только фильтр типа
-        if ( eventNameFilterBox!=null )
+        if ( !isCalendarView )
             eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
         else
-            Toast.makeText(getApplicationContext(), "eventNameFilterBox === NULL ", Toast.LENGTH_SHORT).show();
+            updCalendarEvents();
 
         // Меняем индикатор фильтра в зависимости от наличия фильтров
         if ( eventTypeFilter.filterExist() ) typeFilterLED.setImageResource(R.drawable.filter);
@@ -587,12 +578,14 @@ public class MainActivity extends AppCompatActivity
         readMonthFilterPrefs();
 
         // Обновляем данные в адаптере - для вида календаря обновляем только фильтр типа
-        if ( eventNameFilterBox!=null )
-            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
+        if ( !isCalendarView ) {
+            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString(), eventTypeFilter, eventMonthFilter, eventSortType);
 
-        // Меняем индикатор фильтра в зависимости от наличия фильтров
-        if ( monthFilter.filterExist() ) monthFilterLED.setImageResource(R.drawable.filter);
-        else monthFilterLED.setImageResource(R.drawable.filter_disable);
+            // Меняем индикатор фильтра в зависимости от наличия фильтров
+            if ( monthFilter.filterExist() ) monthFilterLED.setImageResource(R.drawable.filter);
+            else monthFilterLED.setImageResource(R.drawable.filter_disable);
+        }
+
     } // end_method
 
     /*
@@ -611,12 +604,12 @@ public class MainActivity extends AppCompatActivity
         readSortType();
 
         // Обновляем данные в адаптере - для вида календара обновляется только фильтр типа
-        if ( eventNameFilterBox!=null )
-            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
-
-        // Меняем индикатор фильтра в зависимости от наличия фильтров
-        if ( eventSortType!=0 ) sortLED.setImageResource(R.drawable.sort);
-        else sortLED.setImageResource(R.drawable.sort_disable);
+        if ( !isCalendarView ) {
+            eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString(), eventTypeFilter, eventMonthFilter, eventSortType);
+            // Меняем индикатор фильтра в зависимости от наличия фильтров
+            if ( eventSortType!=0 ) sortLED.setImageResource(R.drawable.sort);
+            else sortLED.setImageResource(R.drawable.sort_disable);
+        }
 
     } // end_method
 
@@ -788,6 +781,21 @@ public class MainActivity extends AppCompatActivity
         }
 
         return imgRes;
+    } // end_method
+
+    /*
+        Метод обновляет данные со событиях отображаемых на календаре
+     */
+    private void updCalendarEvents() {
+        // Список событий на календаре
+        List<EventDay> calendarEvents;
+        // Получение списка событий для установки на календаре - для текущего отображаемого месяца
+        calendarEvents = composeFromEvents(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
+        // Передаем события календаря в вид календаря - если событий нет, очищаем передачей пустого списка
+        if (calendarEvents!=null)
+            calendarView.setEvents(calendarEvents);
+        else
+            calendarView.setEvents( new ArrayList<EventDay>() );
     } // end_method
 
 } // end_class
