@@ -184,7 +184,7 @@ public class DateHandler{
             else currDay += i;
             dayStrList.add( currDay );
         }
-        // елси февраль - завершаем заполнение
+        // если февраль - завершаем заполнение
         if ( month==2 ) return dayStrList;
         // иначе добавляем 30е число
         dayStrList.add("30");
@@ -246,10 +246,26 @@ public class DateHandler{
     /*
         Метод возвращает строку даты (месяц-день) в нотации БД из даты в формателе Calendar
      */
-    public static String getDBNotationDateFromCalendar(Calendar cal) {
+    public static String getDBNotationDate(Calendar cal) {
         Date date = cal.getTime();
         SimpleDateFormat dbDateFormat = new SimpleDateFormat("MM-dd");
         return dbDateFormat.format(date);
+    } // end_method
+
+    /*
+        Метод возвращает строку даты (месяц-день) в нотации БД и числового представления месяца и дня
+     */
+    public static String getDbNotationDate(int month, int day) {
+        String date = "";
+        // месяц
+        if ( month<10 ) date += "0" + month;
+        else date += month;
+        // разделитель
+        date += "-";
+        // день
+        if ( day<10 ) date += "0" + day;
+        else date += day;
+        return date;
     } // end_method
 
 } // end_class
