@@ -117,20 +117,16 @@ public class MainActivity extends AppCompatActivity
     ImageView sortLED;
     EditText eventNameFilterBox;
 
-    /*
-        Метод - onCreate
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Проверяем - если приложение не было запущено, читаем GENERAL_PREFS
+        // Проверяем - если приложение не было запущено,
+        //      читаем GENERAL_PREFS и устанавливаем текущий месяц отображаемым на календаре
         if ( savedInstanceState == null ) {
-            // Читаем общие настройки - отображение по умолчанию
             SharedPreferences generalPrefs = getSharedPreferences(GENERAL_PREFS, MODE_PRIVATE);
             isCalendarView = generalPrefs.getBoolean(DEF_VIEW_IS_CALENDAR, true);
 
-            // текущий месяц на виде календаря - при старте приложения
             currDateOnCalendarView = Calendar.getInstance();
         }
 
@@ -219,8 +215,7 @@ public class MainActivity extends AppCompatActivity
                     if (event!=null) {
                         goEventActivityInfo( event.getId() );
                     }
-                    // true - не переходим в обработку короткого нажатия
-                    return true;
+                    return true;    // true - не переходим в обработку короткого нажатия
                 }
             });
 
@@ -251,15 +246,9 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void afterTextChanged(Editable s) { }
             });
-
         }
-
-
     } // end_method
 
-    /*
-        Метод - onResume
-     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -301,9 +290,7 @@ public class MainActivity extends AppCompatActivity
             );
             // Устанавливаем адаптер для списка
             eventListView.setAdapter( eventListAdapter );
-
         }
-
     } // end_method
 
     /*
@@ -313,7 +300,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
-        // установка иконов в зависимости от текущего вида сноговного окна
+        // установка иконок в Action bar в зависимости от текущего вида основного окна
         int calendarViewIcon, listViewIcon;
         if (isCalendarView) {
             calendarViewIcon = R.drawable.act_bar_main_calendar;
@@ -380,9 +367,10 @@ public class MainActivity extends AppCompatActivity
     } // end_class
 
     /*
-        Метод - обрабатывает нажатие кнопки ADD на разметке списка
+        Метод - обрабатывает нажатие кнопки ADD
      */
-    public void onAddBtnClickOnList(View view) {
+    public void onAddBtnClick(View view) {
+        // Переходим на EventActivityEdit - и передаем ID=0 - новое событие
         Intent intent = new Intent(SHOW_EVENT_ACTIVITY_EDIT);
         intent.putExtra("id",0);
         intent.putExtra(FROM_MAIN_ACTIVITY, true);
@@ -390,33 +378,10 @@ public class MainActivity extends AppCompatActivity
     } // end_method
 
     /*
-        Тестовый метод
-     */
-    public void calendarTest(View view) throws OutOfDateRangeException {
-
-        //        calendarView.showCurrentMonthPage();
-        /*
-        Calendar cal1 = Calendar.getInstance();
-        cal1.set(2020, 7, 15);
-        calendarView.setDate( cal1 );
-
-        Date date1 = calendarView.getCurrentPageDate().getTime();
-        Toast.makeText(this, date1.toString(), Toast.LENGTH_LONG).show();
-         */
-
-        /*
-        currDateOnCalendarView.set(2020, 2, 1);
-        calendarView.setDate(currDateOnCalendarView);
-        Date mDate = currDateOnCalendarView.getTime();
-        Toast.makeText(this, mDate.toString(), Toast.LENGTH_LONG).show();
-         */
-
-    } // end_method
-
-    /*
         Метод обработки нажтия на "кнопку" фильтра по типу
      */
     public void onClickTypeFilter(View view) {
+        // Вызваеем диалог настройки фильтра по типу события - передаем в диалог текущем настройки фильтра
         TypeFilterDialogFragment dialog = new TypeFilterDialogFragment();
         Bundle args = new Bundle();
         args.putBoolean(EV_TYPE_BIRTHDAY_ON, eventTypeFilter.isBirthdayOn() );
@@ -432,6 +397,7 @@ public class MainActivity extends AppCompatActivity
         Метод обработки нажтия на "кнопку" фильтра по месяцу
      */
     public void onClickMonthFilterOnList(View view) {
+        // Вызваеем диалог настройки фильтра по месяцам - передаем в диалог текущем настройки фильтра
         MonthFilterDialogFragment dialog = new MonthFilterDialogFragment();
         Bundle args = new Bundle();
         args.putBoolean(EV_MONTH_ON_01, eventMonthFilter.isMonth01() );
@@ -454,6 +420,7 @@ public class MainActivity extends AppCompatActivity
         Метод обработки нажтия на "кнопку" сортировки
      */
     public void onClickSortOnList(View view) {
+        // Вызываем диалог настройки сортировки - передаем в диалог текущую настройку
         SortDialogFragment dialog = new SortDialogFragment();
         Bundle args = new Bundle();
         args.putInt(EV_SORT_TYPE, eventSortType);
@@ -462,16 +429,10 @@ public class MainActivity extends AppCompatActivity
     } // end_method
 
     /*
-        Метод обрабатывает нажатие кнопки очиски строки фильтра по имени
-     */
-    public void onNameFilterClearClick(View view) {
-        eventNameFilterBox.setText("");
-    } // end_method
-
-    /*
         Метод обрабатывает выбор месяца на виде календаря
      */
     public void onClickChoiceMonthOnCalendarView(View view) {
+        // Вызываем диалог выбора отображаемого на календаре месяца - передаем в диалог текущий отображаемый месяц
         ChoiceMonthDialogFragment dialog = new ChoiceMonthDialogFragment();
         Bundle args = new Bundle();
         args.putInt(CURR_YEAR_VIEW, currDateOnCalendarView.get(Calendar.YEAR));
@@ -484,6 +445,7 @@ public class MainActivity extends AppCompatActivity
         Метод обрабатывает выбор года на виде календаря
      */
     public void onClickChoiceYearOnCalendarView(View view) {
+        // Вызываем диалог выбора отображаемого на календаре года - передаем в диалог текущий отображаемый год
         ChoiceYearDialogFragment dialog = new ChoiceYearDialogFragment();
         Bundle args = new Bundle();
         args.putInt(CURR_YEAR_VIEW, currDateOnCalendarView.get(Calendar.YEAR));
@@ -492,6 +454,12 @@ public class MainActivity extends AppCompatActivity
         dialog.show(getSupportFragmentManager(), "ChoiceYearDialogFragment");
     } // end_method
 
+    /*
+        Метод обрабатывает нажатие кнопки очиски строки фильтра по имени
+     */
+    public void onNameFilterClearClick(View view) {
+        eventNameFilterBox.setText(""); // очищаем полу поиска события по имени
+    } // end_method
 
     /*
         Метод считывает настройки фильтрации в объекты настроек
@@ -674,7 +642,7 @@ public class MainActivity extends AppCompatActivity
         // Устанавливаем события для выбранного месяца
         List<EventDay> calendarEvents;  // Список событий для календаре
         // Получение списка событий для установки на календаре - для текущего отображаемого месяца
-        calendarEvents = composeFromEvents(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
+        calendarEvents = composeCalendarEventsFromDb(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
         if (calendarEvents!=null)
             calendarView.setEvents(calendarEvents); // Передаем события календаря в вид календаря
     } // end_method
@@ -682,7 +650,7 @@ public class MainActivity extends AppCompatActivity
     /*
         Метод компанует события из БД в события для отображения на календаре - для заданного месяца
      */
-    private List<EventDay> composeFromEvents(EventTypeFilter typeFilter, int month) {
+    private List<EventDay> composeCalendarEventsFromDb(EventTypeFilter typeFilter, int month) {
         List<EventDay> calEvents = new ArrayList<>();                           // списко для результата
 
         EventTypeFilter currTypeFilter = new EventTypeFilter();
@@ -756,7 +724,7 @@ public class MainActivity extends AppCompatActivity
         // Список событий на календаре
         List<EventDay> calendarEvents;
         // Получение списка событий для установки на календаре - для текущего отображаемого месяца
-        calendarEvents = composeFromEvents(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
+        calendarEvents = composeCalendarEventsFromDb(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
         // Передаем события календаря в вид календаря - если событий нет, очищаем передачей пустого списка
         calendarView.setEvents(calendarEvents);
     } // end_method

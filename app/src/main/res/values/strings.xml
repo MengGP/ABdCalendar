@@ -8,7 +8,7 @@
 
     <!-- Action bar Titles -->
     <string name="title_activity_settings">Настройки</string>
-    <string name="title_about_program_activity">О программе</string>
+    <string name="title_about_program_activity">О приложении</string>
     <string name="title_event_activity_info">Карточка события</string>
     <string name="title_event_activity_edit">Редактор события</string>
 
@@ -18,7 +18,7 @@
     <string name="calendar_view">В виде календаря</string>
 
     <!-- Настройки - активити -->
-    <string name="about_program">О программе</string>
+    <string name="about_program">О приложении</string>
     <string name="generate_random_data">Генерировать случайные данные</string>
     <string name="default_app_view">Вид по умолчанию:</string>
     <string name="setting_is_calendar_view">вид календаря</string>
@@ -27,8 +27,23 @@
     <string name="setting_del_data">Удалить все данные</string>
 
     <!-- About programm / О программе-->
+    <string name="about_proj_name">Название проекта: \"Календарь событий\"</string>
+    <string name="about_proj_ver">Версия: v0.1-demo</string>
+    <string name="about_proj_author">Автор: Oleg Ustsov</string>
+    <string name="about_email">e-mail: menggp.dev@gmail.com</string>
+    <string name="about_resources">Использованные ресурсы:</string>
     <string name="cc_licence_text">В этом проекте использованы материалы по лицензии \"Creative Commons Attribution-NoDerivs 3.0 Unported\" ( https://creativecommons.org/licenses/by-nd/3.0/ )</string>
     <string name="icon8_text">В этом проекте использованы материалы полученные с ресурса ICON8 ( https://icons8.ru ) </string>
+    <string name="applandeo_calendar_text">В этом проекте использован виджет календаря \"Applandeo / Material-Calendar-View\" - Material Calendar View for Android. Ссылка на проект: https://github.com/Applandeo/Material-Calendar-View </string>
+    <string name="about_demo_limits">Основные ограничения DEMO-версии:</string>
+    <string name="about_demo_limits_text">
+        - Не реализованы напоминания
+        \n- Не реализованно сохранение/восстановление списка событий
+        \n- Ограниченная функциональность выбора изображения для события - только предустановленные
+    </string>
+    <string name="about_whats_new">Что нового:</string>
+    <string name="about_whats_new_v0.1">v0.1-demo:</string>
+    <string name="about_whats_new_v0.1_text">- Первая опубликованная версия</string>
 
     <!-- MainACtivity -->
     <string name="main_act_type_filter" >ТИП       </string>

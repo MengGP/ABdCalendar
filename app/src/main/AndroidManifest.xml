@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.menggp.abdcalendar"
     android:versionCode="1"
-    android:versionName="0.1_demo">
+    android:versionName="0.1-demo">
 
     <application
         android:allowBackup="true"

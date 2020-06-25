@@ -56,6 +56,9 @@
     <style name="text16_italic">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">italic</item> </style>
+    <style name="text16_bold_italic">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold|italic</item> </style>
     <style name="text14">
         <item name="android:textSize">14sp</item> </style>
     <style name="text14_center">
@@ -78,7 +81,7 @@
     </style>
 
     <!-- About program style-->
-    <style name="aboutProgramStyle">
+    <style name="about_program_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
