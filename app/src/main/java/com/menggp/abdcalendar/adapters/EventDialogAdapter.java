@@ -20,7 +20,7 @@ import com.menggp.abdcalendar.datamodel.EventType;
 import java.util.List;
 
 /*
-    Адаптер списка событий - для диалога отображения собфтий выбранной на календере даты, в режиме календаря
+    Адаптер списка событий - для диалога отображения событий для выбранной на календере даты, в режиме календаря
         - оптимизирован с ViewHolder
         - разметка: list_item_event_calendar
  */
@@ -40,23 +40,24 @@ public class EventDialogAdapter extends ArrayAdapter<Event> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        // Оптимизация с помошью ViewHolde-а
+        // Оптимизация с помошью ViewHolder
         EventDialogAdapter.ViewHolder viewHolder;
         if (convertView==null) {
             convertView = inflater.inflate(this.layout, parent, false);
             viewHolder = new EventDialogAdapter.ViewHolder(convertView);
             convertView.setTag(viewHolder);
-        } else {
+        } else
             viewHolder = (EventDialogAdapter.ViewHolder) convertView.getTag();
-        }
 
         Event event = events.get( position );
 
         // Создаем объект resource - для использования при конвертации
         Resources res = convertView.getResources();
 
+
         // Изображение события на разметке
         viewHolder.eventImgOnList.setImageResource( event.getEventImg() );
+
         // Имя события на разметке
         viewHolder.eventNameOnList.setText( event.getEventName() );
 
@@ -66,6 +67,7 @@ public class EventDialogAdapter extends ArrayAdapter<Event> {
         if (deltaDays==-1)  dayLeftSrt = res.getString(R.string.today);
         else dayLeftSrt = res.getQuantityString(R.plurals.days, deltaDays, deltaDays);
         viewHolder.eventLeftTimeOnList.setText( dayLeftSrt );
+
         // Тип события
         viewHolder.eventTypeOnList.setText(EventType.convertToHumanNotation(res, event.getEventType()));
 
@@ -95,12 +97,18 @@ public class EventDialogAdapter extends ArrayAdapter<Event> {
     } // end_method
 
     /*
-            Приватный класс описывающий ViewHolder
-         */
+        Приватный класс описывающий ViewHolder
+    */
     private class ViewHolder {
         // Элементы разметки
-        final ImageView eventImgOnList, eventTypeIconOnList;
-        final TextView eventNameOnList, eventLeftTimeOnList, eventTypeOnList, eventPastYearsOnList, eventSinceYearPrefixOnList, eventSinceYearOnList;
+        final ImageView eventImgOnList;
+        final ImageView eventTypeIconOnList;
+        final TextView eventNameOnList;
+        final TextView eventLeftTimeOnList;
+        final TextView eventTypeOnList;
+        final TextView eventPastYearsOnList;
+        final TextView eventSinceYearPrefixOnList;
+        final TextView eventSinceYearOnList;
         ViewHolder(View view) {
             eventImgOnList = (ImageView) view.findViewById(R.id.event_img_on_list);
             eventNameOnList = (TextView) view.findViewById(R.id.event_name_on_list);

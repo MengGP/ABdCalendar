@@ -3,7 +3,7 @@ package com.menggp.abdcalendar.datamodel;
 import androidx.annotation.NonNull;
 
 /*
-    Класс описывает данные табилцы "Events" БД
+    Класс описывает данные "Событие" - "Event"
  */
 public class Event {
 
@@ -18,7 +18,14 @@ public class Event {
     private EventAlertType eventAlertType;  // 'event_alert_type' - TEXT not null   >>> тип напоминания для события - enum из списка
 
     // Конструктор с полным наборос аргументов
-    public Event(long id, String eventName, String eventDate, EventType eventType, int eventSinceYear, String eventComment, int eventImg, EventAlertType eventAlertType) {
+    public Event(long id,
+                 String eventName,
+                 String eventDate,
+                 EventType eventType,
+                 int eventSinceYear,
+                 String eventComment,
+                 int eventImg,
+                 EventAlertType eventAlertType) {
         this.id = id;
         this.eventName = eventName;
         this.eventDate = eventDate;
@@ -110,7 +117,7 @@ public class Event {
     }
     // --- end_getters_setters
 
-
+    /*
     @NonNull
     @Override
     public String toString() {
@@ -124,5 +131,6 @@ public class Event {
                 this.eventImg+ " : " +
                 this.eventAlertType;
     } // end_method
+     */
 
 } // end_class

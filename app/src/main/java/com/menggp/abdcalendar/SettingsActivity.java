@@ -27,7 +27,7 @@ import java.util.GregorianCalendar;
 
 public class SettingsActivity extends AppCompatActivity implements SortAndFilterFlushDialogDatable, DelAllDataDialogDatable {
 
-    private static final String LOG_TAG = "SettingActivity";
+    // private static final String LOG_TAG = "SettingActivity";
 
     SharedPreferences generalPrefs;
 

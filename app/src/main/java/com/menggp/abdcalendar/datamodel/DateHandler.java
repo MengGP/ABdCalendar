@@ -2,30 +2,24 @@ package com.menggp.abdcalendar.datamodel;
 
 import android.content.res.Resources;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
 
 import com.menggp.abdcalendar.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 
 /*
-    Класс реализует различные преобразования используемых в приложении дат
+    Класс реализует методы работы с датой - все методы статические
  */
 public class DateHandler{
 
     private static final String LOG_TAG = "DateConverter";
 
     /*
-        Преобразование даты из строки формата БД: MM-DD
-            в формат элемета списка: DD month_name
+        Преобразование даты из строки формата БД: MM-DD в формат элемета списка: DD month_name
      */
     public static String convertDbToHumanNotation(Resources res, String date) {
         String result="";
@@ -51,7 +45,7 @@ public class DateHandler{
             case "10": result += res.getString(R.string.october);  break;
             case "11": result += res.getString(R.string.november);  break;
             case "12": result += res.getString(R.string.december);  break;
-        };
+        }
 
         return result;
     } // end_method
@@ -65,7 +59,7 @@ public class DateHandler{
         SimpleDateFormat shortDateFormat = new SimpleDateFormat("MM-dd");   // Короткий формат представления даты - месяц-день
         SimpleDateFormat yearDateFormat = new SimpleDateFormat("yyyy");     // только год
         SimpleDateFormat stdDateFormat = new SimpleDateFormat("yyyyMMdd");  // стандатный формат - ГодМесяцДень
-        Date eventDate = null;
+        Date eventDate;
         Date currDate = new Date();// текущая дата
         String eventDateSrt = dateFromDb;                                           // строковое представление текущей даты
         String currDateStr = shortDateFormat.format(currDate);                      // строковое представлени даты события
@@ -84,14 +78,14 @@ public class DateHandler{
            eventDateSrt = nowYear+eventDateSrt;
            try {
                eventDate = stdDateFormat.parse(eventDateSrt);
-               currDate = stdDateFormat.parse( stdDateFormat.format(currDate ));
-           } catch (Exception ex) {
+               currDate = stdDateFormat.parse( stdDateFormat.format(currDate) );    // отбрасывается лишнаяя часть
+
+               long deltaMs = eventDate.getTime() - currDate.getTime();
+               long days =  deltaMs/(24*60*60*1000);
+               result = (int) days;
+           } catch (ParseException|NullPointerException ex) {
                Log.d(LOG_TAG, ex.getMessage());
            }
-           long deltaMs = eventDate.getTime() - currDate.getTime();
-           long days =  deltaMs/(24*60*60*1000);
-           result = (int) days;
-
         } else if ( currDateInt > eventDateInt ) {
            String nextYear = yearDateFormat.format(currDate);
            int nextYearInt = Integer.parseInt(nextYear) + 1;
@@ -99,14 +93,16 @@ public class DateHandler{
            eventDateSrt = nextYear+eventDateSrt;
            try {
                 eventDate = stdDateFormat.parse(eventDateSrt);
-                currDate = stdDateFormat.parse( stdDateFormat.format(currDate ));
-            } catch (Exception ex) {
-                Log.d(LOG_TAG, ex.getMessage());
-            }
-            long deltaMs = eventDate.getTime() - currDate.getTime();
-            long days =  deltaMs/(24*60*60*1000);
-            result = (int) days;
-        } else result = -1;
+                currDate = stdDateFormat.parse( stdDateFormat.format(currDate ));    // отбрасывается лишнаяя часть
+
+                long deltaMs = eventDate.getTime() - currDate.getTime();
+                long days =  deltaMs/(24*60*60*1000);
+                result = (int) days;
+           } catch (ParseException | NullPointerException ex) {
+               Log.d(LOG_TAG, ex.getMessage());
+           }
+        }
+        else result = -1;
 
         return result;
     } // end_method
@@ -216,22 +212,16 @@ public class DateHandler{
         Метод возвращаем номер текущего месяца
      */
     public static int getNowMonth() {
-        Date currDate = new Date();                                                 // текущая дата
-        SimpleDateFormat monthDateFormat = new SimpleDateFormat("MM");      // только месяц
-        int nowMonth = Integer.parseInt( monthDateFormat.format(currDate) );        // текущий месяц
-
-        return nowMonth;
+        Calendar cal = Calendar.getInstance();
+        return cal.get(Calendar.MONTH)+1;
     } // end_method
 
     /*
         Метод возвращаем номер текущего дня месяца
      */
     public static int getNowDay() {
-        Date currDate = new Date();                                                 // текущая дата
-        SimpleDateFormat dayDateFormat = new SimpleDateFormat("dd");      // только месяц
-        int nowDay = Integer.parseInt( dayDateFormat.format(currDate) );        // текущий месяц
-
-        return nowDay;
+        Calendar cal = Calendar.getInstance();
+        return cal.get(Calendar.DAY_OF_MONTH);
     } // end_method
 
     /*
@@ -273,7 +263,7 @@ public class DateHandler{
      */
     public static boolean isLeapYear(int year) {
         Calendar calendar= Calendar.getInstance();
-        calendar.set(Calendar.YEAR,year);
+        calendar.set(Calendar.YEAR, year);
         return calendar.getActualMaximum(Calendar.DAY_OF_YEAR) > 365;
     } // end_method
 

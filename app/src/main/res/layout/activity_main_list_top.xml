@@ -117,8 +117,7 @@
             android:inputType="textFilter"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/event_name_filter_clear_on_list"
-            android:hint="@string/search_by_name"
-            />
+            android:hint="@string/search_by_name" />
         <ImageView
             android:id="@+id/event_name_filter_clear_on_list"
             android:layout_width="40dp"

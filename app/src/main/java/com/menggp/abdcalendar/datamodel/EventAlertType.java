@@ -6,6 +6,10 @@ import com.menggp.abdcalendar.R;
 
 import java.util.ArrayList;
 
+/*
+    Enum - типы напоминания события
+        - типы напоминаний и статическик методы работы с ними
+ */
 public enum EventAlertType {
 
     // values
@@ -16,7 +20,7 @@ public enum EventAlertType {
     INTENSIVE_ALERT,    // уведомление да день до события и в день события - сигнал трижды в день   - в адаптере = 4
     EVERY_MONTH_ALERT;  // ежемесячное уведомлен - в день события                                   - в адаптере = 5
 
-    // Приведение заничения EventAlertType - к String
+    // Приведение заничения EventAlertType - к String, для хранения в БД
     public static String convertToString(EventAlertType type) {
         if ( type == null ) return null;
         switch (type) {
@@ -30,7 +34,7 @@ public enum EventAlertType {
         return  null;
     } // end_method
 
-    // Приведение значения String - к EventType
+    // Приведение значения String - к EventType, для хранения в БД
     public static EventAlertType convertToEventAlertType(String type) {
         if ( type == null ) return null;
         switch (type) {

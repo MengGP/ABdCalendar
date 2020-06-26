@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,7 +44,7 @@ public class EventListAdapter extends ArrayAdapter<Event> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView,ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         // Оптимизация с помошью ViewHolde-а
         ViewHolder viewHolder;
@@ -64,22 +63,28 @@ public class EventListAdapter extends ArrayAdapter<Event> {
 
         // Изображение события на разметке
         viewHolder.eventImgOnList.setImageResource( event.getEventImg() );
+
         // Имя события на разметке
         viewHolder.eventNameOnList.setText( event.getEventName() );
+
         // Дата события на разметке - в отформатированном виде
         viewHolder.eventDateOnList.setText(
                 DateHandler.convertDbToHumanNotation( res, event.getEventDate() )
         );
+
         // Количество оставшихся дней до события
         int deltaDays = DateHandler.timeLeftToEvent( event.getEventDate() );
         String dayLeftSrt = "";
         if (deltaDays==-1)  dayLeftSrt = res.getString(R.string.today);
         else dayLeftSrt = res.getQuantityString(R.plurals.days, deltaDays, deltaDays);
         viewHolder.eventLeftTimeOnList.setText( dayLeftSrt );
+
         // Тип события
         viewHolder.eventTypeOnList.setText(EventType.convertToHumanNotation(res, event.getEventType()));
+
         // Тип напоминания
         viewHolder.eventAlertTypeOnList.setText(EventAlertType.convertToHumanNotation(res, event.getEventAlertType()) );
+
         // Количество лет событию и подпись
         if ( event.getEventSinceYear()==0 ) {
             viewHolder.eventPastYearsOnList.setText("--");
@@ -104,7 +109,15 @@ public class EventListAdapter extends ArrayAdapter<Event> {
     private class ViewHolder {
         // Элементы разметки
         final ImageView eventImgOnList;
-        final TextView eventNameOnList, eventDateOnList, eventLeftTimeOnList, eventTypeOnList, eventAlertTypeOnList, eventPastYearsOnList, eventYearsOnList, eventSinceYearPrefixOnList, eventSinceYearOnList;
+        final TextView eventNameOnList;
+        final TextView eventDateOnList;
+        final TextView eventLeftTimeOnList;
+        final TextView eventTypeOnList;
+        final TextView eventAlertTypeOnList;
+        final TextView eventPastYearsOnList;
+        final TextView eventYearsOnList;
+        final TextView eventSinceYearPrefixOnList;
+        final TextView eventSinceYearOnList;
         ViewHolder(View view) {
             eventImgOnList = (ImageView) view.findViewById(R.id.event_img_on_list);
             eventNameOnList = (TextView) view.findViewById(R.id.event_name_on_list);
@@ -134,21 +147,12 @@ public class EventListAdapter extends ArrayAdapter<Event> {
         this.clear();
 
         // Читаем в данные в адаптер с заданными параметрами фильтрации и сортировки
-        if (nameStrFilter.isEmpty() ) this.addAll( dbAdapter.getEvents(typeFilter, monthFilter, sortType));
-        else this.addAll( dbAdapter.getEvents(nameStrFilter, typeFilter, monthFilter, sortType));
+        if (nameStrFilter.isEmpty() ) this.addAll( dbAdapter.getEvents(typeFilter, monthFilter, sortType) );
+        else this.addAll( dbAdapter.getEvents(nameStrFilter, typeFilter, monthFilter, sortType) );
 
         // Актуализируем выводимые адаптером данные
         this.notifyDataSetChanged();
     } // end_method
-
-    /*
-        Перегруженный метод updAdapterData - с фильтром только по типу события
-     */
-    public void updAdapterData(EventTypeFilter typeFilter) {
-        this.updAdapterData("", typeFilter, null, 0);
-    } // end_method
-
-
 
 } // end_class
 

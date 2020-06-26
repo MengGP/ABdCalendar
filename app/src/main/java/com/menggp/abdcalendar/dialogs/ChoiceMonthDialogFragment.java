@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -29,7 +30,7 @@ public class ChoiceMonthDialogFragment extends DialogFragment {
     int currYear;
     int currMonth;
 
-    // связываем интерфейс TypeFilterDialogDatable с контекстом Activity (из которой вызывается диалог)
+    // связываем интерфейс ChoiceMonthAndYearDialogDatable с контекстом Activity (из которой вызывается диалог)
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -42,10 +43,12 @@ public class ChoiceMonthDialogFragment extends DialogFragment {
 
         // Получаем переданные в диалог данные
         Bundle args = getArguments();
-        currYear = args.getInt(MainActivity.CURR_YEAR_VIEW);
-        currMonth = args.getInt(MainActivity.CURR_MONTH_ON_VIEW);
+        if (args!=null) {
+            currYear = args.getInt(MainActivity.CURR_YEAR_VIEW);
+            currMonth = args.getInt(MainActivity.CURR_MONTH_ON_VIEW);
+        }
 
-        // Получаем разметк и ее элементы
+        // Получаем разметку и ее элементы
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate( R.layout.dialog_month_choice, null );
         RelativeLayout setNowDate = view.findViewById(R.id.dialog_set_now_date);
@@ -253,7 +256,6 @@ public class ChoiceMonthDialogFragment extends DialogFragment {
                 .setView( view )                                            // разметка
                 .setPositiveButton(R.string.dialog_cancel_action, null)   // да
                 .create();
-
     } // end_method
 } // end_class
 

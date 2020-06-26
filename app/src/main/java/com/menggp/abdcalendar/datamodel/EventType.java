@@ -7,8 +7,8 @@ import com.menggp.abdcalendar.R;
 import java.util.ArrayList;
 
 /*
-    enum
-        - описывает типы событий
+     Enum - типы события
+        - типы событий и статическик методы работы с ними
  */
 public enum EventType {
 
@@ -35,7 +35,7 @@ public enum EventType {
     } // end_method
 
     /*
-        Метод приводит значени String (в нотаци БД) к EventType_
+        Метод приводит значени String (в нотаци БД) к EventType
      */
     public static EventType convertToEventType(String type) {
         if ( type == null ) return null;

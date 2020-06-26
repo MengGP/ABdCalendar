@@ -465,9 +465,9 @@ public class MainActivity extends AppCompatActivity
         Метод считывает настройки фильтрации в объекты настроек
      */
     private void readSortAndFilterPrefs() {
-        readTypeFilterPrefs();
-        readMonthFilterPrefs();
-        readSortType();
+        readTypeFilterPrefs();  // читаем настройки фильтра по типу
+        readMonthFilterPrefs(); // читаем настройки фильтра по месяцу
+        readSortType();         // читаем настройки сортировки
     } // end_method
 
     /*
@@ -486,7 +486,7 @@ public class MainActivity extends AppCompatActivity
     /*
         Читаем настройки фильтрации по месяцу
      */
-    public void readMonthFilterPrefs() {
+    private void readMonthFilterPrefs() {
         eventMonthFilter = new EventMonthFilter(
                 sortAndFilterPrefs.getBoolean(EV_MONTH_ON_01, true),
                 sortAndFilterPrefs.getBoolean(EV_MONTH_ON_02, true),
@@ -510,9 +510,111 @@ public class MainActivity extends AppCompatActivity
         eventSortType = sortAndFilterPrefs.getInt(EV_SORT_TYPE, 0);
     }
 
+    /*
+        Метод компанует события из БД в события для отображения на календаре - для заданного месяца
+    */
+    private List<EventDay> composeCalendarEventsFromDb(EventTypeFilter typeFilter, int month) {
+        List<EventDay> calEvents = new ArrayList<>();                           // списко для результата
+
+        EventTypeFilter currTypeFilter = new EventTypeFilter(); // переменная для суммирования типов событий в заданный день
+        boolean isLeapYear = DateHandler.isLeapYear( currDateOnCalendarView.get(Calendar.YEAR) );   // индикатор високосного года
+
+        // Цикл по дням месяца:
+        for (int i=1; i<=31; i++) {
+            // Получаем события на заданный день, с учетом фильтра по типу
+            List<Event> eventsOnDay = dbAdapter.getEventsOnDay(typeFilter, DateHandler.getDbNotationDate(month+1, i));
+            // Если в эту дату есть одно и более события - фиксируем типы этих событий
+            if ( !eventsOnDay.isEmpty() ) {
+                Calendar currCalendar = Calendar.getInstance();
+                // Исключение: события 29-февряля,
+                //      если год отображаемый на календаре не високосный - совмещаем события 28го и 29го февраля
+                if ( month==1 && i==29 && !isLeapYear ) {
+                    currCalendar.set(currDateOnCalendarView.get(Calendar.YEAR), month, i-1);
+                    for (Event iter : eventsOnDay)
+                        currTypeFilter.setTypeTrue(iter.getEventType());
+                    calEvents.set( calEvents.size()-1, new EventDay(currCalendar, getCalendarEventsIcon(currTypeFilter)));
+                    // calEvents.add(new EventDay(currCalendar, getCalendarEventsIcon(currTypeFilter)));
+                }
+                // обычное поведение - все дни кроме 29го февраля невисокосного года
+                else {
+                    currTypeFilter.setAllFalse();
+                    currCalendar.set(currDateOnCalendarView.get(Calendar.YEAR), month, i);
+                    for (Event iter : eventsOnDay)
+                        currTypeFilter.setTypeTrue(iter.getEventType());
+                    calEvents.add(new EventDay(currCalendar, getCalendarEventsIcon(currTypeFilter)));
+                }
+            }
+        }
+        return calEvents;
+    } // end_method
+
+    /*
+       Метод возвраащет "номер" ресурса drawable - иконки событий для дня - в зависимости от типов событий в этот день
+    */
+    private int getCalendarEventsIcon(EventTypeFilter tf) {
+        int imgRes = R.drawable.i4_1_m;
+        // Получаем типы событий для дня - закодированные в разрядах числа
+        int imgNum = 0;
+        if (tf.isBirthdayOn()) imgNum = imgNum + 1000;
+        if (tf.isAnniversaryOn())imgNum = imgNum + 100;
+        if (tf.isHolidayOn()) imgNum = imgNum + 10;
+        if (tf.isMemodateOn() || tf.isOtherOn()) imgNum = imgNum + 1;
+
+        switch (imgNum) {
+            case 1000: imgRes=R.drawable.i1_1_b; break;
+            case  100: imgRes=R.drawable.i2_1_a; break;
+            case   10: imgRes=R.drawable.i3_1_h; break;
+            case    1: imgRes=R.drawable.i4_1_m; break;
+            case 1100: imgRes=R.drawable.i5_2_ba; break;
+            case 1010: imgRes=R.drawable.i6_2_bh; break;
+            case 1001: imgRes=R.drawable.i7_2_bm; break;
+            case  110: imgRes=R.drawable.i8_2_ah; break;
+            case  101: imgRes=R.drawable.i9_2_am; break;
+            case   11: imgRes=R.drawable.i10_2_hm; break;
+            case 1110: imgRes=R.drawable.i11_3_bah; break;
+            case 1101: imgRes=R.drawable.i12_3_bam; break;
+            case 1011: imgRes=R.drawable.i13_3_bhm; break;
+            case  111: imgRes=R.drawable.i14_3_ahm; break;
+            case 1111: imgRes=R.drawable.i15_4_bahm; break;
+        }
+
+        return imgRes;
+    } // end_method
+
+    /*
+       Метод обновляет данные о событиях отображаемых на календаре
+    */
+    private void updCalendarEvents() {
+        // Получение списка событий для установки на календаре - для текущего отображаемого месяца
+        List<EventDay> calendarEvents = composeCalendarEventsFromDb(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
+
+        // Передаем события календаря в вид календаря - если событий нет, очищаем передачей пустого списка
+        calendarView.setEvents(calendarEvents);
+    } // end_method
+
+    /*
+        Метод вызывает диалог с информационной карточкой собыяти - в диалог передается ID события
+     */
+    private void dispEventInfoDialog(long id) {
+        EventInfoDialogFragment dialog = new EventInfoDialogFragment();
+        Bundle args = new Bundle();
+        args.putLong("id", id);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "EventInfoDialogFragment");
+    } // end_method
+
+    /*
+        Метод запускает EventActivityInfo - активити с информацией о событии
+    */
+    private void goEventActivityInfo(long id) {
+        Intent intent = new Intent(SHOW_EVENT_ACTIVITY_INFO);
+        intent.putExtra("id",id);
+        startActivity(intent);
+    } // end_method
 
     /*
         Реализация метода интерфейса TypeFilterDialogDatable
+            - сохранение/обновление настроек фильтрации по типу - из диалога настрйоки фильтрации по типу
      */
     @Override
     public void updTypeFilter(EventTypeFilter typeFilter) {
@@ -530,7 +632,7 @@ public class MainActivity extends AppCompatActivity
         // Обновляем объект eventTypeFilter
         readTypeFilterPrefs();
 
-        // Обновляем данные в адаптере - для вида календаря обновляем только фильтр типа
+        // Обновляем данные в адаптере или на календаре
         if ( !isCalendarView )
             eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString() ,eventTypeFilter, eventMonthFilter, eventSortType);
         else
@@ -543,6 +645,7 @@ public class MainActivity extends AppCompatActivity
 
     /*
         Реализация метода интерфейса MonthFilterDialogDatable
+            - сохранение/обновление настроек фильтрации по месяцу - из диалога настрйоки фильтрации по месяцу
     */
     @Override
     public void updMonthFilter(EventMonthFilter monthFilter) {
@@ -575,11 +678,11 @@ public class MainActivity extends AppCompatActivity
             if ( monthFilter.filterExist() ) monthFilterLED.setImageResource(R.drawable.filter);
             else monthFilterLED.setImageResource(R.drawable.filter_disable);
         }
-
     } // end_method
 
     /*
         Реализация метода интерфейса SortDialogDatable
+                - сохранение/обновление настроек сортировки - из диалога сортировки
      */
     @Override
     public void updSortType(int sortType) {
@@ -600,11 +703,11 @@ public class MainActivity extends AppCompatActivity
             if ( eventSortType!=0 ) sortLED.setImageResource(R.drawable.sort);
             else sortLED.setImageResource(R.drawable.sort_disable);
         }
-
     } // end_method
 
     /*
         Реализация метода интерфейса EventInfoDialogDatable
+            - запуск диалого подтвержеления удаления - из диалога с информационной карточкой события
      */
     @Override
     public void getDelConfirmationDialog(long id) {
@@ -617,131 +720,43 @@ public class MainActivity extends AppCompatActivity
 
     /*
         Метод - реализует метод "delEvent(long)" из интерфейса "delConfirmationDialogDatable" для текущей Activity
+            - удаление события - при подтверждении в диалоге удаления
     */
     @Override
     public void delEvent(long eventId) {
+        // удаление события из БД
         dbAdapter.deleteEvent(eventId);
-        if ( !isCalendarView ) {
+
+        // Обновление отображаемых данных
+        if ( !isCalendarView )
             eventListAdapter.updAdapterData(eventNameFilterBox.getText().toString(), eventTypeFilter, eventMonthFilter, eventSortType);
-        } else {
+        else
             updCalendarEvents();
-        }
     } // end_method
 
     /*
-        Реализация метода интерфейса MonthChoiceDialogDatable
+        Реализация метода интерфейса ChoiceMonthAndYearDialogDatable
+            - установка отображаемого месяца/года - из диалогов выбора месяца/года
      */
     @Override
     public void selectMonthAndYearOnCalendarView(Calendar currCal) {
+        // Сохраняем выбранный месяц/год
         currDateOnCalendarView = currCal;
+
+        // Установка отображаемог месяца/года
         try {
             calendarView.setDate(currCal);
         } catch (OutOfDateRangeException ex ) {
             Log.d(LOG_TAG, ex.getMessage() );
         }
-        // Устанавливаем события для выбранного месяца
-        List<EventDay> calendarEvents;  // Список событий для календаре
-        // Получение списка событий для установки на календаре - для текущего отображаемого месяца
-        calendarEvents = composeCalendarEventsFromDb(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
-        if (calendarEvents!=null)
-            calendarView.setEvents(calendarEvents); // Передаем события календаря в вид календаря
-    } // end_method
 
-    /*
-        Метод компанует события из БД в события для отображения на календаре - для заданного месяца
-     */
-    private List<EventDay> composeCalendarEventsFromDb(EventTypeFilter typeFilter, int month) {
-        List<EventDay> calEvents = new ArrayList<>();                           // списко для результата
-
-        EventTypeFilter currTypeFilter = new EventTypeFilter();
-        boolean isLeapYear = DateHandler.isLeapYear( currDateOnCalendarView.get(Calendar.YEAR) );
-        // Цикл по дням месяца:
-        for (int i=1; i<=31; i++) {
-            // Получаем события на заданный день
-            List<Event> eventsOnDay = dbAdapter.getEventsOnDay(typeFilter, DateHandler.getDbNotationDate(month+1, i));
-            // Если в эту дату есть одно и более события - фиксируем типы этих событий
-            if ( !eventsOnDay.isEmpty() ) {
-                Calendar currCalendar = Calendar.getInstance();
-                // Исключение: события 29-февряля,
-                // если год отображаемый на календаре не високосный - совмещаем события 28го и 29го февраля
-                if ( month==1 && i==29 && !isLeapYear ) {
-                    currCalendar.set(currDateOnCalendarView.get(Calendar.YEAR), month, i-1);
-                    for (Event iter : eventsOnDay)
-                        currTypeFilter.setTypeTrue(iter.getEventType());
-                    calEvents.set( calEvents.size()-1, new EventDay(currCalendar, getCalendarEventsIcon(currTypeFilter)));
-                    // calEvents.add(new EventDay(currCalendar, getCalendarEventsIcon(currTypeFilter)));
-                } else {
-                    // обычное поведение - не все дни кроме 29го февраля невисокосного года
-                    currTypeFilter.setAllFalse();
-                    currCalendar.set(currDateOnCalendarView.get(Calendar.YEAR), month, i);
-                    for (Event iter : eventsOnDay)
-                        currTypeFilter.setTypeTrue(iter.getEventType());
-                    calEvents.add(new EventDay(currCalendar, getCalendarEventsIcon(currTypeFilter)));
-                }
-            }
-        }
-        return calEvents;
-
-    } // end_method
-
-    /*
-        Метод возвраащет "номер" ресурса drawable - иконки событий для дня - в зависимости от типов событий в этот день
-     */
-    private int getCalendarEventsIcon(EventTypeFilter tf) {
-        int imgRes = R.drawable.i4_1_m;
-        // Получаем типы событий для дня - закодированные в разрядах числа
-        int imgNum = 0;
-        if (tf.isBirthdayOn()) imgNum = imgNum + 1000;
-        if (tf.isAnniversaryOn())imgNum = imgNum + 100;
-        if (tf.isHolidayOn()) imgNum = imgNum + 10;
-        if (tf.isMemodateOn() || tf.isOtherOn()) imgNum = imgNum + 1;
-
-        switch (imgNum) {
-            case 1000: imgRes=R.drawable.i1_1_b; break;
-            case  100: imgRes=R.drawable.i2_1_a; break;
-            case   10: imgRes=R.drawable.i3_1_h; break;
-            case    1: imgRes=R.drawable.i4_1_m; break;
-            case 1100: imgRes=R.drawable.i5_2_ba; break;
-            case 1010: imgRes=R.drawable.i6_2_bh; break;
-            case 1001: imgRes=R.drawable.i7_2_bm; break;
-            case  110: imgRes=R.drawable.i8_2_ah; break;
-            case  101: imgRes=R.drawable.i9_2_am; break;
-            case   11: imgRes=R.drawable.i10_2_hm; break;
-            case 1110: imgRes=R.drawable.i11_3_bah; break;
-            case 1101: imgRes=R.drawable.i12_3_bam; break;
-            case 1011: imgRes=R.drawable.i13_3_bhm; break;
-            case  111: imgRes=R.drawable.i14_3_ahm; break;
-            case 1111: imgRes=R.drawable.i15_4_bahm; break;
-        }
-
-        return imgRes;
-    } // end_method
-
-    /*
-        Метод обновляет данные со событиях отображаемых на календаре
-     */
-    private void updCalendarEvents() {
-        // Список событий на календаре
-        List<EventDay> calendarEvents;
-        // Получение списка событий для установки на календаре - для текущего отображаемого месяца
-        calendarEvents = composeCalendarEventsFromDb(eventTypeFilter, currDateOnCalendarView.get(Calendar.MONTH));
-        // Передаем события календаря в вид календаря - если событий нет, очищаем передачей пустого списка
-        calendarView.setEvents(calendarEvents);
-    } // end_method
-
-    /*
-        Метод вызывате диалог с информационной карточкой собыяти - в диалог передается ID события
-     */
-    private void dispEventInfoDialog(long id) {
-        EventInfoDialogFragment dialog = new EventInfoDialogFragment();
-        Bundle args = new Bundle();
-        args.putLong("id", id);
-        dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(), "EventInfoDialogFragment");
+        // Обновляем события отображаемые на календаре
+        updCalendarEvents();
     } // end_method
 
     /*
          Реализация метода интерфейса EventsOnDayDialogDatable
+            - вызов диалога с информационной карточкой события - из диалога со списком событий дня
      */
     @Override
     public void getEventInfoDialogFromCalendarView(long id) {
@@ -750,20 +765,11 @@ public class MainActivity extends AppCompatActivity
 
     /*
          Реализация метода интерфейса EventsOnDayDialogDatable
+            - переход на EventInfoActivity - активити с информационной карточкой события - из далого со списком событий дня
      */
     @Override
     public void getEventActivityInfoFromCalendarView(long id) {
         goEventActivityInfo(id);
     } // end_method
-
-    /*
-       Метод вызывает EventActivityInfo
-     */
-    private void goEventActivityInfo(long id) {
-        Intent intent = new Intent(SHOW_EVENT_ACTIVITY_INFO);
-        intent.putExtra("id",id);
-        startActivity(intent);
-    } // end_method
-
 
 } // end_class
