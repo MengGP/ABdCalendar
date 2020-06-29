@@ -7,7 +7,7 @@ import com.menggp.abdcalendar.datamodel.Event;
  */
 public interface EventDelConfirmationDialogDatable {
 
-    // Метод - удаления сообытия
+    // Метод - удаление сообытия
     void delEvent(long eventId);
 
 } // end_interface

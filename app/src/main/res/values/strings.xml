@@ -92,6 +92,8 @@
     <string name="dialog_set_now_date">Вернуться к текущему месяцу</string>
     <string name="dialog_year">Год:</string>
     <string name="dialog_29_feb_no_leap">28 / 29 февраля</string>
+    <string name="dialog_error">Ошибка</string>
+    <string name="dialog_bad_dialog_text">Ошибка диалога.\nПри повторном появлении перезапустите приложение.</string>
 
 
     <!-- Тосты -->

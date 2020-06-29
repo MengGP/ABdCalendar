@@ -13,8 +13,7 @@ import com.menggp.abdcalendar.datamodel.EventType;
 import com.menggp.abdcalendar.datamodel.EventTypeFilter;
 
 /*
-    Класс реализует взаимодействие с БД
-        - описывает запросы к БД
+    Класс реализует взаимодействие с БД на уровне запросов
  */
 class SQLiteQueryHandler {
 
@@ -49,7 +48,7 @@ class SQLiteQueryHandler {
         whereClause += "_id != 0";
 
         // Блок фильра по типу
-        if ( typeFilter.filterExist() ) {
+        if ( typeFilter!=null && typeFilter.filterExist() ) {
             whereClause += " AND ";
             whereClause += DatabaseHelper.COL_EVENT_TYPE + " NOT IN ( 'x', ";   // начало строки условия
             if ( !typeFilter.isBirthdayOn() ) whereClause += "'"+EventType.convertToString(EventType.BIRTHDAY)+"', ";
@@ -61,7 +60,7 @@ class SQLiteQueryHandler {
         }
 
         // Блок фильтра по месяцу
-        if ( monthFilter!=null || monthFilter.filterExist() ) {
+        if ( monthFilter!=null && monthFilter.filterExist() ) {
             whereClause += " AND ";
             whereClause += "strftime('%m',"+DatabaseHelper.COL_EVENT_DATE+") NOT IN ( 'x', ";      // начало строки условия
             if ( !monthFilter.isMonth01() ) whereClause += "'01', ";
@@ -122,7 +121,9 @@ class SQLiteQueryHandler {
     } // end_method
 
     /*
-        Метод возвращает все события на заданную дату - с фильтрацией по типу
+        Метод возвращает все события на заданную дату
+            - фильтр по типу события
+            - сортировка по имени события
      */
     static Cursor getEventsOnDay(SQLiteDatabase db, EventTypeFilter typeFilter, String date) {
         // Массив строк - содержащеий получаемые в запросе поля
@@ -153,6 +154,9 @@ class SQLiteQueryHandler {
             whereClause += " 'y')";     // завершение строки условия
         }
 
+        // Строка сортировки - сортировка по имени события
+        String orderByClause = "UPPER("+DatabaseHelper.COL_EVENT_NAME+")";
+
         return db.query(
                 DatabaseHelper.TABLE_EVENTS,        // целевая таблица
                 columns,                            // поля
@@ -160,12 +164,12 @@ class SQLiteQueryHandler {
                 whereArgs,                          // аргументы условий
                 null,                      // блок группировки
                 null,                       // блок HAVING
-                null                       // блок сортировки
+                orderByClause                       // блок сортировки
         );
     } // end_method
 
     /*
-        Метод возвращает все записи EVENT - в виде курсора
+        Метод возвращает все записи EVENT - в виде курсора: без фильтров и сортировок
      */
     static Cursor getAllEvents(SQLiteDatabase db) {
         // Массив строк - содержащеий получаемые в запросе поля
@@ -209,32 +213,6 @@ class SQLiteQueryHandler {
     } // end_method
 
     /*
-        Метод возвращаеи количество записей в БД - для определенной даты
-     */
-    static long getEventCountOnDay(SQLiteDatabase db, String date, EventTypeFilter typeFilter) {
-        // Условие отбора по дате
-        String whereClause = "strftime('%m-%d',"+DatabaseHelper.COL_EVENT_DATE + ") = ?";
-        String[] whereArgs = new String[] { date };
-
-        // Блок условия фильра по типу
-        if ( typeFilter.filterExist() ) {
-            whereClause += " AND ";
-            whereClause += DatabaseHelper.COL_EVENT_TYPE + " NOT IN ( 'x', ";   // начало строки условия
-            if ( !typeFilter.isBirthdayOn() ) whereClause += "'"+EventType.convertToString(EventType.BIRTHDAY)+"', ";
-            if ( !typeFilter.isAnniversaryOn() ) whereClause += "'"+EventType.convertToString(EventType.ANNIVERSARY)+"', ";
-            if ( !typeFilter.isMemodateOn() ) whereClause += "'"+EventType.convertToString(EventType.MEMODATE)+"', ";
-            if ( !typeFilter.isHolidayOn() ) whereClause += "'"+EventType.convertToString(EventType.HOLIDAY)+"', ";
-            if ( !typeFilter.isOtherOn() ) whereClause += "'"+EventType.convertToString(EventType.OTHER)+"', ";
-            whereClause += " 'y')";     // завершение строки условия
-        }
-
-        return DatabaseUtils.queryNumEntries(db,
-                DatabaseHelper.TABLE_EVENTS,
-                whereClause,
-                whereArgs);
-    } // end_method
-
-    /*
         Метод добавляет в таблицу EVENTS запись
      */
     static long insertEvent(SQLiteDatabase db, Event event) {
@@ -269,7 +247,7 @@ class SQLiteQueryHandler {
         Метод обновляет запись события в БД
      */
     static long updateEvent(SQLiteDatabase db, Event event) {
-        String whereClause = DatabaseHelper.COL_EVENT_ID + "=" + String.valueOf( event.getId() );
+        String whereClause = DatabaseHelper.COL_EVENT_ID + "=" + event.getId();
 
         // Создаем объект ContentValues - с данными для обновления
         ContentValues cv = new ContentValues();
@@ -290,6 +268,32 @@ class SQLiteQueryHandler {
                         null                  // аргументы условия
                 );
 
+    } // end_method
+
+    /*
+        Метод возвращаеи количество записей в БД - для определенной даты
+     */
+    static long getEventCountOnDay(SQLiteDatabase db, String date, EventTypeFilter typeFilter) {
+        // Условие отбора по дате
+        String whereClause = "strftime('%m-%d',"+DatabaseHelper.COL_EVENT_DATE + ") = ?";
+        String[] whereArgs = new String[] { date };
+
+        // Блок условия фильра по типу
+        if ( typeFilter!=null && typeFilter.filterExist() ) {
+            whereClause += " AND ";
+            whereClause += DatabaseHelper.COL_EVENT_TYPE + " NOT IN ( 'x', ";   // начало строки условия
+            if ( !typeFilter.isBirthdayOn() ) whereClause += "'"+EventType.convertToString(EventType.BIRTHDAY)+"', ";
+            if ( !typeFilter.isAnniversaryOn() ) whereClause += "'"+EventType.convertToString(EventType.ANNIVERSARY)+"', ";
+            if ( !typeFilter.isMemodateOn() ) whereClause += "'"+EventType.convertToString(EventType.MEMODATE)+"', ";
+            if ( !typeFilter.isHolidayOn() ) whereClause += "'"+EventType.convertToString(EventType.HOLIDAY)+"', ";
+            if ( !typeFilter.isOtherOn() ) whereClause += "'"+EventType.convertToString(EventType.OTHER)+"', ";
+            whereClause += " 'y')";     // завершение строки условия
+        }
+
+        return DatabaseUtils.queryNumEntries(db,
+                DatabaseHelper.TABLE_EVENTS,
+                whereClause,
+                whereArgs);
     } // end_method
 
     // Метод стирает все данные БД

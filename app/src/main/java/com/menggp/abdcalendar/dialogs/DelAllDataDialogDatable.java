@@ -5,7 +5,7 @@ package com.menggp.abdcalendar.dialogs;
  */
 public interface DelAllDataDialogDatable {
 
-    // Удаление данных приложения
+    // Удаление всех данных приложения
     void hardResetData();
 
 } // end_interface

@@ -62,7 +62,7 @@
             android:layout_marginEnd="8dp"
             android:background="@color/gray_light"
             style="@style/text18_bold"
-            android:onClick="eventDatePickerDialog"/>
+            android:onClick="dispEventDatePickerDialog"/>
         <!-- Поле выбора года начала собятия -->
         <Spinner
             android:id="@+id/event_since_year_on_edit"

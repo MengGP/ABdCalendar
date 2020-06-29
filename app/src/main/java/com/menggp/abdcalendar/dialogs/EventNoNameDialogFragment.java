@@ -23,7 +23,6 @@ public class EventNoNameDialogFragment extends DialogFragment {
         return builder
                 .setTitle( R.string.dialog_no_name_alert_title )                // заголовок
                 .setIcon( R.drawable.about_program )                          // иконка в заголовке
-                //.setView( view )                                                  // разметка
                 .setPositiveButton(R.string.dialog_yes_action, null)     // YES
                 .create();
     } // end_method

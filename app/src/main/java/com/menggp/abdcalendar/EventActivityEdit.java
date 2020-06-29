@@ -40,7 +40,6 @@ import java.util.ArrayList;
 public class EventActivityEdit extends AppCompatActivity implements EventDatePickerDialogDatable, EventDelConfirmationDialogDatable, EventChangeConfirmationDialogDatable {
 
     private static final String LOG_TAG = "EventActivityEdit";
-//    public static final String SHOW_EVENT_ACTIVITY_INFO = "com.menggp.SHOW_EVENT_ACTIVITY_INFO";
 
     Resources res;
     DatabaseAdapter dbAdapter;
@@ -67,9 +66,11 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
 
         // настройка Action bar
         ActionBar actionBar = getSupportActionBar();            // получем доступ к action bar
-        actionBar.setTitle(R.string.title_event_activity_edit);                 // меняем заголовок
-        actionBar.setHomeButtonEnabled(true);                   // активируем кнопку "home"
-        actionBar.setDisplayHomeAsUpEnabled(true);              // отображаем кнопку "home"
+        if (actionBar!=null) {
+            actionBar.setTitle(R.string.title_event_activity_edit);                 // меняем заголовок
+            actionBar.setHomeButtonEnabled(true);                   // активируем кнопку "home"
+            actionBar.setDisplayHomeAsUpEnabled(true);              // отображаем кнопку "home"
+        }
 
         // Объект resources для вызываемых методов
         res = getResources();
@@ -134,14 +135,14 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
         Bundle extras = getIntent().getExtras();
         if ( extras != null ) {
             eventId = extras.getLong("id");
-            fromMainActivivty =extras.getBoolean(MainActivity.FROM_MAIN_ACTIVITY);
+            fromMainActivivty = extras.getBoolean(MainActivity.FROM_MAIN_ACTIVITY);
         }
 
         // Создаем БД адаптер
         dbAdapter = new DatabaseAdapter(this);
 
-        // проверяем значение eventId - если > 0 - заполняем поля
-        //  иначе - пустые поля для создания нового события
+        // Проверяем значение eventId - если > 0 - заполняем поля
+        //      иначе - пустые поля для создания нового события
         if ( eventId>0 ) {
             // получаем event по ID из БД
             event = dbAdapter.getEvent( eventId );
@@ -222,34 +223,9 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
 
     } // end_method
 
-    public void eventDatePickerDialog(View view) {
-        EventDatePickerDialogFragment dialog = new EventDatePickerDialogFragment();
-        Bundle args = new Bundle();
-        args.putInt("day", DateHandler.getDayFromDbDate(eventDateStr) );
-        args.putInt("month", DateHandler.getMonthFromDbDate(eventDateStr));
-        dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(),"EventDatePickerDialogFragment");
-    } // end_method
-
     /*
-        Метод реализует изменение даты совершенное в диалоге выбора даты
-     */
-    @Override
-    public void setEventDateOnEdit(int month, int day) {
-        // Формируем строковое предстваление даты в формате БД
-        eventDateStr = "";
-        if ( month < 10 ) eventDateStr += "0" + month + "-";
-        else eventDateStr += month + "-";
-        if ( day < 10 ) eventDateStr += "0" + day;
-        else eventDateStr += day;
-
-        // Устанавливаем новое значение на разметке
-        eventDateBox.setText( DateHandler.convertDbToHumanNotation(res, eventDateStr));
-    } // end_method
-
-    /*
-       Определение меню в Action Bar
-        */
+        Определение меню в Action Bar
+    */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -258,7 +234,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             2 - save btn
          */
         // Пункт меню - УДАЛИТЬ, добавляем только в режиме редактирования события, но не для нового
-         if (eventId > 0) {
+        if (eventId > 0) {
             menu.add(0
                     , 1
                     , 0
@@ -287,15 +263,40 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case android.R.id.home: onBackClick(); break;
+            case android.R.id.home:
+                onBackClick();
+                break;
             case 1 :
-                delConfirmation();
+                dispDelConfirmation();
                 break;
             case 2 :
                 saveEvent();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    } // end_method
+
+    /*
+        Метод отображает диалог выбора даты события
+     */
+    public void dispEventDatePickerDialog(View view) {
+        EventDatePickerDialogFragment dialog = new EventDatePickerDialogFragment();
+        Bundle args = new Bundle();
+        args.putInt("day", DateHandler.getDayFromDbDate(eventDateStr) );
+        args.putInt("month", DateHandler.getMonthFromDbDate(eventDateStr));
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(),"EventDatePickerDialogFragment");
+    } // end_method
+
+    /*
+        Метод вызывает диалог подтверждения удаления
+    */
+    private void dispDelConfirmation() {
+        EventDelConfirmationDialogFragment dialog = new EventDelConfirmationDialogFragment();
+        Bundle args = new Bundle();
+        args.putLong("id", eventId);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(),"delConfirmationDialogFragment");
     } // end_method
 
     /*
@@ -316,7 +317,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             event.setEventComment( eventCommentBox.getText().toString() );
             event.setEventImg( Integer.parseInt(eventImgBox.getSelectedItem().toString()) );
             event.setEventAlertType( eventAlertType );
-            dbAdapter.update( event );
+            dbAdapter.updateEvent( event );
             Toast.makeText(this, R.string.toast_event_change_saved, Toast.LENGTH_SHORT).show();
         } else {
             // Создаем новый объект Event - с данными с формы
@@ -338,8 +339,8 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
     } // end_method
 
     /*
-    Метод описывает обработка нажатия кнопки назад
- */
+        Метод описывает обработка нажатия кнопки назад
+     */
     private void onBackClick() {
         // Если событие редактируется
         if (eventId>0) {
@@ -359,7 +360,8 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             if (isChanged) {
                 EventChangeConfirmationDialogFragment dialog = new EventChangeConfirmationDialogFragment();
                 dialog.show(getSupportFragmentManager(), "EventChangeConfirmationDialogFragment");
-            } else goBackActivity();
+            } else
+                goBackActivity();
         }
         // если событие новое
         else {
@@ -378,15 +380,14 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
             if (isChanged) {
                 EventChangeConfirmationDialogFragment dialog = new EventChangeConfirmationDialogFragment();
                 dialog.show(getSupportFragmentManager(), "EventChangeConfirmationDialogFragment");
-            } else goMainActivity();
+            } else
+                goMainActivity();
         }
-
-
     } // end_method
 
     /*
         Метод возращает на предыдущую Activity - если в события не были внесены изменения
-            - в зависимости от того с какой ACtivity был осуществлен переход
+            - в зависимости от того с какой Aсtivity был осуществлен переход
      */
     private void goBackActivity() {
         if ( fromMainActivivty ) goMainActivity();
@@ -411,20 +412,10 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
         startActivity(intent);
     } // end_method
 
-    /*
-        Метод вызывает диалог подтверждения удаления
-     */
-    private void delConfirmation() {
-        EventDelConfirmationDialogFragment dialog = new EventDelConfirmationDialogFragment();
-        Bundle args = new Bundle();
-        args.putLong("id", eventId);
-        dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(),"delConfirmationDialogFragment");
-    } // end_method
 
     /*
         Метод - реализует метод "delEvent(long)" из интерфейса "delConfirmationDialogDatable"
-        для текущей Activity
+            для текущей Activity - удаление события из БД
      */
     @Override
     public void delEvent(long eventId) {
@@ -438,6 +429,7 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
      */
     @Override
     public void noSaveEventChange() {
+        Toast.makeText(this, R.string.toast_event_change_no_saved, Toast.LENGTH_SHORT).show();
         goBackActivity();
     } // end_method
 
@@ -448,6 +440,25 @@ public class EventActivityEdit extends AppCompatActivity implements EventDatePic
     @Override
     public void saveEventChange() {
         saveEvent();
+    } // end_method
+
+    /*
+        Метод реализует изменение даты совершенное в диалоге выбора даты
+     */
+    @Override
+    public void setEventDateOnEdit(int month, int day) {
+        // Формируем строковое предстваление даты в формате БД
+        eventDateStr = "";
+        if ( month < 10 ) eventDateStr += "0" + month + "-";
+        else eventDateStr += month + "-";
+        if ( day < 10 ) eventDateStr += "0" + day;
+        else eventDateStr += day;
+
+        // Устанавливаем новое значение на разметке
+        eventDateBox.setText( DateHandler.convertDbToHumanNotation(res, eventDateStr));
+
+        // Выводим информационное сообщение
+        Toast.makeText(this, R.string.toast_date_changed, Toast.LENGTH_SHORT).show();
     } // end_method
 
 } // end_class

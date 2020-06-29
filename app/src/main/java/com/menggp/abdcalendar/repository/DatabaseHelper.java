@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
 /*
     Класс репозитория - для работы с БД SQLite
         - содержит описание БД
@@ -46,7 +44,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_EVENT_IMG + " INTEGER," +
                 COL_EVENT_ALERT_TYPE + " TEXT);"
         );
-
     } // end_method
 
     // Метод - проверяет версию БД - если версия отличается от текущей - обновляем БД

@@ -17,7 +17,7 @@ import java.util.List;
 /*
     Класс реализует адатпер работы с БД
         - для связи модели и БД исопользует класс .repository.DatabaseHelper
-        - запросы вынесены в отдельный класс SQLiteQueryHandler
+        - запросы вынесены в отдельный класс .repository.SQLiteQueryHandler
  */
 public class DatabaseAdapter {
 
@@ -33,7 +33,6 @@ public class DatabaseAdapter {
      */
     private void open() {
         db = dbHelper.getWritableDatabase();
-        // return this;
     } // end_method
 
     /*
@@ -87,7 +86,7 @@ public class DatabaseAdapter {
     } // end_method
 
     /*
-        Перегруженный метод getEvents - только фильтр по типу
+        Перегруженный метод getEvents - фильтр по типу и номеру месяца - отдает события только одного месяца
     */
     public List<Event> getEvents(EventTypeFilter typeFilter, int month) {
         EventMonthFilter monthFilter = new EventMonthFilter();
@@ -143,7 +142,7 @@ public class DatabaseAdapter {
     } // end_method
 
     /*
-        Метод возвращает все записи EVENT в виде ArrayList<Event>
+        Метод возвращает все записи EVENT в виде ArrayList<Event> - без фильтров и сортировок
      */
     public List<Event> getEventsAll() {
         ArrayList<Event> events = new ArrayList<>();    // ArrayList - для возврата результата метода
@@ -175,7 +174,7 @@ public class DatabaseAdapter {
     } // end_method
 
     /*
-        Метод - возващает количество записей в БД
+        Метод - возващает полное количество записей в БД
      */
     public long geEventCount() {
         long count;
@@ -251,7 +250,7 @@ public class DatabaseAdapter {
     /*
         Метод обновляет запись в БД
      */
-    public long update(Event event) {
+    public long updateEvent(Event event) {
         long result;
         this.open();
         result = SQLiteQueryHandler.updateEvent(db, event);
@@ -267,8 +266,5 @@ public class DatabaseAdapter {
         SQLiteQueryHandler.flushDB(db);
         this.close();
     } // end_method
-
-
-
 
 } // end_class

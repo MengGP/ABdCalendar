@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -40,7 +39,6 @@ public class SortAndFilterFlushDialogFragment extends DialogFragment {
                 sortAndFilterFlushDialogDatable.flushSortAndFilter();
             }
         }; // end_listener
-
 
         // Создаем конструктор диалога и возвращаем построенный с его помощью диалог
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );

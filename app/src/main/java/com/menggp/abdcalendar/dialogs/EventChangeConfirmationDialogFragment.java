@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,7 +35,6 @@ public class EventChangeConfirmationDialogFragment extends DialogFragment {
         DialogInterface.OnClickListener noAction = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), R.string.toast_event_change_no_saved, Toast.LENGTH_SHORT).show();
                 eventChangeConfirmationDialogDatable.noSaveEventChange();
             }
         }; // end_listener
@@ -54,7 +52,6 @@ public class EventChangeConfirmationDialogFragment extends DialogFragment {
         return builder
                 .setTitle( R.string.dialog_save_confirmation_title )                // заголовок
                 .setIcon( R.drawable.act_bar_save_floppy )                          // иконка в заголовке
-                //.setView( view )                                                  // разметка
                 .setNeutralButton(R.string.dialog_cancel_action, null)      // CANCEL
                 .setNegativeButton(R.string.dialog_no_action, noAction)         // NO
                 .setPositiveButton(R.string.dialog_yes_action, yesAction)     // YES

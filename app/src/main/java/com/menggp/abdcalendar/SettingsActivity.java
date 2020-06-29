@@ -183,6 +183,8 @@ public class SettingsActivity extends AppCompatActivity implements SortAndFilter
         SharedPreferences.Editor spEditor = sp.edit();
         spEditor.putBoolean(MainActivity.DEF_VIEW_IS_CALENDAR, true);
         spEditor.apply();
+        // Информационное сообщение
+        Toast.makeText(this, R.string.toast_del_all_data, Toast.LENGTH_LONG).show();
         // Возвращаемся на MainActivity
         goMainActivity();
     } // end_method

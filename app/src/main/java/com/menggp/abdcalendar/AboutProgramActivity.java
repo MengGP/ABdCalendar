@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+/*
+    Активити: "О приложении"
+ */
 public class AboutProgramActivity extends AppCompatActivity {
 
     @Override
@@ -16,10 +19,11 @@ public class AboutProgramActivity extends AppCompatActivity {
 
         // настройка Action bar
         ActionBar actionBar = getSupportActionBar();                // получем доступ к action bar
-        actionBar.setTitle(R.string.title_about_program_activity);  // меняем заголовок
-        actionBar.setHomeButtonEnabled(true);                       // активируем кнопку "home"
-        actionBar.setDisplayHomeAsUpEnabled(true);                  // отображаем кнопку "home"
-
+        if (actionBar!=null) {
+            actionBar.setTitle(R.string.title_about_program_activity);  // меняем заголовок
+            actionBar.setHomeButtonEnabled(true);                       // активируем кнопку "home"
+            actionBar.setDisplayHomeAsUpEnabled(true);                  // отображаем кнопку "home"
+        }
     } // end_method
 
     /*

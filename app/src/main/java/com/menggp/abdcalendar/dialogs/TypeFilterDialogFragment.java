@@ -52,108 +52,114 @@ public class TypeFilterDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
-        // Получаем переданные данные о фильтрации по типу в объек EventTypeFilter
         Bundle args = getArguments();
-        EventTypeFilter eventTypeFilter = new EventTypeFilter(
-                args.getBoolean(MainActivity.EV_TYPE_BIRTHDAY_ON),
-                args.getBoolean(MainActivity.EV_TYPE_ANNIVERSARY_ON),
-                args.getBoolean(MainActivity.EV_TYPE_MEMODATE_ON),
-                args.getBoolean(MainActivity.EV_TYPE_HOLIDAY_ON),
-                args.getBoolean(MainActivity.EV_TYPE_OTHER_ON)
-        );
 
-        // Получаем разметку и ее элементы
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate( R.layout.dialog_type_filter, null);
-        typeBirthdayBox = (CheckBox)view.findViewById(R.id.ev_type_birthday_on_dialog);
-        typeAnniversaryBox = (CheckBox)view.findViewById(R.id.ev_type_anniversary_on_dialog);
-        typeMemodateBox = (CheckBox)view.findViewById(R.id.ev_type_memodate_on_dialog);
-        typeHolydayBox = (CheckBox)view.findViewById(R.id.ev_type_holiday_on_dialog);
-        typeOtherBox = (CheckBox)view.findViewById(R.id.ev_type_other_on_dialog);
+        // Проверка переменных - при ошибочных параметрах выводим диалог об ошибке
+        if (args!=null) {
+            // Получаем переданные данные о фильтрации по типу в объек EventTypeFilter
+            typeFilter = new EventTypeFilter(
+                    args.getBoolean(MainActivity.EV_TYPE_BIRTHDAY_ON),
+                    args.getBoolean(MainActivity.EV_TYPE_ANNIVERSARY_ON),
+                    args.getBoolean(MainActivity.EV_TYPE_MEMODATE_ON),
+                    args.getBoolean(MainActivity.EV_TYPE_HOLIDAY_ON),
+                    args.getBoolean(MainActivity.EV_TYPE_OTHER_ON)
+            );
 
-        // Помещаем данные на разметку
-        typeBirthdayBox.setChecked( eventTypeFilter.isBirthdayOn() );
-        typeAnniversaryBox.setChecked( eventTypeFilter.isAnniversaryOn());
-        typeMemodateBox.setChecked( eventTypeFilter.isMemodateOn());
-        typeHolydayBox.setChecked( eventTypeFilter.isHolidayOn());
-        typeOtherBox.setChecked( eventTypeFilter.isOtherOn());
+            // Получаем разметку и ее элементы
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View view = inflater.inflate(R.layout.dialog_type_filter, null);
+            typeBirthdayBox = (CheckBox) view.findViewById(R.id.ev_type_birthday_on_dialog);
+            typeAnniversaryBox = (CheckBox) view.findViewById(R.id.ev_type_anniversary_on_dialog);
+            typeMemodateBox = (CheckBox) view.findViewById(R.id.ev_type_memodate_on_dialog);
+            typeHolydayBox = (CheckBox) view.findViewById(R.id.ev_type_holiday_on_dialog);
+            typeOtherBox = (CheckBox) view.findViewById(R.id.ev_type_other_on_dialog);
 
+            // Помещаем данные на разметку
+            typeBirthdayBox.setChecked(typeFilter.isBirthdayOn());
+            typeAnniversaryBox.setChecked(typeFilter.isAnniversaryOn());
+            typeMemodateBox.setChecked(typeFilter.isMemodateOn());
+            typeHolydayBox.setChecked(typeFilter.isHolidayOn());
+            typeOtherBox.setChecked(typeFilter.isOtherOn());
 
-        // Слушательль для блока "Снять все"
-        RelativeLayout deselectAllBlock = (RelativeLayout)view.findViewById(R.id.dialog_deselect_all_types);
-        View.OnClickListener onDeselectAllClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                typeBirthdayBox.setChecked( false );
-                typeAnniversaryBox.setChecked( false );
-                typeMemodateBox.setChecked( false );
-                typeHolydayBox.setChecked( false );
-                typeOtherBox.setChecked( false );
-            }
-        };
-        deselectAllBlock.setOnClickListener( onDeselectAllClickListener );
+            // Слушательль для блока "Снять все"
+            RelativeLayout deselectAllBlock = (RelativeLayout) view.findViewById(R.id.dialog_deselect_all_types);
+            View.OnClickListener onDeselectAllClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    typeBirthdayBox.setChecked(false);
+                    typeAnniversaryBox.setChecked(false);
+                    typeMemodateBox.setChecked(false);
+                    typeHolydayBox.setChecked(false);
+                    typeOtherBox.setChecked(false);
+                }
+            };
+            deselectAllBlock.setOnClickListener(onDeselectAllClickListener);
 
-        // Слушательль для блока "Выделить все"
-        RelativeLayout selectAllBlock = (RelativeLayout)view.findViewById(R.id.dialog_select_all_types);
-        View.OnClickListener onSelectAllClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                typeBirthdayBox.setChecked( true );
-                typeAnniversaryBox.setChecked( true );
-                typeMemodateBox.setChecked( true );
-                typeHolydayBox.setChecked( true );
-                typeOtherBox.setChecked( true );
-            }
-        };
-        selectAllBlock.setOnClickListener( onSelectAllClickListener );
+            // Слушательль для блока "Выделить все"
+            RelativeLayout selectAllBlock = (RelativeLayout) view.findViewById(R.id.dialog_select_all_types);
+            View.OnClickListener onSelectAllClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    typeBirthdayBox.setChecked(true);
+                    typeAnniversaryBox.setChecked(true);
+                    typeMemodateBox.setChecked(true);
+                    typeHolydayBox.setChecked(true);
+                    typeOtherBox.setChecked(true);
+                }
+            };
+            selectAllBlock.setOnClickListener(onSelectAllClickListener);
 
-        // Слушатель действия - flushAction
-        DialogInterface.OnClickListener flushAction = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), R.string.toast_type_filter_flush, Toast.LENGTH_SHORT).show();
-                // Устанавиваем все типы событий как активные и передаем объект EventTypeFilter в активити
-                typeFilter = new EventTypeFilter(
-                  true,
-                  true,
-                  true,
-                  true,
-                  true
-                );
+            // Слушатель действия - flushAction
+            DialogInterface.OnClickListener flushAction = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getContext(), R.string.toast_type_filter_flush, Toast.LENGTH_SHORT).show();
+                    // Устанавиваем все типы событий как активные и передаем объект EventTypeFilter в активити
+                    typeFilter.setAllTrue();
 
-                typeFilterDialogDatable.updTypeFilter(typeFilter);
-            }
-        }; // end_listener
+                    typeFilterDialogDatable.updTypeFilter(typeFilter);
+                }
+            }; // end_listener
 
-        // Слушатель действия - yesAction
-        DialogInterface.OnClickListener yesAction = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), R.string.toast_type_filter_changed, Toast.LENGTH_SHORT).show();
-                // Устанавиваем типы событий в соответствии с выбором и передаем объект EventTypeFilter в активити
-                typeFilter = new EventTypeFilter(
-                        typeBirthdayBox.isChecked(),
-                        typeAnniversaryBox.isChecked(),
-                        typeMemodateBox.isChecked(),
-                        typeHolydayBox.isChecked(),
-                        typeOtherBox.isChecked()
-                );
+            // Слушатель действия - yesAction
+            DialogInterface.OnClickListener yesAction = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getContext(), R.string.toast_type_filter_changed, Toast.LENGTH_SHORT).show();
+                    // Устанавиваем типы событий в соответствии с выбором и передаем объект EventTypeFilter в активити
+                    typeFilter = new EventTypeFilter(
+                            typeBirthdayBox.isChecked(),
+                            typeAnniversaryBox.isChecked(),
+                            typeMemodateBox.isChecked(),
+                            typeHolydayBox.isChecked(),
+                            typeOtherBox.isChecked()
+                    );
 
-                typeFilterDialogDatable.updTypeFilter(typeFilter);
-            }
-        }; // end_listener
+                    typeFilterDialogDatable.updTypeFilter(typeFilter);
+                }
+            }; // end_listener
 
 
-        // Создаем конструктор диалога и возвращаем построенный с его помощью диалог
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        return builder
-                .setTitle( R.string.dialog_type_filter_type_filter )                // заголовок
-                .setIcon( R.drawable.filter )                                       // иконка в заголовке
-                .setView( view )                                                    // разметка
-                .setNeutralButton(R.string.dialog_flush_action, flushAction)       // сбросить фильтр
-                .setNegativeButton(R.string.dialog_cancel_action, null)     // отмена
-                .setPositiveButton(R.string.dialog_yes_action, yesAction)        // да
-                .create();
+            // Создаем конструктор диалога и возвращаем построенный с его помощью диалог
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            return builder
+                    .setTitle(R.string.dialog_type_filter_type_filter)                // заголовок
+                    .setIcon(R.drawable.filter)                                       // иконка в заголовке
+                    .setView(view)                                                    // разметка
+                    .setNeutralButton(R.string.dialog_flush_action, flushAction)       // сбросить фильтр
+                    .setNegativeButton(R.string.dialog_cancel_action, null)     // отмена
+                    .setPositiveButton(R.string.dialog_yes_action, yesAction)        // да
+                    .create();
+        } else {
+            // Создаем конструктор диалога и возвращаем построенный с его помощью диалог
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            return builder
+                    .setTitle(R.string.dialog_error)             // заголовок
+                    .setIcon(R.drawable.warning)                 // иконка в заголовке
+                    .setMessage(R.string.dialog_bad_dialog_text)
+                    .setPositiveButton(R.string.dialog_cancel_action, null) // cancel
+                    .create();
+        }
     } // end_method
 
 

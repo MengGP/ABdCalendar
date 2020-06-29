@@ -169,4 +169,22 @@ public class EventMonthFilter {
         return false;
     } // end_method
 
+    /*
+        Метод устанавливает все фильта в TRUE
+     */
+    public void setAllTrue() {
+        this.month01 = true;
+        this.month02 = true;
+        this.month03 = true;
+        this.month04 = true;
+        this.month05 = true;
+        this.month06 = true;
+        this.month07 = true;
+        this.month08 = true;
+        this.month09 = true;
+        this.month10 = true;
+        this.month11 = true;
+        this.month12 = true;
+    } // end_method
+
 } // end_class

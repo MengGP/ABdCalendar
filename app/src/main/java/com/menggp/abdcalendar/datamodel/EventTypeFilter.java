@@ -92,6 +92,17 @@ public class EventTypeFilter {
     } // end_method
 
     /*
+        Метод устанвливает все фильтры в TRUE
+     */
+    public void setAllTrue() {
+        this.birthdayOn = true;
+        this.anniversaryOn = true;
+        this.memodateOn = true;
+        this.holidayOn = true;
+        this.otherOn = true;
+    } // end_method
+
+    /*
         Метод устанавливает занчаение TRUE - для укзанного типа события
      */
     public void setTypeTrue(EventType type) {

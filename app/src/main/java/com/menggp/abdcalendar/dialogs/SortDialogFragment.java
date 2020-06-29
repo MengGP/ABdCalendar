@@ -45,60 +45,85 @@ public class SortDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
-        // получаем переданные в диалог данные
         Bundle args = getArguments();
-        sortType = args.getInt(MainActivity.EV_SORT_TYPE);
 
-        // Получаем разметку и элементы
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate( R.layout.dialog_sort, null);
-        sortTypeSwitchBox = (RadioGroup) view.findViewById(R.id.sort_type_switch);
-        sortBoxType0 = (RadioButton) view.findViewById(R.id.sort_type_0);
-        sortBoxType1 = (RadioButton) view.findViewById(R.id.sort_type_1);
-        sortBoxType2 = (RadioButton) view.findViewById(R.id.sort_type_2);
+        // Проверка переменных - при ошибочных параметрах выводим диалог об ошибке
+        if (args!=null) {
+            // получаем переданные в диалог данные
+            sortType = args.getInt(MainActivity.EV_SORT_TYPE);
 
-        // Начальные данные
-        switch (sortType) {
-            case 0: sortBoxType0.setChecked(true); break;
-            case 1: sortBoxType1.setChecked(true); break;
-            case 2: sortBoxType2.setChecked(true); break;
-        }
+            // Получаем разметку и элементы
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View view = inflater.inflate(R.layout.dialog_sort, null);
+            sortTypeSwitchBox = (RadioGroup) view.findViewById(R.id.sort_type_switch);
+            sortBoxType0 = (RadioButton) view.findViewById(R.id.sort_type_0);
+            sortBoxType1 = (RadioButton) view.findViewById(R.id.sort_type_1);
+            sortBoxType2 = (RadioButton) view.findViewById(R.id.sort_type_2);
 
-        // Слушатель действия - flushAction
-        DialogInterface.OnClickListener flushAction = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), R.string.toast_sort_default, Toast.LENGTH_SHORT).show();
-                sortType = 0;
-                sortDialogDatable.updSortType(sortType);
+            // Начальные данные
+            switch (sortType) {
+                case 0:
+                    sortBoxType0.setChecked(true);
+                    break;
+                case 1:
+                    sortBoxType1.setChecked(true);
+                    break;
+                case 2:
+                    sortBoxType2.setChecked(true);
+                    break;
             }
-        }; // end_listener
 
-        // Слушатель действия - yesAction
-        DialogInterface.OnClickListener yesAction = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), R.string.toast_sort_changed, Toast.LENGTH_SHORT).show();
-                // считываем в аттрибут sortType выбранные вараинт
-                switch (sortTypeSwitchBox.getCheckedRadioButtonId() ) {
-                    case R.id.sort_type_0: sortType=0; break;
-                    case R.id.sort_type_1: sortType=1; break;
-                    case R.id.sort_type_2: sortType=2; break;
+            // Слушатель действия - flushAction
+            DialogInterface.OnClickListener flushAction = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getContext(), R.string.toast_sort_default, Toast.LENGTH_SHORT).show();
+                    sortType = 0;
+                    sortDialogDatable.updSortType(sortType);
                 }
-                sortDialogDatable.updSortType(sortType);
-            }
-        }; // end_listener
+            }; // end_listener
 
-        // Создаем конструктор диалога и возвращаем построенный с его помощью диалог
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        return builder
-                .setTitle( R.string.dialog_sort )                // заголовок
-                .setIcon( R.drawable.sort )                                       // иконка в заголовке
-                .setView( view )                                                    // разметка
-                .setNeutralButton(R.string.dialog_flush_action, flushAction)       // сбросить фильтр
-                .setNegativeButton(R.string.dialog_cancel_action, null)     // отмена
-                .setPositiveButton(R.string.dialog_yes_action, yesAction)        // да
-                .create();
+            // Слушатель действия - yesAction
+            DialogInterface.OnClickListener yesAction = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getContext(), R.string.toast_sort_changed, Toast.LENGTH_SHORT).show();
+                    // считываем в аттрибут sortType выбранные вараинт
+                    switch (sortTypeSwitchBox.getCheckedRadioButtonId()) {
+                        case R.id.sort_type_0:
+                            sortType = 0;
+                            break;
+                        case R.id.sort_type_1:
+                            sortType = 1;
+                            break;
+                        case R.id.sort_type_2:
+                            sortType = 2;
+                            break;
+                    }
+                    sortDialogDatable.updSortType(sortType);
+                }
+            }; // end_listener
+
+            // Создаем конструктор диалога и возвращаем построенный с его помощью диалог
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            return builder
+                    .setTitle(R.string.dialog_sort)                // заголовок
+                    .setIcon(R.drawable.sort)                                       // иконка в заголовке
+                    .setView(view)                                                    // разметка
+                    .setNeutralButton(R.string.dialog_flush_action, flushAction)       // сбросить фильтр
+                    .setNegativeButton(R.string.dialog_cancel_action, null)     // отмена
+                    .setPositiveButton(R.string.dialog_yes_action, yesAction)        // да
+                    .create();
+        } else {
+            // Создаем конструктор диалога и возвращаем построенный с его помощью диалог
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            return builder
+                    .setTitle(R.string.dialog_error)             // заголовок
+                    .setIcon(R.drawable.warning)                 // иконка в заголовке
+                    .setMessage(R.string.dialog_bad_dialog_text)
+                    .setPositiveButton(R.string.dialog_cancel_action, null) // cancel
+                    .create();
+        }
 
     } // end_class
 
