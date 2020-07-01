@@ -42,9 +42,11 @@ public class EventActivityInfo extends AppCompatActivity implements EventDelConf
 
         // настройка Action bar
         ActionBar actionBar = getSupportActionBar();            // получем доступ к action bar
-        actionBar.setTitle(R.string.title_event_activity_info); // меняем заголовок
-        actionBar.setHomeButtonEnabled(true);                   // активируем кнопку "home"
-        actionBar.setDisplayHomeAsUpEnabled(true);              // отображаем кнопку "home"
+        if (actionBar!=null) {
+            actionBar.setTitle(R.string.title_event_activity_info); // меняем заголовок
+            actionBar.setHomeButtonEnabled(true);                   // активируем кнопку "home"
+            actionBar.setDisplayHomeAsUpEnabled(true);              // отображаем кнопку "home"
+        }
 
         // Получаем данные из предыдущей Activity
         Bundle extras = getIntent().getExtras();
@@ -53,7 +55,7 @@ public class EventActivityInfo extends AppCompatActivity implements EventDelConf
         }
 
         // проверяем значение eventId - если > 0 - заполняем поля
-        //  иначе - перанправляем на MainActivity
+        //      иначе - перанправляем на MainActivity
         if ( eventId>0 ) {
             // получаем event по ID из БД
             dbAdapter = new DatabaseAdapter(this);
@@ -95,63 +97,14 @@ public class EventActivityInfo extends AppCompatActivity implements EventDelConf
             // Комментарий
             eventCommentView.setText( event.getEventComment() );
 
-        } else goMainActivity();
+        } else
+            goMainActivity();
 
-    } // end_method
-
-    /*
-        Метод - возвращает на MAIN_ACTIVITY
-     */
-    private void goMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
-    } // end_method
-
-    /*
-        Метод вызывает диалог подтверждения удаления
-     */
-    private void delConfirmation() {
-        EventDelConfirmationDialogFragment dialog = new EventDelConfirmationDialogFragment();
-        Bundle args = new Bundle();
-        args.putLong("id", eventId);
-        dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(),"delConfirmationDioalodFragment");
-    } // end_method
-
-    /*
-        Метод вызывает EventEditActivity и передает в нее ID текущего события
-     */
-    private void goEventActivityEdit() {
-        Intent intent = new Intent(MainActivity.SHOW_EVENT_ACTIVITY_EDIT);
-        intent.putExtra("id",eventId );
-        startActivity(intent);
-    } // end_class
-
-    /*
-        Обработка нажатия меню в Action bar
-        - кнопка "home" ( дефолтный ID = android.R.id.home )
-        - кнопка "delete" ( ID = 1 )
-        - кнопка "Edit" ( ID = 2 )
-    */
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case android.R.id.home: goMainActivity(); break;
-            case 1 :
-                delConfirmation();
-                break;
-            case 2 :
-                goEventActivityEdit();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     } // end_method
 
     /*
         Определение меню в Action Bar
-         */
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -177,8 +130,61 @@ public class EventActivityInfo extends AppCompatActivity implements EventDelConf
     } // end_method
 
     /*
+         Обработка нажатия меню в Action bar
+            - кнопка "home" ( дефолтный ID = android.R.id.home )
+            - кнопка "delete" ( ID = 1 )
+            - кнопка "Edit" ( ID = 2 )
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                goMainActivity();
+                break;
+            case 1 :
+                dispDelConfirmationDialog();
+                break;
+            case 2 :
+                goEventActivityEdit();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    } // end_method
+
+
+    /*
+        Метод - возвращает на MAIN_ACTIVITY
+     */
+    private void goMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    } // end_method
+
+    /*
+        Метод вызывает диалог подтверждения удаления
+     */
+    private void dispDelConfirmationDialog() {
+        EventDelConfirmationDialogFragment dialog = new EventDelConfirmationDialogFragment();
+        Bundle args = new Bundle();
+        args.putLong("id", eventId);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(),"delConfirmationDioalodFragment");
+    } // end_method
+
+    /*
+        Метод вызывает EventEditActivity и передает в нее ID текущего события
+     */
+    private void goEventActivityEdit() {
+        Intent intent = new Intent(MainActivity.SHOW_EVENT_ACTIVITY_EDIT);
+        intent.putExtra("id",eventId );
+        startActivity(intent);
+    } // end_class
+
+    /*
         Метод - реализует метод "delEvent(long)" из интерфейса "delConfirmationDialogDatable"
-        для текущей Activity
+            - удаление события из БД
      */
     @Override
     public void delEvent(long eventId) {

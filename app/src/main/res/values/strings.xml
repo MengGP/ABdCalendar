@@ -179,6 +179,8 @@
     <string name="cd_now_month">Установить текущий месяц</string>
     <string name="cd_year_choice">Выбор года</string>
     <string name="cd_month_choice">Выбор месяца</string>
+    <string name="cd_clear_name_search">Очистка поля поиска по имени</string>
+    <string name="cd_icon_type">Изображение типа события</string>
 
     <!-- Прочее -->
     <string name="lower_since_with_space">"с "</string>

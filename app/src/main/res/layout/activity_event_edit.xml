@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Разметка описывает активность редактирования события
+    Активити - редактор события: EventActivityEdit
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -28,8 +27,10 @@
         android:inputType="textMultiLine"
         android:background="@color/gray_light"
         android:padding="8dp"
-        style="@style/text26_bold" />
+        style="@style/text26_bold"
+        android:importantForAutofill="no"/>
 
+    <!-- Блок: дата, возраст, тип, напоминание-->
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:text="@string/event_date_note" />
-
         <TextView
             style="@style/text18_italic"
             android:layout_width="0dp"
@@ -78,7 +78,6 @@
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:text="@string/event_type_note" />
-
         <TextView
             style="@style/text18_italic"
             android:layout_width="0dp"
@@ -103,6 +102,7 @@
             android:background="@color/gray_light" />
     </GridLayout>
 
+    <!-- Блок комментария -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -110,7 +110,6 @@
         android:layout_marginStart="12dp"
         style="@style/text20_bold_italic"
         android:text="@string/event_comment_note"/>
-
     <EditText
         android:id="@+id/event_comment_on_edit"
         android:layout_width="match_parent"
@@ -123,6 +122,7 @@
         android:inputType="textMultiLine"
         android:background="@color/gray_light"
         android:padding="8dp"
-        />
+        android:importantForAutofill="no"/>
 
 </LinearLayout>
+<!-- end_layout -->

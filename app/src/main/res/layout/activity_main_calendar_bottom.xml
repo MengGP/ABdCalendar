@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Часть основной активити - вида календаря
+        > блок календаря
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--
-    <ImageView
-        android:layout_width="wrap_content"
+
+    <com.applandeo.materialcalendarview.CalendarView
+        android:id="@+id/calendar_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/arrow_left"/>
-     -->
+        android:layout_margin="8dp"
+        app:headerColor="@color/gray_light"
+        app:todayLabelColor="@color/red"
+        app:headerLabelColor="@color/red"
+        app:previousButtonSrc="@drawable/arrow_left_24"
+        app:forwardButtonSrc="@drawable/arrow_right_24"
+        app:swipeEnabled="true"
+        app:highlightedDaysLabelsColor="@color/gray_light"/>
+
 </LinearLayout>
+<!-- end_layout-->

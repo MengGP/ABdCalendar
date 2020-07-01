@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Основная разметка режима списка главной активити
+    Часть основной активити - вида списка
+        > блок элементов управления и списка событий
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Блок кнопок: кнопки / фильтры / сортировки -->
+    <!-- Блок кнопок: фильтр по типу / сортировка / фильтр по месяцам / добавить -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <!-- Фильтрация по типу -->
         <LinearLayout
@@ -117,7 +119,8 @@
             android:inputType="textFilter"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/event_name_filter_clear_on_list"
-            android:hint="@string/search_by_name" />
+            android:hint="@string/search_by_name"
+            android:importantForAutofill="no" />
         <ImageView
             android:id="@+id/event_name_filter_clear_on_list"
             android:layout_width="40dp"
@@ -125,13 +128,15 @@
             android:layout_marginEnd="8dp"
             android:layout_alignParentEnd="true"
             android:src="@drawable/clear"
-            android:onClick="onNameFilterClearClick"/>
+            android:onClick="onNameFilterClearClick"
+            android:contentDescription="@string/cd_clear_name_search"/>
     </RelativeLayout>
 
-    <!-- Список EVENTS -->
+    <!-- Список событий -->
     <ListView
         android:id="@+id/main_list_event_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>
+<!-- end_layout -->

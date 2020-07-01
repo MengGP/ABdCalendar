@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Разметка для адаптера
-        - вывод списка EVENT в режиме Calendar в диалоге - при выборе даты
+    Разметка для адаптера EventDialogAdapter
+        - вывод списка событий в далоге, в режиме календаря основной активити, при выборе даыт
+            > события в выбранную дату
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             style="@style/text16_bold_vert_center" />
 
+        <!-- Блок: тип события / осталось дней до соыбтия -->
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,7 +61,8 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_toStartOf="@id/event_list_item_ages_block"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:contentDescription="@string/cd_icon_type"/>
 
     <!-- Правый блок информации - информации и годах -->
     <LinearLayout
@@ -94,3 +97,4 @@
     </LinearLayout>
 
 </RelativeLayout>
+<!-- end_layout -->

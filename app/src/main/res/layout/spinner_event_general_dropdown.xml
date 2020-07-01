@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Спиннер - строковый обычный
+        - выпадающие элементы
+-->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/str_spinner_text1"
     style="@style/text18"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp" />
+
+<!-- end_layout -->
 

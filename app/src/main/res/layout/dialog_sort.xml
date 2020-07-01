@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Диалог - выбор типа сортировки
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Блок выбора типа сортировки -->
     <RadioGroup
         android:id="@+id/sort_type_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
         <RadioButton
             android:id="@+id/sort_type_0"
             android:layout_width="wrap_content"
@@ -30,7 +36,7 @@
             style="@style/text18"
             android:layout_margin="8dp"
             android:text="@string/dialog_sort_type2"/>
-
     </RadioGroup>
 
 </LinearLayout>
+<!-- end_layout -->

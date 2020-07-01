@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Диалог - сортировка по месяцам
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -7,7 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <!-- "Кнопка" - снять все -->
         <RelativeLayout
@@ -24,7 +29,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="12dp"
                 style="@style/text14_bold_center"
-                android:text="@string/dialog_deselect_all"/>
+                android:text="@string/dialog_deselect_all"
+                tools:ignore="RelativeOverlap" />
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
@@ -48,7 +54,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="12dp"
                 style="@style/text14_bold_center"
-                android:text="@string/dialog_select_all"/>
+                android:text="@string/dialog_select_all"
+                tools:ignore="RelativeOverlap" />
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
@@ -60,11 +67,13 @@
     </LinearLayout>
 
     <!-- Выбор месяца -->
-    <!-- 1е полугодие -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <!-- 1е полугодие -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -167,3 +176,4 @@
 
 
 </LinearLayout>
+<!-- end_layout -->

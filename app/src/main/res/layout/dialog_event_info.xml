@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Диалог - информационная карточка события
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Блок: дата события / возраст события / тип события / тип напоминания -->
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,6 +73,7 @@
             style="@style/text16_bold" />
     </GridLayout>
 
+    <!-- Блок комментария -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,7 +81,6 @@
         android:layout_marginStart="8dp"
         style="@style/text18_bold_italic"
         android:text="@string/event_comment_note"/>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -92,3 +96,4 @@
     </ScrollView>
 
 </LinearLayout>
+<!-- end_layout -->

@@ -3,10 +3,13 @@
     Диалог подтвержежения удаления события
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="UseCompoundDrawables">
 
+    <!-- Изображение события -->
     <ImageView
         android:id="@+id/event_img_on_del_dialog"
         android:layout_width="64dp"
@@ -17,6 +20,7 @@
         android:layout_gravity="center_vertical"
         android:contentDescription="@string/cd_event_img" />
 
+    <!-- Имя события -->
     <TextView
         android:id="@+id/event_name_on_del_dialog"
         android:layout_width="wrap_content"
@@ -26,3 +30,4 @@
         style="@style/text18_italic"/>
 
 </LinearLayout>
+<!-- end_layout -->

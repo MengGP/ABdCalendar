@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Активити - настройки
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
     <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:padding="16dp">
 
         <!-- Выбор вида по умолчанию -->
@@ -53,7 +56,7 @@
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables"
             android:layout_marginTop="16dp"
-            android:onClick="flushSortAndFilters">
+            android:onClick="dispSortAndFilterFlushDialog">
             <ImageView
                 android:src="@drawable/clear"
                 style="@style/settings_images_style"
@@ -63,14 +66,14 @@
                 style="@style/settings_text_style" />
         </LinearLayout>
 
-        <!-- О программе -->
+        <!-- О приложении -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables"
             android:layout_marginTop="16dp"
-            android:onClick="aboutProgram">
+            android:onClick="goAboutProgramActivity">
             <ImageView
                 android:src="@drawable/about_program"
                 style="@style/settings_images_style"
@@ -87,7 +90,7 @@
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables"
             android:layout_marginTop="16dp"
-            android:onClick="delAllData">
+            android:onClick="dispDelAllDataDialog">
             <ImageView
                 android:src="@drawable/delete"
                 style="@style/settings_images_style"
@@ -102,17 +105,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:onClick="genRndData">
+            android:onClick="genRndData"
+            tools:ignore="UseCompoundDrawables">
             <ImageView
                 android:src="@drawable/profile_action"
-                style="@style/settings_images_style" />
+                style="@style/settings_images_style"
+                android:contentDescription="@null"/>
             <TextView
                 android:text="@string/generate_random_data"
                 style="@style/settings_text_style" />
         </LinearLayout>
 
-
-
     </LinearLayout>
 
 </ScrollView>
+<!-- end_layout -->

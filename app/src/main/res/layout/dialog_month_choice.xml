@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Диалог - выбора месяца отображаемог она календаре
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Устновка текущей даты -->
+    <!-- Устновка текущей даты (месяц-год)-->
     <RelativeLayout
         android:id="@+id/dialog_set_now_date"
         android:layout_width="match_parent"
@@ -32,7 +35,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
         <!-- 1е полугодие -->
         <LinearLayout
             android:layout_width="0dp"
@@ -158,5 +163,5 @@
         </LinearLayout>
     </LinearLayout>
 
-
 </LinearLayout>
+<!-- end_layout -->

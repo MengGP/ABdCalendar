@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Диалог - список событий в выбранный день
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Разделитель - горизонтальная черта -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/delimiter"
-        />
+        android:background="@drawable/delimiter"/>
 
-    <!-- Список EVENTS -->
+    <!-- Список событий -->
     <ListView
         android:id="@+id/event_list_in_calendar_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>
+<!-- end_layout -->

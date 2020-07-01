@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Разметка описывает активность просмотра полной информации о событии
+    Активити - информационная карточка соыбтия
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,12 +8,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- Изображения и имя события -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
-
         <ImageView
             android:id="@+id/event_img_on_info"
             android:contentDescription="@string/cd_event_img"
@@ -29,6 +29,7 @@
             style="@style/text26_bold" />
     </LinearLayout>
 
+    <!-- Блок: дата, возраст, тип, напоминание-->
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,6 +96,7 @@
             style="@style/text18_bold" />
     </GridLayout>
 
+    <!-- Блок комментария -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -102,7 +104,6 @@
         android:layout_marginStart="12dp"
         style="@style/text20_bold_italic"
         android:text="@string/event_comment_note"/>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -118,3 +119,4 @@
     </ScrollView>
 
 </LinearLayout>
+<!-- end_layout-->

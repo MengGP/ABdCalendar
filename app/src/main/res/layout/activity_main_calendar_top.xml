@@ -1,98 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Часть основной активити - вида календаря
+        > блок элементов управления
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:baselineAligned="false">
 
-    <!-- Блок кнопок: кнопки / фильтры / сортировки -->
-        <!-- Фильтрация по типу -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:background="@color/gray_light"
-            android:layout_margin="4dp"
-            android:onClick="onClickTypeFilter">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/text14_bold_center"
-                android:text="@string/main_act_type_filter"/>
-            <ImageView
-                android:id="@+id/type_filter_indicator"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="end"
-                android:src="@drawable/filter_disable"
-                android:contentDescription="@string/cd_filter"/>
-        </LinearLayout>
+    <!-- Фильтрация по типу -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/gray_light"
+        android:layout_margin="4dp"
+        android:onClick="onClickTypeFilter">
 
-        <!-- Выбор месяца -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:background="@color/gray_light"
-            android:layout_margin="4dp"
-            android:onClick="onClickChoiceMonthOnCalendarView">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/text14_bold_center"
-                android:text="@string/main_act_month"/>
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="end"
-                android:src="@drawable/month_choice_stroke"
-                android:contentDescription="@string/cd_month_choice"/>
-        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/text14_bold_center"
+            android:text="@string/main_act_type_filter"/>
+        <ImageView
+            android:id="@+id/type_filter_indicator"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end"
+            android:src="@drawable/filter_disable"
+            android:contentDescription="@string/cd_filter"/>
+    </LinearLayout>
 
-        <!-- Выбор года -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:background="@color/gray_light"
-            android:layout_margin="4dp"
-            android:onClick="onClickChoiceYearOnCalendarView">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/text14_bold_center"
-                android:text="@string/main_act_year"/>
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="end"
-                android:src="@drawable/month_choice_stroke"
-                android:contentDescription="@string/cd_year_choice"/>
-        </LinearLayout>
+    <!-- Выбор отображаемого месяца -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/gray_light"
+        android:layout_margin="4dp"
+        android:onClick="onClickChoiceMonthOnCalendarView">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/text14_bold_center"
+            android:text="@string/main_act_month"/>
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end"
+            android:src="@drawable/month_choice_stroke"
+            android:contentDescription="@string/cd_month_choice"/>
+    </LinearLayout>
 
-        <!-- Добавление нового события -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:background="@color/gray_light"
-            android:layout_margin="4dp"
-            android:onClick="onAddBtnClick">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/text14_bold_center"
-                android:text="@string/main_act_add"/>
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="end"
-                android:src="@drawable/add"
-                android:contentDescription="@string/cd_add"/>
-        </LinearLayout>
+    <!-- Выбор отображаемого года -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/gray_light"
+        android:layout_margin="4dp"
+        android:onClick="onClickChoiceYearOnCalendarView">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/text14_bold_center"
+            android:text="@string/main_act_year"/>
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end"
+            android:src="@drawable/month_choice_stroke"
+            android:contentDescription="@string/cd_year_choice"/>
+    </LinearLayout>
+
+    <!-- Добавление нового события -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/gray_light"
+        android:layout_margin="4dp"
+        android:onClick="onAddBtnClick">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/text14_bold_center"
+            android:text="@string/main_act_add"/>
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end"
+            android:src="@drawable/add"
+            android:contentDescription="@string/cd_add"/>
+    </LinearLayout>
 
 </LinearLayout>
+<!-- end_layout -->

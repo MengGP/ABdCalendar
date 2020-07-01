@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Активити - основное > вид списка
+-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Блок элементов упралвения и списка собятий-->
     <include
         layout="@layout/activity_main_list_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/activity_main_list_advert"
-        />
-
-    <include
-        android:id="@+id/activity_main_list_advert"
-        layout="@layout/activity_main_list_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignParentBottom="true"
-        />
+        android:layout_alignParentTop="true"/>
 
 </RelativeLayout>
+<!-- end_layout -->

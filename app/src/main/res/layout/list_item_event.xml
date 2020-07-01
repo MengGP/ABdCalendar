@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Разметка для адаптера EventAdapter
-        - вывод списка EVENT в режиме List в MainActivity
+        - вывод списка событий в режиме списка в основной активити
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -25,6 +25,7 @@
         android:layout_toStartOf="@id/event_list_item_ages_block"
         android:layout_marginStart="8dp">
 
+        <!-- Имя события -->
         <TextView
             android:id="@+id/event_name_on_list"
             android:layout_width="wrap_content"
@@ -32,6 +33,7 @@
             android:layout_margin="4dp"
             style="@style/text18_bold_vert_center" />
 
+        <!-- Блок: дата события / оставшиеся дни до события / тип события / тип напоминания -->
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,7 +65,7 @@
         </GridLayout>
     </LinearLayout>
 
-    <!-- Правый блок информации - информации и годах -->
+    <!-- Правый блок информации - информации и годе начала собяти и прошедших годах -->
     <LinearLayout
         android:id="@+id/event_list_item_ages_block"
         android:layout_width="56dp"
@@ -101,3 +103,4 @@
     </LinearLayout>
 
 </RelativeLayout>
+<!-- end_layout -->

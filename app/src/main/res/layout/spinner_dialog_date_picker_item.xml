@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Спиннер - элемент выбора даты событий
+        - основной элемент
+-->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/str_spinner_text1"
     style="@style/text18_bold"
@@ -6,4 +10,6 @@
     android:layout_height="wrap_content"
     android:padding="12dp"
     android:gravity="center" />
+
+<!-- end_layout -->
 

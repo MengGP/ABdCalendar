@@ -27,11 +27,7 @@ import java.util.GregorianCalendar;
 
 public class SettingsActivity extends AppCompatActivity implements SortAndFilterFlushDialogDatable, DelAllDataDialogDatable {
 
-    // private static final String LOG_TAG = "SettingActivity";
-
     SharedPreferences generalPrefs;
-
-//    public static final String SHOW_ABOUT_PROGRAM_ACTIVITY = "com.menggp.SHOW_ABOUT_PROGRAM_ACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +36,17 @@ public class SettingsActivity extends AppCompatActivity implements SortAndFilter
 
         // настройка Action bar
         ActionBar actionBar = getSupportActionBar();            // получем доступ к action bar
-        actionBar.setTitle(R.string.title_activity_settings);                        // меняем заголовок
-        actionBar.setHomeButtonEnabled(true);                   // активируем кнопку "home"
-        actionBar.setDisplayHomeAsUpEnabled(true);              // отображаем кнопку "home"
+        if (actionBar!=null) {
+            actionBar.setTitle(R.string.title_activity_settings);                        // меняем заголовок
+            actionBar.setHomeButtonEnabled(true);                   // активируем кнопку "home"
+            actionBar.setDisplayHomeAsUpEnabled(true);              // отображаем кнопку "home"
+        }
 
         // Получаем настройки
         generalPrefs = getSharedPreferences(MainActivity.GENERAL_PREFS, MODE_PRIVATE);
 
         // Получаем элементы с разметки
         RadioGroup defaultAppView = (RadioGroup)findViewById(R.id.setting_default_app_view);
-        //RadioButton isCalendarViewRadBtn = (RadioButton)findViewById(R.id.radio_is_calendar_view);
 
         // значения элементтов по умолчанию
         if ( generalPrefs.getBoolean(MainActivity.DEF_VIEW_IS_CALENDAR, true) ) {
@@ -107,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity implements SortAndFilter
     /*
         Обработка выбора пункта настроек "О программе / About programm"
     */
-    public void aboutProgram(View view) {
+    public void goAboutProgramActivity(View view) {
         Intent intentAboutProgram = new Intent(MainActivity.SHOW_ABOUT_PROGRAM_ACTIVITY);
         startActivity(intentAboutProgram);
     } // end_method
@@ -115,17 +112,49 @@ public class SettingsActivity extends AppCompatActivity implements SortAndFilter
     /*
         Обработка "сброса фильтров и сортировки "
      */
-    public void flushSortAndFilters(View view) {
+    public void dispSortAndFilterFlushDialog(View view) {
         SortAndFilterFlushDialogFragment dialog = new SortAndFilterFlushDialogFragment();
         dialog.show(getSupportFragmentManager(), "SortAndFilterFlushDialogFragmen");
     }  // end_method
 
     /*
+        Обработка пункта "Удалить все данные"
+     */
+    public void dispDelAllDataDialog(View view) {
+        DelAllDataDialogFragment dialog = new DelAllDataDialogFragment();
+        dialog.show(getSupportFragmentManager(), "DelAllDataDialogFragment");
+    } // end_method
+
+    /*
         Реализация метода интерфейса SortAndFilterFlushDialogDatable
+            - сброс настроен сортировки и фильтров
      */
     @Override
     public void flushSortAndFilter() {
         loadDefSortAndFilterPrefs();
+    } // end_method
+
+    /*
+        Реализация метода интерфейса DelAllDataDialog
+            - полная очистка данных приложения
+     */
+    @Override
+    public void hardResetData() {
+        // Подключаем БД
+        DatabaseAdapter dbAdapter = new DatabaseAdapter(this);
+        // Очищаем БД
+        dbAdapter.hardResetData();
+        // Сбрасываем настройки фильтров и сортировки на умолчания
+        loadDefSortAndFilterPrefs();
+        // Сбрасываем "общие" настройки на умолчаемя
+        SharedPreferences sp = getSharedPreferences(MainActivity.GENERAL_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor spEditor = sp.edit();
+        spEditor.putBoolean(MainActivity.DEF_VIEW_IS_CALENDAR, true);
+        spEditor.apply();
+        // Информационное сообщение
+        Toast.makeText(this, R.string.toast_del_all_data, Toast.LENGTH_LONG).show();
+        // Возвращаемся на MainActivity
+        goMainActivity();
     } // end_method
 
     /*
@@ -160,38 +189,8 @@ public class SettingsActivity extends AppCompatActivity implements SortAndFilter
     } // end_method
 
     /*
-        Обработка пункта "Удалить все данные"
+        Метод генерирует услучайные EVENT-ы и записывает их в БД
      */
-    public void delAllData(View view) {
-        DelAllDataDialogFragment dialog = new DelAllDataDialogFragment();
-        dialog.show(getSupportFragmentManager(), "DelAllDataDialogFragment");
-    } // end_method
-
-    /*
-        Реализация метода интерфейса DelAllDataDialog
-     */
-    @Override
-    public void hardResetData() {
-        // Подключаем БД
-        DatabaseAdapter dbAdapter = new DatabaseAdapter(this);
-        // Очищаем БД
-        dbAdapter.hardResetData();
-        // Сбрасываем настройки фильтров и сортировки на умолчания
-        loadDefSortAndFilterPrefs();
-        // Сбрасываем "общие" настройки на умолчаемя
-        SharedPreferences sp = getSharedPreferences(MainActivity.GENERAL_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor spEditor = sp.edit();
-        spEditor.putBoolean(MainActivity.DEF_VIEW_IS_CALENDAR, true);
-        spEditor.apply();
-        // Информационное сообщение
-        Toast.makeText(this, R.string.toast_del_all_data, Toast.LENGTH_LONG).show();
-        // Возвращаемся на MainActivity
-        goMainActivity();
-    } // end_method
-
-    /*
-                Метод генерирует услучайные EVENT-ы и записывает их в БД
-             */
     public void genRndData(View view) {
         Toast.makeText(getApplicationContext(), "Gen option - checked.", Toast.LENGTH_SHORT).show();
         // Данные для генерации:
@@ -199,8 +198,6 @@ public class SettingsActivity extends AppCompatActivity implements SortAndFilter
         String[] lastNames  = new String[]{"imja.name", "Абрамов", "Авдеев", "Агапов", "Агафонов", "Агеев", "Акимов", "Аксенов", "Александров", "Алексеев", "Алехин", "Алешин", "Ананьев", "Андреев", "Андрианов", "Аникин", "Анисимов", "Анохин", "Антипов", "Антонов", "Артамонов", "Артемов", "Архипов", "Астафьев", "Астахов", "Афанасьев", "Бабушкин", "Баженов", "Балашов", "Баранов", "Барсуков", "Басов", "Безруков", "Беликов", "Белкин", "Белов", "Белоусов", "Беляев", "Беляков", "Березин", "Беспалов", "Бессонов", "Бирюков", "Блинов", "Блохин", "Бобров", "Богданов", "Богомолов", "Болдырев", "Большаков", "Бондарев", "Борисов", "Бородин", "Бочаров", "Булатов", "Булгаков", "Буров", "Быков", "Бычков", "в", "Вавилов", "Васильев", "Вдовин", "Верещагин", "Вешняков", "Виноградов", "Винокуров", "Вишневский", "Владимиров", "Власов", "Волков", "Волошин", "Воробьев", "Воронин", "Воронков", "Воронов", "Воронцов", "Высоцкий", "Гаврилов", "Галкин", "Герасимов", "Гладков", "Глебов", "Глухов", "Глушков", "Голиков", "Голованов", "Головин", "Голубев", "Гончаров", "Горбачев", "Горбунов", "Гордеев", "Горелов", "Горлов", "Горохов", "Горшков", "Горюнов", "Горячев", "Грачев", "Греков", "Грибов", "Григорьев", "Гришин", "Громов", "Губанов", "Гуляев", "Гуров", "Гусев", "Гущин", "Давыдов", "Данилов", "Дегтярев", "Дементьев", "Демидов", "Демин", "Демьянов", "Денисов", "Дмитриев", "Добрынин", "Долгов", "допускается.", "Дорофеев", "Дорохов", "Дроздов", "других", "Дружинин", "Дубинин", "Дубов", "Дубровин", "Дьяков", "Дьяконов", "Евдокимов", "Евсеев", "Егоров", "Ежов", "Елизаров", "Елисеев", "Емельянов", "Еремеев", "Еремин", "Ермаков", "Ермилов", "Ермолаев", "Ермолов", "Ерофеев", "Ершов", "Ефимов", "Ефремов", "Жаров", "Жданов", "Жилин", "Жуков", "Журавлев", "Завьялов", "Зайцев", "Захаров", "Зверев", "Зеленин", "Зимин", "Зиновьев", "Злобин", "Золотарев", "Золотов", "Зорин", "Зотов", "Зубков", "Зубов", "Зуев", "Зыков", "Иванов", "Игнатов", "Игнатьев", "Измайлов", "Ильин", "Ильинский", "Исаев", "Исаков", "Казаков", "Казанцев", "Калачев", "Калашников", "Калинин", "Калмыков", "Калугин", "Капустин", "Карасев", "Карпов", "Карташов", "Касаткин", "Касьянов", "Киреев", "Кириллов", "Киселев", "Климов", "Клюев", "Князев", "Ковалев", "Кожевников", "Козин", "Козлов", "Козловский", "Козырев", "Колесников", "Колесов", "Колосов", "Колпаков", "Кольцов", "Комаров", "Комиссаров", "Кондратов", "Кондратьев", "Кондрашов", "Коновалов", "Кононов", "Константинов", "Копылов", "Корнев", "Корнеев", "Корнилов", "Коровин", "Королев", "Коротков", "Корчагин", "Коршунов", "Косарев", "Костин", "Котов", "Кочергин", "Кочетков", "Кочетов", "Кошелев", "Кравцов", "Краснов", "Круглов", "Крылов", "Крюков", "Крючков", "Кудрявцев", "Кудряшов", "Кузин", "Кузнецов", "Кузьмин", "Кукушкин", "Кулагин", "Кулаков", "Кулешов", "Куликов", "Куприянов", "Курочкин", "Лаврентьев", "Лавров", "Лазарев", "Лапин", "Лаптев", "Лапшин", "Ларин", "Ларионов", "Латышев", "Лебедев", "Левин", "Леонов", "Леонтьев", "Литвинов", "Лобанов", "Логинов", "Лопатин", "Лосев", "Лукин", "Лукьянов", "Лыков", "Львов", "Любимов", "Майоров", "Макаров", "Макеев", "Максимов", "Малахов", "Малинин", "Малышев", "Мальцев", "Маркелов", "Маркин", "Марков", "Мартынов", "Масленников", "Маслов", "Матвеев", "материала", "Медведев", "Мельников", "Меркулов", "Мешков", "Мещеряков", "Минаев", "Минин", "Миронов", "Митрофанов", "Михайлов", "Михеев", "Моисеев", "Молчанов", "Моргунов", "Морозов", "Москвин", "Муравьев", "Муратов", "Мухин", "на", "Назаров", "Наумов", "не", "Некрасов", "Нестеров", "Нефедов", "Нечаев", "Никитин", "Никифоров", "Николаев", "Никольский", "Никонов", "Никулин", "Новиков", "Носков", "Носов", "Овсянников", "Овчинников", "Одинцов", "Озеров", "Окулов", "Олейников", "Орехов", "Орлов", "Осипов", "Островский", "Павлов", "Павловский", "Панин", "Панков", "Панкратов", "Панов", "Пантелеев", "Панфилов", "Парамонов", "Парфенов", "Пастухов", "Пахомов", "Петров", "Петровский", "Петухов", "Пименов", "Пирогов", "Платонов", "Плотников", "Поздняков", "Покровский", "Поликарпов", "Поляков", "Пономарев", "Попов", "Постников", "Потапов", "Прокофьев", "Прохоров", "Пугачев", "Раков", "Рогов", "Родин", "Родионов", "Рожков", "Розанов", "Романов", "Рубцов", "Рудаков", "Руднев", "Румянцев", "Русаков", "Русанов", "Рыбаков", "Рыжов", "Рябинин", "Рябов", "Савельев", "Савин", "Савицкий", "Сазонов", "сайтах,", "Сальников", "Самойлов", "Самсонов", "Сафонов", "Сахаров", "Свешников", "Свиридов", "Севастьянов", "Седов", "Селезнев", "Селиванов", "Семенов", "Семин", "Сергеев", "Серебряков", "Серов", "сетях", "Сидоров", "Сизов", "Симонов", "Синицын", "Ситников", "Скворцов", "Смирнов", "Снегирев", "Соболев", "Соколов", "Соловьев", "Сомов", "Сорокин", "Сотников", "Софронов", "социальных", "Спиридонов", "Стариков", "Старостин", "Степанов", "Столяров", "Субботин", "Суворов", "Судаков", "Сурков", "Суслов", "Суханов", "Сухарев", "Сухов", "Сычев", "Тарасов", "Терентьев", "Терехов", "Тимофеев", "Титов", "Тихомиров", "Тихонов", "Ткачев", "Токарев", "Толкачев", "Третьяков", "Трифонов", "Троицкий", "Трофимов", "Трошин", "Туманов", "Уваров", "Ульянов", "Усов", "Успенский", "Устинов", "Уткин", "Ушаков", "Фадеев", "Фамилия", "Федоров", "Федосеев", "Федотов", "Фетисов", "Филатов", "Филимонов", "Филиппов", "Фирсов", "Фокин", "Фомин", "Фомичев", "форумах,", "Фролов", "Харитонов", "Хомяков", "Хромов", "Худяков", "Царев", "Цветков", "Частотность", "Чеботарев", "Черепанов", "Черкасов", "Чернов", "Черный", "Черных", "Чернышев", "Черняев", "Чесноков", "Чижов", "Чистяков", "Чумаков", "Шаповалов", "Шапошников", "Шаров", "Швецов", "Шевелев", "Шевцов", "Шестаков", "Шилов", "Широков", "Ширяев", "Шишкин", "Шмелев", "Шубин", "Шувалов", "Шульгин", "Щеглов", "Щербаков", "Щукин", "этого", "Юдин", "Яковлев", "Яшин"};
 
         DatabaseAdapter dbAdapter = new DatabaseAdapter(this);
-
-
 
         // Генерируем и добавляем в БД запись
         for (int i=0; i<100; i++) {
@@ -284,7 +281,7 @@ public class SettingsActivity extends AppCompatActivity implements SortAndFilter
     /*
         Метод генерации случайного целого числа в задланном диапазоне
      */
-    public static int rndBetween(int start, int end) {
+    private static int rndBetween(int start, int end) {
         return start + (int)Math.round( Math.random() * (end-start) );
     } // end_method
 
