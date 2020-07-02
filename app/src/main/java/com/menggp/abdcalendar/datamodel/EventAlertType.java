@@ -63,15 +63,19 @@ public enum EventAlertType {
 
     /*
         Метод возвращает ArrayList<String> со списком типов напиминая в представлении для разметки
+            ! --- отключены все типы уведомлений кроме "не напоминать" - до реализации уведомлений в приложении
      */
     public static ArrayList<String> getEventAlertTypeStrLst(Resources res) {
         ArrayList<String> eventAlertTypeStrList = new ArrayList<>();
         eventAlertTypeStrList.add( convertToHumanNotation(res, NO_ALERT) );
+        /*
+            ! --- отключены до реализации уведомлений
         eventAlertTypeStrList.add( convertToHumanNotation(res, SILENT_ALERT) );
         eventAlertTypeStrList.add( convertToHumanNotation(res, IN_DAY_ALERT) );
         eventAlertTypeStrList.add( convertToHumanNotation(res, DAY_BEFORE_ALERT) );
         eventAlertTypeStrList.add( convertToHumanNotation(res, INTENSIVE_ALERT) );
         eventAlertTypeStrList.add( convertToHumanNotation(res, EVERY_MONTH_ALERT) );
+         */
         return eventAlertTypeStrList;
     } // end_method
 
