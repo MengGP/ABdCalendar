@@ -39,30 +39,6 @@
             style="@style/text16"
             android:autoLink="email"/>
 
-
-        <!-- Использованные материлы -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/about_resources"
-            style="@style/text16_bold"/>
-
-        <TextView
-            android:text="@string/cc_licence_text"
-            style="@style/about_program_style"
-            android:autoLink="web"/>
-
-        <TextView
-            android:text="@string/icon8_text"
-            style="@style/about_program_style"
-            android:autoLink="web"/>
-
-        <TextView
-            android:text="@string/applandeo_calendar_text"
-            style="@style/about_program_style"
-            android:autoLink="web"/>
-
         <!-- Ограничения DEMO-версии -->
         <TextView
             android:layout_width="wrap_content"
@@ -74,8 +50,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/about_demo_limits_text"
             style="@style/text16"/>
+
+        <!-- Описание -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="@string/about_description"
+            style="@style/text16_bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/about_description_text"
+            style="@style/text16"/>
+
+        <!-- Использованные материлы -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="@string/about_resources"
+            style="@style/text16_bold"/>
+        <TextView
+            android:text="@string/cc_licence_text"
+            style="@style/about_program_style"
+            android:autoLink="web"/>
+        <TextView
+            android:text="@string/icon8_text"
+            style="@style/about_program_style"
+            android:autoLink="web"/>
+        <TextView
+            android:text="@string/applandeo_calendar_text"
+            style="@style/about_program_style"
+            android:autoLink="web"/>
 
         <!-- Что нового -->
         <TextView
