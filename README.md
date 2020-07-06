@@ -1,5 +1,7 @@
 # Календарь событий / Events calendar
-![Logo image](https://github.com/MengGP/ABdCalendar/raw/master/descimg/Img_for_description.png)
+<p align="center">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Img_for_description.png" width="320" title="logo">
+</p>
 
 Общие сведения:
 -----------------
@@ -32,13 +34,15 @@
 
 Скриншоты:
 ----------
-![screen_1](https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_1.png)
-![screen_2](https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_2.png)
-![screen_3](https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_3.png)
-![screen_4](https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_4.png)
-![screen_5](https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_5.png)
-![screen_6](https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_6.png)
-![screen_7](https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_7.png)
+<p>
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_1.png" width="120" title="screen_1" hspace="10">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_2.png" width="120" title="screen_2" hspace="10">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_3.png" width="120" title="screen_3" hspace="10">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_4.png" width="120" title="screen_4" hspace="10">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_5.png" width="120" title="screen_5" hspace="10">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_6.png" width="120" title="screen_6" hspace="10">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_7.png" width="120" title="screen_7" hspace="10">
+</p>
 
 Использованные ресурсы:
 -----------------------
