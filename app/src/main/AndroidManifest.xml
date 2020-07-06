@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.menggp.abdcalendar">
+    package="com.menggp.abdcalendar"
+    android:versionCode="1"
+    android:versionName="v0.1-demo">
 
     <application
         android:icon="@drawable/logo_calendar_big"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo_calendar_big"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:allowBackup="false">
 
