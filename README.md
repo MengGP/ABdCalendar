@@ -1,6 +1,6 @@
 # Календарь событий / Events calendar
 <p align="center">
-    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Img_for_description.png" width="480" title="logo">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Img_for_description.png" width="512" title="logo">
 </p>
 
 Общие сведения:
@@ -11,7 +11,7 @@
     Первый релиз: 2020-07-06
     Последнее обновление: ---
     Минимальная поддерживаемая версия - Android 5.0
-    Ссылка на Google Play: -- url --
+    Google Play: https://play.google.com/store/apps/details?id=com.menggp.abdcalendar
 
 Описание проекта:
 -----------------
@@ -22,7 +22,7 @@
     списка. Вы легко можете переключаться между этими видами, а также воспользоваться 
     функциями фильтрации событий по типу, дате (месяцам) и имени события и настроить удобную 
     для вас сортировку. Быстрый доступ к информационным карточкам событий и возможность 
-    сохранять комментарии для событий, позволят бысто и удобно просматривать важную 
+    сохранять комментарии для событий, позволят быстро и удобно просматривать важную 
     информацию о событиях и легко ее редактировать.
 
 
@@ -35,13 +35,13 @@
 Скриншоты:
 ----------
 <p>
-    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_1.png" width="240" title="screen_1" hspace="5">
-    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_2.png" width="240" title="screen_2" hspace="5">
-    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_3.png" width="240" title="screen_3" hspace="5">
-    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_4.png" width="240" title="screen_4" hspace="5">
-    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_5.png" width="240" title="screen_5" hspace="5">
-    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_6.png" width="240" title="screen_6" hspace="5">
-    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_7.png" width="240" title="screen_7" hspace="5">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_1.png" width="256" title="screen_1" hspace="5" vspace="5">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_2.png" width="256" title="screen_2" hspace="5" vspace="5">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_3.png" width="256" title="screen_3" hspace="5" vspace="5">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_4.png" width="256" title="screen_4" hspace="5" vspace="5">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_5.png" width="256" title="screen_5" hspace="5" vspace="5">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_6.png" width="256" title="screen_6" hspace="5" vspace="5">
+    <img src="https://github.com/MengGP/ABdCalendar/raw/master/descimg/Screen_7.png" width="256" title="screen_7" hspace="5" vspace="5">
 </p>
 
 Использованные ресурсы:
